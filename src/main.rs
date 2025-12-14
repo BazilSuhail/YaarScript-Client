@@ -25,7 +25,8 @@ fn main() {
     if has_lex_errors {
         for token in &tokens {
             if token.token_type == TokenType::Error {
-                reporter.report_lexical(&token.value, token.line, token.column);
+                let report = reporter.report_lexical(&token.value, token.line, token.column);
+                println!("{}", report);
             }
         }
         return;
@@ -39,7 +40,8 @@ fn main() {
             ast
         }
         Err(err) => {
-            reporter.report_syntax(&err.message, err.token.line, err.token.column);
+            let report = reporter.report_syntax(&err.message, err.token.line, err.token.column);
+            println!("{}", report);
             return;
         }
     };
@@ -48,7 +50,8 @@ fn main() {
     let mut scope_analyzer = ScopeAnalyzer::new();
     if let Err(errors) = scope_analyzer.analyze(&ast) {
         for error in &errors {
-            reporter.report_scope(&error.message, error.line, error.column);
+            let report = reporter.report_scope(&error.message, error.line, error.column);
+            println!("{}", report);
         }
         eprintln!("Scope analysis failed with \x1b[1;31m{} error(s)\x1b[0m", errors.len());
         return;
@@ -59,7 +62,8 @@ fn main() {
     let mut type_checker = TypeChecker::new(scope_analyzer.get_global_scope());
     if let Err(errors) = type_checker.check(&ast) {
         for error in &errors {
-            reporter.report_type(&error.message, error.line, error.column);
+            let report = reporter.report_type(&error.message, error.line, error.column);
+            println!("{}", report);
         }
         eprintln!("Type checking failed with \x1b[1;31m{} error(s)\x1b[0m", errors.len());
         return;
@@ -70,30 +74,24 @@ fn main() {
     // --- IR Generation ---
     let mut tac_gen = TACGenerator::new();
     let raw_tac = tac_gen.generate(&ast);
-    
-    if let Err(e) = tac_gen.save_to_file("three-address-code.txt") {
-        eprintln!("❌ Failed to save raw TAC: {}", e);
-    } else {
-        println!("✅ Raw TAC saved to 'three-address-code.txt'");
-    }
+    println!("✅ Raw TAC generated");
 
     // --- IR Optimization ---
     let mut optimizer = IROptimizer::new(raw_tac);
     optimizer.run();
     let optimized_tac = optimizer.get_instructions();
-    
-    if let Err(e) = optimizer.save_to_file("optimal-three-address-code.txt") {
-        eprintln!("❌ Failed to save optimized TAC: {}", e);
-    } else {
-        println!("✅ Optimization completed! Saved to 'optimal-three-address-code.txt'");
-    }
+    println!("✅ Optimization completed!");
 
     // --- Execution ---
     println!("\nExecuting Program Output:");
     let engine = ExecutionEngine::new(optimized_tac);
-    if let Err(e) = engine.execute() {
-        eprintln!("\n❌ Execution Error: {}", e);
-        return;
+    match engine.execute() {
+        Ok(output) => {
+            println!("{}", output);
+            println!("✅ Execution finished.");
+        }
+        Err(e) => {
+            eprintln!("\n❌ Execution Error: {}", e);
+        }
     }
-    println!("✅ Execution finished.");
 }

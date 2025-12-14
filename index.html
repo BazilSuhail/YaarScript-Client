@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>YaarScript Browser Playground</title>
+  </head>
+  <body>
+    <textarea id="code" rows="10" cols="50">
+int main() {
+    print "Hello from Wasm!";
+    return 0;
+}
+    </textarea>
+    <button id="run">Run Code</button>
+    <pre id="output"></pre>
+
+    <script type="module">
+      import init, { compile_and_run } from './pkg/compiler.js';
+
+      async function run() {
+        await init();
+        document.getElementById('run').onclick = () => {
+          const code = document.getElementById('code').value;
+          const result = compile_and_run(code);
+          document.getElementById('output').textContent = result;
+        };
+      }
+      run();
+    </script>
+  </body>
+</html>

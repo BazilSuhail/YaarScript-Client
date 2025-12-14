@@ -79,6 +79,7 @@ struct RuntimeState {
     global_vars: HashMap<String, Value>,
     stack: Vec<HashMap<String, Value>>,
     param_buffer: Vec<Value>,
+    pub output: Vec<String>,
 }
 
 impl RuntimeState {
@@ -87,6 +88,7 @@ impl RuntimeState {
             global_vars: HashMap::new(),
             stack: vec![HashMap::new()],
             param_buffer: Vec::new(),
+            output: Vec::new(),
         }
     }
 
@@ -143,11 +145,11 @@ impl ExecutionEngine {
         Self { instructions, labels }
     }
 
-    pub fn execute(&self) -> Result<(), RuntimeError> {
+    pub fn execute(&self) -> Result<String, RuntimeError> {
         let mut state = RuntimeState::new();
         let main_idx = *self.labels.get("main").ok_or(RuntimeError::MainNotFound)?;
         self.run_from(&mut state, main_idx)?;
-        Ok(())
+        Ok(state.output.join(""))
     }
 
     fn run_from(&self, state: &mut RuntimeState, start_pc: usize) -> Result<Value, RuntimeError> {
@@ -192,13 +194,10 @@ impl ExecutionEngine {
                 }
 
                 Instruction::Print(args) => {
-                    let output: Vec<String> = args.iter()
+                    let vals: Vec<String> = args.iter()
                         .map(|a| state.resolve(a).map(|v| v.to_string()))
                         .collect::<Result<_, _>>()?;
-                    // Manual newline control via escape sequences only
-                    print!("{}", output.join(" "));
-                    use std::io::Write;
-                    std::io::stdout().flush().map_err(|e| RuntimeError::Other(e.to_string()))?;
+                    state.output.push(vals.join(" "));
                 }
 
                 Instruction::Goto(lbl) => {

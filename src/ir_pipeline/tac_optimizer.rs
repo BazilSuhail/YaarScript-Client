@@ -1,6 +1,5 @@
 use crate::core::token::TokenType;
 use crate::ir_pipeline::tac::{Instruction, Operand};
-use std::fs;
 use std::collections::HashSet;
 
 pub struct IROptimizer {
@@ -405,11 +404,4 @@ impl IROptimizer {
         }
     }
 
-    pub fn save_to_file(&self, filename: &str) -> std::io::Result<()> {
-        let mut content = String::new();
-        for instr in &self.instructions {
-            content.push_str(&format!("{}\n", instr));
-        }
-        fs::write(filename, content)
-    }
 }

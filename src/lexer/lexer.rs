@@ -434,7 +434,6 @@ impl Lexer {
 
         // Safety check: if position hasn't advanced, force it
         if self.pos == start_pos && self.pos < self.input.len() {
-            eprintln!("WARNING: Token matching failed to advance position at pos {}", self.pos);
             self.advance();
         }
 
@@ -449,8 +448,6 @@ impl Lexer {
         loop {
             iterations += 1;
             if iterations > max_iterations {
-                eprintln!("ERROR: Tokenizer exceeded maximum iterations. Possible infinite loop.");
-                eprintln!("Position: {}, Line: {}, Column: {}", self.pos, self.line, self.column);
                 tokens.push(Token::new(
                     TokenType::Error,
                     "Tokenizer loop limit exceeded".to_string(),
@@ -473,7 +470,6 @@ impl Lexer {
                     break;
                 }
             } else {
-                eprintln!("Warning: next_token() returned None unexpectedly at pos {}", self.pos);
                 break;
             }
         }
