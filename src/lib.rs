@@ -10,8 +10,7 @@ pub mod core {
 }
 
 pub mod parser {
-    pub mod parser;
-    pub mod ast_printer;
+    pub mod parser; 
 }
 
 pub mod semantics {

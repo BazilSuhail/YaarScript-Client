@@ -1,8 +1,7 @@
 // main.rs - using lib.rs for module organization
 use compiler::lexer::lexer::Lexer;
 use compiler::core::token::TokenType;
-use compiler::parser::parser::Parser;
-//use compiler::parser::ast_printer::print_ast;
+use compiler::parser::parser::Parser; 
 use compiler::semantics::scope::ScopeAnalyzer;
 use compiler::semantics::type_checker::TypeChecker;
 use compiler::ir_pipeline::tac::TACGenerator;
