@@ -25,9 +25,15 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        .editor-wrapper {
+            position: relative;
+            flex: 1;
+            background: #0f172a;
+            overflow: hidden;
+        }
+
         .editor-container {
             display: flex;
-            background: #0f172a;
             height: 100%;
             position: relative;
         }
@@ -41,8 +47,8 @@
             font-size: 14px;
             line-height: 1.5rem;
             user-select: none;
-            overflow: hidden;
             border-right: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 10;
         }
 
         .line-numbers span {
@@ -50,25 +56,84 @@
             padding-right: 10px;
         }
 
-        #code {
-            flex: 1;
-            background: transparent;
-            color: #f1f5f9;
+        /* Highlighting Overlay logic */
+        #code,
+        #highlighting {
+            position: absolute;
+            top: 0;
+            left: 45px;
+            width: calc(100% - 45px);
+            height: 100%;
+            margin: 0;
+            padding: 24px;
+            border: 0;
             font-size: 15px;
             line-height: 1.5rem;
-            padding: 24px;
-            outline: none;
-            resize: none;
-            border: none;
+            font-family: 'JetBrains Mono', monospace;
             tab-size: 4;
             white-space: pre;
-            overflow-x: auto;
+            overflow: auto;
+            box-sizing: border-box;
         }
 
-        .active-line {
-            color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
+        #code {
+            color: transparent;
+            background: transparent;
+            caret-color: #38bdf8;
+            z-index: 20;
+            resize: none;
+            outline: none;
         }
+
+        #highlighting {
+            z-index: 10;
+            pointer-events: none;
+            color: #94a3b8;
+        }
+
+        /* Syntax Colors */
+        .token-keyword {
+            color: #38bdf8;
+            font-weight: 500;
+        }
+
+        /* Sky Blue */
+        .token-type {
+            color: #818cf8;
+        }
+
+        /* Indigo */
+        .token-string {
+            color: #fbbf24;
+        }
+
+        /* Amber */
+        .token-number {
+            color: #f87171;
+        }
+
+        /* Red */
+        .token-comment {
+            color: #475569;
+            font-style: italic;
+        }
+
+        /* Slate */
+        .token-function {
+            color: #4ade80;
+        }
+
+        /* Green */
+        .token-operator {
+            color: #94a3b8;
+        }
+
+        /* Slate Light */
+        .token-boolean {
+            color: #fb7185;
+        }
+
+        /* Rose */
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -110,10 +175,11 @@
                 </div>
             </div>
 
-            <div class="hidden md:flex items-center h-8 border-l border-white/10 pl-6 space-x-5 text-sm">
-                <a href="#" class="text-slate-400 hover:text-white transition-colors">Documentation</a>
+            <div class="hidden md:flex items-center h-8 border-l border-white/10 pl-6 space-x-5 text-sm font-medium">
+                <a href="#" class="text-slate-400 hover:text-white transition-colors">Docs</a>
                 <a href="#" class="text-slate-400 hover:text-white transition-colors">Standard Lib</a>
-                <a href="#" class="text-slate-400 hover:text-white transition-colors">Github</a>
+                <a href="#"
+                    class="text-slate-400 hover:text-white transition-colors underline decoration-sky-500 decoration-2 underline-offset-4">Playground</a>
             </div>
         </div>
 
@@ -121,23 +187,15 @@
             <div id="connection-status"
                 class="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900 border border-white/5 mr-2">
                 <div class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Wasm: Loading</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Wasm: Connecting</span>
             </div>
-
-            <button id="clear" class="p-2 text-slate-400 hover:text-white hover:bg-white/5 rounded-lg transition-all"
-                title="Clear Code">
-                <svg class="w-5 h-5 font-bold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                </svg>
-            </button>
 
             <button id="run"
                 class="flex items-center space-x-2.5 px-6 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-lg shadow-lg shadow-sky-500/20 active:scale-95 transition-all">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                 </svg>
-                <span class="text-sm">Execute Build</span>
+                <span class="text-sm uppercase tracking-wide">Compile & Run</span>
             </button>
         </div>
     </header>
@@ -149,37 +207,38 @@
         <section class="flex-1 flex flex-col bg-[#0f172a]">
             <div class="h-10 bg-slate-900/80 px-4 flex items-center justify-between border-b border-white/5">
                 <div class="flex items-center space-x-4">
-                    <span
-                        class="text-[10px] font-bold uppercase tracking-widest text-sky-400/80">workspace/main.yr</span>
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-sky-400/80">main.yr</span>
                     <span id="line-col-indicator" class="text-[10px] text-slate-500 font-mono">Line: 1, Col: 1</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <span class="text-[10px] text-slate-600 font-mono">UTF-8</span>
+                <div class="flex items-center space-x-4">
+                    <button id="clear"
+                        class="text-[10px] text-slate-500 hover:text-slate-300 transition-colors uppercase font-bold">Clear</button>
+                    <span class="text-[10px] text-slate-600 font-serif italic">YaarScript Lexical Core</span>
                 </div>
             </div>
 
-            <div class="flex-1 editor-container mono overflow-hidden">
-                <div id="line-numbers" class="line-numbers">
-                    <span>1</span>
+            <div class="editor-wrapper">
+                <div class="editor-container">
+                    <div id="line-numbers" class="line-numbers">
+                        <span>1</span>
+                    </div>
+                    <pre id="highlighting" aria-hidden="true"></pre>
+                    <textarea id="code" spellcheck="false" wrap="off" autofocus>main {
+    print("System Initialized... \n");
+    
+    int count = 5;
+    print("Iterating over set: \n");
+    
+    for (int i = 0; i < count; i++) {
+        print(" -> Step: ", i, "\n");
+        if (i == 2) {
+            print("    [!] Mid-point reached \n");
+        }
+    }
+    
+    print("\nCompilation Result: Success \n");
+}</textarea>
                 </div>
-                <textarea id="code" spellcheck="false" wrap="off" autofocus>
-                    main {
-                        print("System Initialized... \n");
-                        
-                        int count = 5;
-                        print("Iterating over set: \n");
-                        
-                        for (int i = 0; i < count; i++) {
-                            print(" -> Step: ", i, "\n");
-                            if (i == 2) {
-                                print("    [!] Mid-point reached \n");
-                            }
-                        }
-                        
-                        print("\nCompilation Result: Success \n");
-                        
-                    }
-                </textarea>
             </div>
         </section>
 
@@ -188,76 +247,131 @@
             <div class="h-10 bg-slate-900/80 px-4 flex items-center justify-between border-b border-white/5">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Terminal Output</span>
                 <button id="clear-term"
-                    class="text-[10px] text-slate-600 hover:text-slate-400 uppercase tracking-tighter transition-colors font-bold">Clear
-                    Buffer</button>
+                    class="text-[10px] text-slate-600 hover:text-slate-400 uppercase font-bold">Clear</button>
             </div>
-            <div class="flex-1 p-6 overflow-auto scrollbar-hide">
-                <pre id="output"
-                    class="mono text-sm leading-7 text-slate-300 whitespace-pre-wrap selection:bg-indigo-500/40">
-<span class="text-slate-600 italic opacity-40 leading-relaxed tracking-tight">System ready. Awaiting instructions...</span></pre>
+            <div class="flex-1 p-6 overflow-auto bg-slate-950/40">
+                <pre id="output" class="mono text-sm leading-7 text-slate-300 whitespace-pre-wrap">
+<span class="text-slate-600 italic opacity-40">System ready. Awaiting instructions...</span></pre>
             </div>
 
-            <!-- Metrics Area -->
             <div class="h-24 bg-slate-900/30 p-4 border-t border-white/5 flex flex-col justify-between">
                 <div
                     class="flex justify-between items-center text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                    <span>Runtime Performance</span>
+                    <span>Execution Efficiency</span>
                     <span id="exec-time" class="text-sky-500/80">0ms</span>
                 </div>
                 <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
                     <div id="prog-bar" class="h-full bg-sky-500/40 w-0 transition-all duration-500"></div>
                 </div>
                 <div class="flex justify-between text-[9px] text-slate-600 mono">
-                    <span>MEMORY: LOCAL_VM</span>
-                    <span>THREAD: MAIN_UI</span>
+                    <span>VIRTUAL_MACHINE: READY</span>
+                    <span>CORE: OPTIMIZED_WASM</span>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- Global Key Bindings & Logic -->
+    <!-- Footer -->
+    <footer
+        class="border-t border-white/5 bg-black px-6 py-2 flex justify-between items-center text-[10px] text-slate-600 mono bg-slate-950">
+        <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-2">
+                <div class="w-2 h-2 rounded-full bg-green-500/50 shadow-sm shadow-green-500"></div>
+                <span class="font-bold">ENGINE: STABLE</span>
+            </div>
+            <span>LANG: YAARSCRIPT_PRO</span>
+        </div>
+        <div>
+            <span>&copy; 2026 YAAR LABS</span>
+        </div>
+    </footer>
+
     <script type="module">
         import init, { compile_and_run } from './pkg/compiler.js';
 
         const codeArea = document.getElementById('code');
+        const highlightArea = document.getElementById('highlighting');
         const gutter = document.getElementById('line-numbers');
         const outputArea = document.getElementById('output');
         const runBtn = document.getElementById('run');
         const statusIndicator = document.getElementById('connection-status');
         const lineColIndicator = document.getElementById('line-col-indicator');
 
+        // Syntax Highlighting Engine (Single Pass)
+        const highlight = (text) => {
+            const tokens = [
+                { type: 'comment', regex: /\/\/.*|\/\*[\s\S]*?\*\// },
+                { type: 'string', regex: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/ },
+                { type: 'keyword', regex: /\b(?:if|else|while|return|main|include|const|global|do|switch|break|for|default|case)\b/ },
+                { type: 'type', regex: /\b(?:int|float|double|char|void|bool|string|enum)\b/ },
+                { type: 'function', regex: /\b(?:print)\b/ },
+                { type: 'boolean', regex: /\b(?:true|false)\b/ },
+                { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
+                { type: 'operator', regex: /[+\-*\/%=!<>|&^:]+/ }
+            ];
+
+            // 1. Escape HTML
+            let escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            // 2. Build one big regex with capture groups
+            const bigRegex = new RegExp(tokens.map(t => `(${t.regex.source})`).join('|'), 'g');
+
+            // 3. One pass replacement
+            return escaped.replace(bigRegex, (match, ...groups) => {
+                for (let i = 0; i < tokens.length; i++) {
+                    if (groups[i] !== undefined) {
+                        return `<span class="token-${tokens[i].type}">${match}</span>`;
+                    }
+                }
+                return match;
+            });
+        };
+
+        const syncHighlight = () => {
+            highlightArea.innerHTML = highlight(codeArea.value) + "\n";
+        };
+
         async function bootstrap() {
             try {
                 await init();
                 statusIndicator.innerHTML = `
             <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-            <span class="text-[10px] font-bold text-green-500 uppercase tracking-widest">Wasm: Connected</span>
+            <span class="text-[10px] font-bold text-green-500 uppercase tracking-widest">Wasm: Online</span>
           `;
-                console.log("YaarScript Engine Ready.");
+                console.log("YaarScript Engine Online.");
             } catch (e) {
                 statusIndicator.innerHTML = `
             <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-            <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">Wasm: Failed</span>
+            <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">Wasm: Offline</span>
           `;
             }
         }
 
-        // Line numbering logic
         const updateLineNumbers = () => {
             const lines = codeArea.value.split('\n').length;
             gutter.innerHTML = Array.from({ length: lines }, (_, i) => `<span>${i + 1}</span>`).join('');
         };
 
-        // Cursor position tracking
         const updateLineCol = () => {
-            const lines = codeArea.value.substr(0, codeArea.selectionStart).split('\n');
-            const line = lines.length;
-            const col = lines[lines.length - 1].length + 1;
-            lineColIndicator.textContent = `Line: ${line}, Col: ${col}`;
+            const textBefore = codeArea.value.substr(0, codeArea.selectionStart);
+            const lines = textBefore.split('\n');
+            lineColIndicator.textContent = `Line: ${lines.length}, Col: ${lines[lines.length - 1].length + 1}`;
         };
 
-        // Tab key support
+        // Events
+        codeArea.addEventListener('input', () => {
+            syncHighlight();
+            updateLineNumbers();
+            updateLineCol();
+        });
+
+        codeArea.addEventListener('scroll', () => {
+            highlightArea.scrollTop = codeArea.scrollTop;
+            highlightArea.scrollLeft = codeArea.scrollLeft;
+            gutter.scrollTop = codeArea.scrollTop;
+        });
+
         codeArea.addEventListener('keydown', (e) => {
             if (e.key === 'Tab') {
                 e.preventDefault();
@@ -265,30 +379,19 @@
                 const end = codeArea.selectionEnd;
                 codeArea.value = codeArea.value.substring(0, start) + "    " + codeArea.value.substring(end);
                 codeArea.selectionStart = codeArea.selectionEnd = start + 4;
+                syncHighlight();
                 updateLineNumbers();
             }
-        });
-
-        codeArea.addEventListener('input', () => {
-            updateLineNumbers();
-            updateLineCol();
         });
 
         codeArea.addEventListener('click', updateLineCol);
         codeArea.addEventListener('keyup', updateLineCol);
 
-        // Sync scroll
-        codeArea.addEventListener('scroll', () => {
-            gutter.scrollTop = codeArea.scrollTop;
-        });
-
-        // Actions
         runBtn.onclick = () => {
             const code = codeArea.value;
             outputArea.innerHTML = '<span class="text-sky-400 animate-pulse font-bold tracking-widest">>> BUILDING CORE...</span>\n';
-
             const start = performance.now();
-            document.getElementById('prog-bar').style.width = '40%';
+            document.getElementById('prog-bar').style.width = '60%';
 
             setTimeout(() => {
                 try {
@@ -296,17 +399,18 @@
                     outputArea.textContent = result || ">> Process finished with return code 0.";
                     document.getElementById('prog-bar').style.width = '100%';
                 } catch (err) {
-                    outputArea.innerHTML = `<span class="text-red-400 font-bold border-b border-red-400/20 pb-1 mb-2 block">KERNEL PANIC</span>\n${err}`;
+                    outputArea.innerHTML = `<span class="text-red-400 font-bold border-b border-red-400/20 pb-1 block mb-2">BUILD FAILED</span>\n${err}`;
                     document.getElementById('prog-bar').style.width = '0%';
                 }
-                const end = performance.now();
-                document.getElementById('exec-time').textContent = `${Math.floor(end - start)}ms`;
-            }, 100);
+                document.getElementById('exec-time').textContent = `${Math.floor(performance.now() - start)}ms`;
+            }, 80);
         };
 
-        document.getElementById('clear').onclick = () => codeArea.value = '';
+        document.getElementById('clear').onclick = () => { codeArea.value = ''; syncHighlight(); updateLineNumbers(); };
         document.getElementById('clear-term').onclick = () => outputArea.textContent = '';
 
+        // Init
+        syncHighlight();
         updateLineNumbers();
         bootstrap();
     </script>
