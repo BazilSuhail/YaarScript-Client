@@ -56,7 +56,6 @@
             padding-right: 10px;
         }
 
-        /* Highlighting Overlay logic */
         #code,
         #highlighting {
             position: absolute;
@@ -97,43 +96,34 @@
             font-weight: 500;
         }
 
-        /* Sky Blue */
         .token-type {
             color: #818cf8;
         }
 
-        /* Indigo */
         .token-string {
             color: #fbbf24;
         }
 
-        /* Amber */
         .token-number {
             color: #f87171;
         }
 
-        /* Red */
         .token-comment {
             color: #475569;
             font-style: italic;
         }
 
-        /* Slate */
         .token-function {
             color: #4ade80;
         }
 
-        /* Green */
         .token-operator {
             color: #94a3b8;
         }
 
-        /* Slate Light */
         .token-boolean {
             color: #fb7185;
         }
-
-        /* Rose */
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
@@ -224,19 +214,18 @@
                     </div>
                     <pre id="highlighting" aria-hidden="true"></pre>
                     <textarea id="code" spellcheck="false" wrap="off" autofocus>main {
-    print("System Initialized... \n");
+    print("Welcome to YaarScript Pro! \n");
     
-    int count = 5;
-    print("Iterating over set: \n");
+    int count = 10;
+    print("Process started... \n");
     
     for (int i = 0; i < count; i++) {
-        print(" -> Step: ", i, "\n");
-        if (i == 2) {
-            print("    [!] Mid-point reached \n");
+        if (i % 2 == 0) {
+            print(" -> Event detected at index: ", i, "\n");
         }
     }
     
-    print("\nCompilation Result: Success \n");
+    print("\n[COMPLETE] System sequence terminated. \n");
 }</textarea>
                 </div>
             </div>
@@ -298,7 +287,7 @@
         const statusIndicator = document.getElementById('connection-status');
         const lineColIndicator = document.getElementById('line-col-indicator');
 
-        // Syntax Highlighting Engine (Single Pass)
+        // Syntax Highlighting Engine (Professional Single-Pass)
         const highlight = (text) => {
             const tokens = [
                 { type: 'comment', regex: /\/\/.*|\/\*[\s\S]*?\*\// },
@@ -308,24 +297,30 @@
                 { type: 'function', regex: /\b(?:print)\b/ },
                 { type: 'boolean', regex: /\b(?:true|false)\b/ },
                 { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
-                { type: 'operator', regex: /[+\-*\/%=!<>|&^:]+/ }
+                { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,]+/ }
             ];
 
-            // 1. Escape HTML
-            let escaped = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-            // 2. Build one big regex with capture groups
+            const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             const bigRegex = new RegExp(tokens.map(t => `(${t.regex.source})`).join('|'), 'g');
 
-            // 3. One pass replacement
-            return escaped.replace(bigRegex, (match, ...groups) => {
-                for (let i = 0; i < tokens.length; i++) {
-                    if (groups[i] !== undefined) {
-                        return `<span class="token-${tokens[i].type}">${match}</span>`;
-                    }
+            let html = "";
+            let lastIndex = 0;
+
+            text.replace(bigRegex, (match, ...args) => {
+                const offset = args[args.length - 2];
+                html += escapeHTML(text.slice(lastIndex, offset));
+                const tokenIndex = args.slice(0, tokens.length).findIndex(val => val !== undefined);
+                if (tokenIndex !== -1) {
+                    html += `<span class="token-${tokens[tokenIndex].type}">${escapeHTML(match)}</span>`;
+                } else {
+                    html += escapeHTML(match);
                 }
+                lastIndex = offset + match.length;
                 return match;
             });
+
+            html += escapeHTML(text.slice(lastIndex));
+            return html;
         };
 
         const syncHighlight = () => {
@@ -359,7 +354,6 @@
             lineColIndicator.textContent = `Line: ${lines.length}, Col: ${lines[lines.length - 1].length + 1}`;
         };
 
-        // Events
         codeArea.addEventListener('input', () => {
             syncHighlight();
             updateLineNumbers();
@@ -409,7 +403,6 @@
         document.getElementById('clear').onclick = () => { codeArea.value = ''; syncHighlight(); updateLineNumbers(); };
         document.getElementById('clear-term').onclick = () => outputArea.textContent = '';
 
-        // Init
         syncHighlight();
         updateLineNumbers();
         bootstrap();
