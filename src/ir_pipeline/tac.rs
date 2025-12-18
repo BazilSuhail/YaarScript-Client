@@ -169,13 +169,6 @@ impl TACGenerator {
                 else { Some(Operand::Var(n.name.clone())) }
             }
 
-            // ASTNode::BinaryExpr(b) => {
-            //     let left = self.gen_node(&b.left)?;
-            //     let right = self.gen_node(&b.right)?;
-            //     let dest = self.new_temp();
-            //     self.emit(Instruction::Binary(dest.clone(), b.op, left, right));
-            //     Some(dest)
-            // }
             ASTNode::BinaryExpr(b) => {
             // 1. Generate the right-hand side first
             let right = self.gen_node(&b.right)?;
