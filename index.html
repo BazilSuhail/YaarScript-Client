@@ -125,6 +125,42 @@
             color: #fb7185;
         }
 
+        /* Terminal Colors */
+        .term-error-header {
+            color: #facc15;
+            font-weight: bold;
+        }
+
+        /* Yellow */
+        .term-error-label {
+            color: #f87171;
+            font-weight: bold;
+        }
+
+        /* Red */
+        .term-arrow {
+            color: #22d3ee;
+        }
+
+        /* Cyan */
+        .term-pointer {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        /* Bright Red */
+        .term-caret {
+            color: #ef4444;
+            font-weight: bold;
+        }
+
+        /* Bright Red */
+        .term-gutter {
+            color: #475569;
+        }
+
+        /* Slate Gutter */
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 10px;
@@ -232,7 +268,7 @@
         </section>
 
         <!-- Terminal -->
-        <section class="lg:w-[450px] flex flex-col bg-[#020617] border-l border-white/5">
+        <section class="lg:w-[650px] flex flex-col bg-[#020617] border-l border-white/5">
             <div class="h-10 bg-slate-900/80 px-4 flex items-center justify-between border-b border-white/5">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Terminal Output</span>
                 <button id="clear-term"
@@ -287,7 +323,7 @@
         const statusIndicator = document.getElementById('connection-status');
         const lineColIndicator = document.getElementById('line-col-indicator');
 
-        // Syntax Highlighting Engine (Professional Single-Pass)
+        // Syntax Highlighting Engine
         const highlight = (text) => {
             const tokens = [
                 { type: 'comment', regex: /\/\/.*|\/\*[\s\S]*?\*\// },
@@ -321,6 +357,20 @@
 
             html += escapeHTML(text.slice(lastIndex));
             return html;
+        };
+
+        // Terminal Formatting Engine
+        const formatTerminal = (text) => {
+            const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            let escaped = escapeHTML(text);
+
+            return escaped
+                .replace(/(\b\w+ Error:)/g, '<span class="term-error-header">$1</span>')
+                .replace(/(error:)/g, '<span class="term-error-label">$1</span>')
+                .replace(/(--&gt; \d+:\d+)/g, '<span class="term-arrow">$1</span>')
+                .replace(/(^|[\r\n])(\s*&gt;\s*)/g, '$1<span class="term-pointer">$2</span>')
+                .replace(/(\s+\^)/g, '<span class="term-caret">$1</span>')
+                .replace(/(\d+\s+\|\s+)/g, '<span class="term-gutter">$1</span>');
         };
 
         const syncHighlight = () => {
@@ -390,7 +440,12 @@
             setTimeout(() => {
                 try {
                     const result = compile_and_run(code);
-                    outputArea.textContent = result || ">> Process finished with return code 0.";
+                    // Apply terminal formatting if there are error patterns
+                    if (result.includes("Error:") || result.includes("error:")) {
+                        outputArea.innerHTML = formatTerminal(result);
+                    } else {
+                        outputArea.textContent = result || ">> Process finished with return code 0.";
+                    }
                     document.getElementById('prog-bar').style.width = '100%';
                 } catch (err) {
                     outputArea.innerHTML = `<span class="text-red-400 font-bold border-b border-red-400/20 pb-1 block mb-2">BUILD FAILED</span>\n${err}`;
