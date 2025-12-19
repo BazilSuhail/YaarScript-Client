@@ -248,7 +248,8 @@
                 </div>
                 <div>
                     <h1 class="text-lg font-bold tracking-tight text-slate-800 dark:text-white leading-none">YaarScript
-                        <span class="text-sky-500">Pro</span></h1>
+                        <span class="text-sky-500">Pro</span>
+                    </h1>
                     <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-semibold mt-1">Advanced
                         Toolchain</p>
                 </div>
@@ -324,19 +325,32 @@
                         <span>1</span>
                     </div>
                     <pre id="highlighting" class="text-slate-900 dark:text-slate-200" aria-hidden="true"></pre>
-                    <textarea id="code" spellcheck="false" wrap="off" autofocus>asli_cheez {
-    bolo("Oye Yaar! Welcome to YaarScript Pro! \n");
+                    <textarea id="code" spellcheck="false" wrap="off" autofocus>enum Mausam { Sardi, Garmi, Barish }
+
+
+number check_status(number val) {
+    agar (val > TARGET) {
+        wapsi 1;
+    } warna {
+        wapsi 0;
+    }
+}
+
+asli_cheez {
+    bolo("--- YaarScript Pro Mission Control --- \n");
     
-    number ginti = 10;
-    bolo("Kaam shuru ho raha hai... \n");
-    
-    dohrao (number i = 0; i < ginti; i++) {
-        agar (i % 2 == 0) {
-            bolo(" -> Point mil gaya loop mein: ", i, "\n");
+    number score = 0;
+    dohrao (number i = 0; i < 5; i++) {
+        score = score + 25;
+        bolo("Current Score: ", score, "\n");
+        
+        agar (check_status(score) == 1) {
+            bolo("[!!] Target reached at step ", i, "\n");
+            bas_kar;
         }
     }
     
-    bolo("\n[MUBARAK] Kaam khatam ho gaya yaar! \n");
+    bolo("\nKaam khatam ho gaya! \nFinal Score: ", score, "\n");
 }</textarea>
                 </div>
             </div>
