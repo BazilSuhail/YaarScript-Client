@@ -6,13 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>YaarScript Pro | Cloud Compiler</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        editor: {
+                            dark: '#0f172a',
+                            light: '#ffffff'
+                        },
+                        terminal: {
+                            dark: '#020617',
+                            light: '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <link
         href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;600&display=swap"
         rel="stylesheet">
     <style>
         body {
             font-family: 'Outfit', sans-serif;
-            background-color: #020617;
         }
 
         .mono {
@@ -20,15 +38,20 @@
         }
 
         .glass {
-            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .bg-main {
+            background-color: #020617;
+        }
+
+        html:not(.dark) .bg-main {
+            background-color: #f1f5f9;
         }
 
         .editor-wrapper {
             position: relative;
             flex: 1;
-            background: #0f172a;
             overflow: hidden;
         }
 
@@ -42,13 +65,11 @@
             width: 45px;
             padding: 24px 0;
             text-align: right;
-            background: #020617;
-            color: #334155;
             font-size: 14px;
             line-height: 1.5rem;
             user-select: none;
-            border-right: 1px solid rgba(255, 255, 255, 0.05);
             z-index: 10;
+            transition: background-color 0.3s, color 0.3s;
         }
 
         .line-numbers span {
@@ -87,10 +108,9 @@
         #highlighting {
             z-index: 10;
             pointer-events: none;
-            color: #94a3b8;
         }
 
-        /* Syntax Colors */
+        /* Syntax Colors - Dark Mode (Default) */
         .token-keyword {
             color: #38bdf8;
             font-weight: 500;
@@ -125,99 +145,150 @@
             color: #fb7185;
         }
 
+        /* Syntax Colors - Light Mode Overrides */
+        html:not(.dark) .token-keyword {
+            color: #0284c7;
+        }
+
+        html:not(.dark) .token-type {
+            color: #4f46e5;
+        }
+
+        html:not(.dark) .token-string {
+            color: #b45309;
+        }
+
+        html:not(.dark) .token-number {
+            color: #dc2626;
+        }
+
+        html:not(.dark) .token-comment {
+            color: #94a3b8;
+        }
+
+        html:not(.dark) .token-function {
+            color: #16a34a;
+        }
+
+        html:not(.dark) .token-operator {
+            color: #64748b;
+        }
+
         /* Terminal Colors */
         .term-error-header {
             color: #facc15;
             font-weight: bold;
         }
 
-        /* Yellow */
         .term-error-label {
             color: #f87171;
             font-weight: bold;
         }
 
-        /* Red */
         .term-arrow {
             color: #22d3ee;
         }
 
-        /* Cyan */
         .term-pointer {
             color: #ef4444;
             font-weight: bold;
         }
 
-        /* Bright Red */
         .term-caret {
             color: #ef4444;
             font-weight: bold;
         }
 
-        /* Bright Red */
         .term-gutter {
             color: #475569;
         }
 
-        /* Slate Gutter */
+        html:not(.dark) .term-arrow {
+            color: #0891b2;
+        }
 
-        /* Custom Scrollbar */
+        html:not(.dark) .term-error-header {
+            color: #a16207;
+        }
+
         ::-webkit-scrollbar {
             width: 10px;
             height: 10px;
         }
 
         ::-webkit-scrollbar-track {
-            background: #0f172a;
+            background: transparent;
         }
 
-        ::-webkit-scrollbar-thumb {
+        .dark ::-webkit-scrollbar-thumb {
             background: #1e293b;
             border-radius: 5px;
             border: 2px solid #0f172a;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
+        html:not(.dark) ::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 5px;
+            border: 2px solid #ffffff;
         }
     </style>
 </head>
 
-<body class="text-slate-200 min-h-screen flex flex-col selection:bg-sky-500/30">
+<body
+    class="text-slate-900 dark:text-slate-200 bg-slate-50 bg-main min-h-screen flex flex-col selection:bg-sky-500/30 transition-colors duration-300">
 
     <!-- Navbar -->
-    <header class="glass sticky top-0 z-50 px-6 py-3 flex justify-between items-center bg-slate-950/80">
+    <header
+        class="glass sticky top-0 z-50 px-6 py-3 flex justify-between items-center bg-white/80 dark:bg-slate-950/80 border-b border-slate-200 dark:border-white/5">
         <div class="flex items-center space-x-6">
-            <div class="flex items-center space-x-2.5 group cursor-pointer">
+            <div class="flex items-center space-x-2.5 group cursor-pointer" onclick="window.location.reload()">
                 <div
                     class="w-9 h-9 bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-700 rounded-lg flex items-center justify-center shadow-xl shadow-sky-500/20 group-hover:scale-110 transition-transform duration-300">
                     <span class="text-white font-black text-xl italic leading-none">Y</span>
                 </div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight text-white leading-none">YaarScript <span
-                            class="text-sky-400">Pro</span></h1>
+                    <h1 class="text-lg font-bold tracking-tight text-slate-800 dark:text-white leading-none">YaarScript
+                        <span class="text-sky-500">Pro</span></h1>
                     <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-semibold mt-1">Advanced
                         Toolchain</p>
                 </div>
             </div>
 
-            <div class="hidden md:flex items-center h-8 border-l border-white/10 pl-6 space-x-5 text-sm font-medium">
-                <a href="#" class="text-slate-400 hover:text-white transition-colors">Docs</a>
-                <a href="#" class="text-slate-400 hover:text-white transition-colors">Standard Lib</a>
+            <div
+                class="hidden md:flex items-center h-8 border-l border-slate-200 dark:border-white/10 pl-6 space-x-5 text-sm font-medium">
                 <a href="#"
-                    class="text-slate-400 hover:text-white transition-colors underline decoration-sky-500 decoration-2 underline-offset-4">Playground</a>
+                    class="text-slate-500 dark:text-slate-400 hover:text-sky-500 dark:hover:text-white transition-colors">Docs</a>
+                <a href="#"
+                    class="text-slate-500 dark:text-slate-400 hover:text-sky-500 dark:hover:text-white transition-colors">Standard
+                    Lib</a>
+                <a href="#"
+                    class="text-sky-600 dark:text-white underline decoration-sky-500 decoration-2 underline-offset-4">Playground</a>
             </div>
         </div>
 
         <div class="flex items-center space-x-3">
+            <button id="theme-toggle"
+                class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-all mr-2"
+                title="Toggle Theme">
+                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+                </svg>
+                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path
+                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                        fill-rule="evenodd" clip-rule="evenodd"></path>
+                </svg>
+            </button>
+
             <div id="connection-status"
-                class="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-900 border border-white/5 mr-2">
+                class="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-white/5 mr-2 transition-colors">
                 <div class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Wasm: Connecting</span>
+                <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Wasm:
+                    Connecting</span>
             </div>
 
             <button id="run"
-                class="flex items-center space-x-2.5 px-6 py-2 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold rounded-lg shadow-lg shadow-sky-500/20 active:scale-95 transition-all">
+                class="flex items-center space-x-2.5 px-6 py-2 bg-sky-500 hover:bg-sky-400 text-white dark:text-slate-950 font-bold rounded-lg shadow-lg shadow-sky-500/20 active:scale-95 transition-all">
                 <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z" />
                 </svg>
@@ -230,65 +301,75 @@
     <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
 
         <!-- Editor -->
-        <section class="flex-1 flex flex-col bg-[#0f172a]">
-            <div class="h-10 bg-slate-900/80 px-4 flex items-center justify-between border-b border-white/5">
+        <section class="flex-1 flex flex-col bg-white dark:bg-editor-dark transition-colors duration-300">
+            <div
+                class="h-10 bg-slate-50 dark:bg-slate-900/80 px-4 flex items-center justify-between border-b border-slate-200 dark:border-white/5 transition-colors">
                 <div class="flex items-center space-x-4">
-                    <span class="text-[10px] font-bold uppercase tracking-widest text-sky-400/80">main.yr</span>
+                    <span
+                        class="text-[10px] font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400/80">workspace/main.yr</span>
                     <span id="line-col-indicator" class="text-[10px] text-slate-500 font-mono">Line: 1, Col: 1</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <button id="clear"
-                        class="text-[10px] text-slate-500 hover:text-slate-300 transition-colors uppercase font-bold">Clear</button>
-                    <span class="text-[10px] text-slate-600 font-serif italic">YaarScript Lexical Core</span>
+                        class="text-[10px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-colors uppercase font-bold">Clear</button>
+                    <span class="text-[10px] text-slate-400 dark:text-slate-600 font-serif italic">YaarScript Lexical
+                        Core</span>
                 </div>
             </div>
 
             <div class="editor-wrapper">
                 <div class="editor-container">
-                    <div id="line-numbers" class="line-numbers">
+                    <div id="line-numbers"
+                        class="line-numbers bg-slate-50 dark:bg-slate-950 text-slate-400 dark:text-slate-600 border-r border-slate-200 dark:border-white/5">
                         <span>1</span>
                     </div>
-                    <pre id="highlighting" aria-hidden="true"></pre>
-                    <textarea id="code" spellcheck="false" wrap="off" autofocus>main {
-    print("Welcome to YaarScript Pro! \n");
+                    <pre id="highlighting" class="text-slate-900 dark:text-slate-200" aria-hidden="true"></pre>
+                    <textarea id="code" spellcheck="false" wrap="off" autofocus>asli_cheez {
+    bolo("Oye Yaar! Welcome to YaarScript Pro! \n");
     
-    int count = 10;
-    print("Process started... \n");
+    number ginti = 10;
+    bolo("Kaam shuru ho raha hai... \n");
     
-    for (int i = 0; i < count; i++) {
-        if (i % 2 == 0) {
-            print(" -> Event detected at index: ", i, "\n");
+    dohrao (number i = 0; i < ginti; i++) {
+        agar (i % 2 == 0) {
+            bolo(" -> Point mil gaya loop mein: ", i, "\n");
         }
     }
     
-    print("\n[COMPLETE] System sequence terminated. \n");
+    bolo("\n[MUBARAK] Kaam khatam ho gaya yaar! \n");
 }</textarea>
                 </div>
             </div>
         </section>
 
         <!-- Terminal -->
-        <section class="lg:w-[650px] flex flex-col bg-[#020617] border-l border-white/5">
-            <div class="h-10 bg-slate-900/80 px-4 flex items-center justify-between border-b border-white/5">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400">Terminal Output</span>
+        <section
+            class="lg:w-[550px] flex flex-col bg-slate-100 dark:bg-terminal-dark border-l border-slate-200 dark:border-white/5 transition-colors duration-300">
+            <div
+                class="h-10 bg-slate-50 dark:bg-slate-900/80 px-4 flex items-center justify-between border-b border-slate-200 dark:border-white/5 transition-colors">
+                <span
+                    class="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Terminal
+                    Output</span>
                 <button id="clear-term"
-                    class="text-[10px] text-slate-600 hover:text-slate-400 uppercase font-bold">Clear</button>
+                    class="text-[10px] text-slate-400 hover:text-slate-700 dark:hover:text-slate-400 uppercase font-bold">Clear</button>
             </div>
-            <div class="flex-1 p-6 overflow-auto bg-slate-950/40">
-                <pre id="output" class="mono text-sm leading-7 text-slate-300 whitespace-pre-wrap">
-<span class="text-slate-600 italic opacity-40">System ready. Awaiting instructions...</span></pre>
+            <div class="flex-1 p-6 overflow-auto bg-white/40 dark:bg-slate-950/40">
+                <pre id="output" class="mono text-sm leading-7 text-slate-800 dark:text-slate-300 whitespace-pre-wrap">
+<span class="text-slate-400 dark:text-slate-600 italic opacity-60">System ready. Awaiting instructions...</span></pre>
             </div>
 
-            <div class="h-24 bg-slate-900/30 p-4 border-t border-white/5 flex flex-col justify-between">
+            <div
+                class="h-24 bg-slate-50 dark:bg-slate-900/30 p-4 border-t border-slate-200 dark:border-white/5 flex flex-col justify-between transition-colors">
                 <div
                     class="flex justify-between items-center text-[10px] text-slate-500 font-bold uppercase tracking-widest">
                     <span>Execution Efficiency</span>
-                    <span id="exec-time" class="text-sky-500/80">0ms</span>
+                    <span id="exec-time" class="text-sky-600 dark:text-sky-500/80">0ms</span>
                 </div>
-                <div class="w-full h-1 bg-white/5 rounded-full overflow-hidden">
-                    <div id="prog-bar" class="h-full bg-sky-500/40 w-0 transition-all duration-500"></div>
+                <div class="w-full h-1 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
+                    <div id="prog-bar"
+                        class="h-full bg-sky-500/40 w-0 transition-all duration-500 border-r border-sky-400"></div>
                 </div>
-                <div class="flex justify-between text-[9px] text-slate-600 mono">
+                <div class="flex justify-between text-[9px] text-slate-400 dark:text-slate-600 mono">
                     <span>VIRTUAL_MACHINE: READY</span>
                     <span>CORE: OPTIMIZED_WASM</span>
                 </div>
@@ -299,10 +380,10 @@
 
     <!-- Footer -->
     <footer
-        class="border-t border-white/5 bg-black px-6 py-2 flex justify-between items-center text-[10px] text-slate-600 mono bg-slate-950">
+        class="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-slate-950 px-6 py-2 flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-600 mono transition-colors">
         <div class="flex items-center space-x-6">
             <div class="flex items-center space-x-2">
-                <div class="w-2 h-2 rounded-full bg-green-500/50 shadow-sm shadow-green-500"></div>
+                <div class="w-2 h-2 rounded-full bg-green-500 shadow-sm shadow-green-500"></div>
                 <span class="font-bold">ENGINE: STABLE</span>
             </div>
             <span>LANG: YAARSCRIPT_PRO</span>
@@ -323,15 +404,49 @@
         const statusIndicator = document.getElementById('connection-status');
         const lineColIndicator = document.getElementById('line-col-indicator');
 
-        // Syntax Highlighting Engine
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const darkIcon = document.getElementById('theme-toggle-dark-icon');
+        const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            lightIcon.classList.remove('hidden');
+        } else {
+            document.documentElement.classList.remove('dark');
+            darkIcon.classList.remove('hidden');
+        }
+
+        themeToggleBtn.addEventListener('click', function () {
+            darkIcon.classList.toggle('hidden');
+            lightIcon.classList.toggle('hidden');
+
+            if (localStorage.getItem('color-theme')) {
+                if (localStorage.getItem('color-theme') === 'light') {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                }
+            } else {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            }
+        });
+
         const highlight = (text) => {
             const tokens = [
                 { type: 'comment', regex: /\/\/.*|\/\*[\s\S]*?\*\// },
                 { type: 'string', regex: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/ },
-                { type: 'keyword', regex: /\b(?:if|else|while|return|main|include|const|global|do|switch|break|for|default|case)\b/ },
-                { type: 'type', regex: /\b(?:int|float|double|char|void|bool|string|enum)\b/ },
-                { type: 'function', regex: /\b(?:print)\b/ },
-                { type: 'boolean', regex: /\b(?:true|false)\b/ },
+                { type: 'keyword', regex: /\b(?:agar|warna|jabtak|wapsi|asli_cheez|karo|dekh|mangwao|paki_cheez|sab_ke_liye|bas_kar|dohrao|baaki|phadda)\b/ },
+                { type: 'type', regex: /\b(?:number|float|double|char|void|sach_jhoot|lafz|enum)\b/ },
+                { type: 'function', regex: /\b(?:bolo)\b/ },
+                { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
                 { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
                 { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,]+/ }
             ];
@@ -359,7 +474,6 @@
             return html;
         };
 
-        // Terminal Formatting Engine
         const formatTerminal = (text) => {
             const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
             let escaped = escapeHTML(text);
@@ -384,7 +498,6 @@
             <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
             <span class="text-[10px] font-bold text-green-500 uppercase tracking-widest">Wasm: Online</span>
           `;
-                console.log("YaarScript Engine Online.");
             } catch (e) {
                 statusIndicator.innerHTML = `
             <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
@@ -433,14 +546,13 @@
 
         runBtn.onclick = () => {
             const code = codeArea.value;
-            outputArea.innerHTML = '<span class="text-sky-400 animate-pulse font-bold tracking-widest">>> BUILDING CORE...</span>\n';
+            outputArea.innerHTML = '<span class="text-sky-500 animate-pulse font-bold tracking-widest">>> BUILDING CORE...</span>\n';
             const start = performance.now();
             document.getElementById('prog-bar').style.width = '60%';
 
             setTimeout(() => {
                 try {
                     const result = compile_and_run(code);
-                    // Apply terminal formatting if there are error patterns
                     if (result.includes("Error:") || result.includes("error:")) {
                         outputArea.innerHTML = formatTerminal(result);
                     } else {
@@ -448,7 +560,7 @@
                     }
                     document.getElementById('prog-bar').style.width = '100%';
                 } catch (err) {
-                    outputArea.innerHTML = `<span class="text-red-400 font-bold border-b border-red-400/20 pb-1 block mb-2">BUILD FAILED</span>\n${err}`;
+                    outputArea.innerHTML = `<span class="text-red-500 font-bold border-b border-red-500/20 pb-1 block mb-2">BUILD FAILED</span>\n${err}`;
                     document.getElementById('prog-bar').style.width = '0%';
                 }
                 document.getElementById('exec-time').textContent = `${Math.floor(performance.now() - start)}ms`;
