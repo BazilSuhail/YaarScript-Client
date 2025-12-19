@@ -1,111 +1,106 @@
-# Custom Compiler 🚀
+# YaarScript Pro: The Industrial Urdu Compiler 🇵🇰🚀
 
-A professional, industrial-grade multi-pass compiler written in Rust. This project transforms a high-level C-like language into an optimized **Three-Address Code (TAC)** intermediate representation. It features a robust Pratt parser, a context-sensitive semantic analyzer, and a sophisticated 5-pass IR optimization pipeline.
-
----
-
-## �️ Compiler Architecture
-
-The compiler is organized into a modular pipeline, ensuring high maintainability and clear separation of concerns:
-
-1.  **Lexical Analysis (Lexer)**: Scans source code into a stream of typed tokens with full UTF-8/Unicode support.
-2.  **Syntax Analysis (Parser)**: Implements a **Pratt Parser** to construct a high-fidelity Abstract Syntax Tree (AST).
-3.  **Semantic Analysis**:
-    *   **Scope Analyzer**: Manages symbol tables, handle shadowing, and ensures declaration-before-use.
-    *   **Type Checker**: Enforces strict typing rules and validates operation compatibility.
-4.  **IR Generation**: Translates the validated AST into flat, machine-agnostic **Three-Address Code (TAC)**.
-5.  **IR Optimization**: A persistent optimizer that runs 5 distinct passes (Constant Folding, Propagation, DCE, etc.) until code reachability and efficiency are maximized.
+YaarScript Pro is a professional, industrial-grade multi-pass compiler that brings the warmth of the Urdu language to the power of Rust-based systems programming. It transforms a high-level high-performance language into optimized **Three-Address Code (TAC)**, running natively in the browser via **WebAssembly**.
 
 ---
 
-## ✨ Language Features & Specifications
+## 🏗️ Compiler Architecture
 
-### 🔬 Advanced Type System
-*   **Strongly Typed**: No implicit type coercion (e.g., `int` + `float` is an error).
-*   **Native Types**: `int`, `float`, `double`, `char`, `bool`, `string`, `void`.
-*   **Enumerations**: 
-    *   Declared globally with `enum Name { ... }`.
-    *   Automatically assigned sequential integer values.
-    *   Compatible with `int` for logic and switch statements.
+The YaarScript toolchain is organized into a modular pipeline:
 
-### 🔐 Variable Modifiers
-*   **`const`**: Marks variables as immutable post-initialization, enabling aggressive compile-time optimizations.
-*   **`global`**: Declares variables in the global segment, surviving local scope pruning.
+1.  **Lexical Analysis (Lexer)**: Scans source code into "Yaar-Tokens" with full Unicode/Emoji support.
+2.  **Syntax Analysis (Parser)**: Uses a **Top-Down Operator Precedence (Pratt) Parser** for 12 levels of mathematical expression handling.
+3.  **Semantic Intelligence**:
+    *   **Scope Analyzer**: Manages symbol levels, shadowing, and forward references.
+    *   **Type Checker**: Enforces strict typing without implicit coercion.
+4.  **IR Pipeline**: Generates machine-agnostic **Three-Address Code (TAC)**.
+5.  **Fixed-Point Optimizer**: Runs 5 persistent passes (Constant Folding, DCE, Peephole) until the IR is physically perfect.
+6.  **Wasm Execution Engine**: A high-performance virtual machine running the optimized TAC in your browser.
 
-### 🌐 Modern UTF-8 Support
-Identifiers can include any Unicode character:
-*   Standard: `int count = 0;`
-*   International: `int 变量 = 10;`, `int перем = 5;`
-*   Creative: `float x😒😒 = 3.14;`
+---
+
+## 🎭 The "Yaar" Style Syntax
+
+YaarScript Pro replaces boring standard keywords with intuitive, funny Urdu-style keywords that make coding feel like a conversation.
+
+| High-Level Category | Standard Keyword | Yaar Style | Use Case |
+| :--- | :--- | :--- | :--- |
+| **Entry Point** | `main` | `asli_cheez` | The heart of your program. |
+| **Output** | `print` | `bolo` | Shout it out to the terminal! |
+| **Types** | `int`, `string`, `bool` | `number`, `lafz`, `sach_jhoot` | Defining your data. |
+| **Branching** | `if`, `else` | `agar`, `warna` | Making hard decisions. |
+| **Loops** | `for`, `while` | `dohrao`, `jabtak` | Going in circles. |
+| **Constants** | `const`, `global` | `paki_cheez`, `sab_ke_liye` | State that stays. |
+| **Booleans** | `true`, `false` | `sahi`, `galat` | Trust but verify. |
+| **Control** | `break`, `return` | `bas_kar`, `wapsi` | Stopping or going home. |
+| **Switch** | `switch`, `case` | `dekh`, `phadda` | Handling multiple situations. |
 
 ---
 
 ## 📝 Language Grammar (EBNF)
 
-The full formal grammar used by the parser:
-
-### Program Structure
-```ebnf
-Program          ::= Includes* Declaration* MainDecl?
-Includes         ::= "include" ("<" Identifier ">" | StringLiteral)
-Declaration      ::= VarDecl | FunctionProto | FunctionDecl | EnumDecl
-```
-
 ### Declarations & Types
 ```ebnf
-VarDecl          ::= ("const" | "global")? Type Identifier ("=" Expression)? ";"
-Type             ::= "int" | "float" | "double" | "char" | "bool" | "string" | "void" | Identifier
-FunctionProto    ::= Type Identifier "(" ParamList? ")" ";"
-FunctionDecl     ::= Type Identifier "(" ParamList? ")" Block
-MainDecl         ::= "main" Block
+VarDecl          ::= ("paki_cheez" | "sab_ke_liye")? Type Identifier ("=" Expression)? ";"
+Type             ::= "number" | "float" | "lafz" | "sach_jhoot" | "void" | Identifier
 EnumDecl         ::= "enum" Identifier "{" Identifier ("," Identifier)* "}" ";"
-ParamList        ::= (Type Identifier) ("," Type Identifier)*
+MainDecl         ::= "asli_cheez" "{" Statement* "}"
 ```
 
-### Statements & Control Flow
+### Control Flow
 ```ebnf
-Statement        ::= VarDecl | Block | IfStmt | WhileStmt | DoWhileStmt | ForStmt 
-                   | SwitchStmt | ReturnStmt | BreakStmt | PrintStmt | ExpressionStmt
-Block            ::= "{" Statement* "}"
-IfStmt           ::= "if" "(" Expression ")" Block ("else" Block)?
-WhileStmt        ::= "while" "(" Expression ")" Block
-DoWhileStmt      ::= "do" Block "while" "(" Expression ")" ";"
-ForStmt          ::= "for" "(" (VarDecl | ExpressionStmt | ";") Expression? ";" Expression? ")" Block
-SwitchStmt       ::= "switch" "(" Expression ")" "{" CaseBlock* DefaultBlock? "}"
-CaseBlock        ::= "case" Expression ":" Statement*
-ReturnStmt       ::= "return" Expression? ";"
-PrintStmt        ::= "print" "(" ExpressionList? ")" ";"
+AgarStmt         ::= "agar" "(" Expression ")" Block ("warna" Block)?
+JabtakStmt       ::= "jabtak" "(" Expression ")" Block
+DohraoStmt       ::= "dohrao" "(" (VarDecl | ExpressionStmt | ";") Expression? ";" Expression? ")" Block
+BoloStmt         ::= "bolo" "(" ExpressionList? ")" ";"
 ```
 
-### Main Entry Point
-Every program begins execution at the `main` block. Unlike traditional C, `main` is a keyword-initiated block and does not require a return type or parameter list.
+---
 
-```ebnf
-MainDecl         ::= "main" Block
-```
+## 💻 Comprehensive Example
 
-Example:
 ```cpp
-main {
-    print("Welcome to YaarScript Pro!");
+enum Mausam { Sardi, Garmi, Barish }
+
+paki_cheez number TARGET = 100;
+
+number check_status(number val) {
+    agar (val > TARGET) {
+        wapsi 1;
+    } warna {
+        wapsi 0;
+    }
+}
+
+asli_cheez {
+    bolo("--- YaarScript Pro Mission Control --- \n");
+    
+    number score = 0;
+    dohrao (number i = 0; i < 5; i++) {
+        score = score + 25;
+        bolo("Current Score: ", score, "\n");
+        
+        agar (check_status(score) == 1) {
+            bolo("[!!] Target reached at step ", i, "\n");
+            bas_kar;
+        }
+    }
+    
+    bolo("\nKaam khatam! Final Score: ", score, "\n");
 }
 ```
 
 ---
 
 ## 🎓 Project Achievements
-*   ✅ **Wasm Integration**: Multi-pass compiler pipeline running natively in the browser via WebAssembly.
-*   ✅ **Professional IDE**: Real-time syntax highlighting, line numbering, and runtime performance metrics.
-*   ✅ **Robust Lexer**: 35+ token types with full Unicode/Emoji identification.
-*   ✅ **Pratt Parser**: Efficient 12-level precedence handling.
-*   ✅ **Semantic Suite**: Detection of 15+ scope errors and 17+ type errors.
-*   ✅ **IR Pipeline**: Full TAC generation for all control flow constructs.
-*   ✅ **Fixed-Point Optimizer**: Significant reduction in code density and complexity through 5-pass analysis.
+*   ✅ **Wasm Integration**: Entire compiler pipeline compiled to `wasm32-unknown-unknown`.
+*   ✅ **Professional IDE**: Dark/Light mode, syntax highlighting, and 650px terminal width.
+*   ✅ **Urdu Branding**: Fully localized keyword set for a unique developer experience.
+*   ✅ **Fixed-Point Optimizer**: Significant code density reduction through 5 persistent passes.
 
 ## 🚧 Road Map
-- [x] Full IR Optimization Suite
 - [x] WebAssembly Compiler Backend
+- [x] Professional IDE & Terminal
 - [ ] RISC-V Native Code Generation
 - [ ] Register Allocation (Graph Coloring)
 - [ ] Structs and Pointers support
-- [ ] Standard Library (I/O, String manipulation)
