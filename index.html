@@ -325,32 +325,85 @@
                         <span>1</span>
                     </div>
                     <pre id="highlighting" class="text-slate-900 dark:text-slate-200" aria-hidden="true"></pre>
-                    <textarea id="code" spellcheck="false" wrap="off" autofocus>enum Mausam { Sardi, Garmi, Barish }
+                    <textarea id="code" spellcheck="false" wrap="off" autofocus>/* 
+   YaarScript Pro: Comprehensive Feature Demo
+   This code covers loops, functions, variables, and logic.
+*/
 
+// pakka means constant, sab_ke_liye means global
+pakka sab_ke_liye number TARGET = 100;
 
-number check_status(number val) {
-    agar (val > TARGET) {
-        wapsi 1;
+// qism creates an Enum
+qism Mausam { Garmi, Sardi, Barish };
+
+// Functions are defined with ReturnType Name(Params)
+number calculate_bonus(number level) {
+    agar (level > 5) {
+        wapsi level * 10;
     } warna {
-        wapsi 0;
+        wapsi level * 2;
     }
 }
 
-asli_cheez {
-    bolo("--- YaarScript Pro Mission Control --- \n");
-    
-    number score = 0;
-    dohrao (number i = 0; i < 5; i++) {
-        score = score + 25;
-        bolo("Current Score: ", score, "\n");
-        
-        agar (check_status(score) == 1) {
-            bolo("[!!] Target reached at step ", i, "\n");
-            bas_kar;
+// yaar is the entry point (main function)
+yaar {
+    bolo("--- YaarScript Pro Mission Control ---\n");
+
+    // Variables: number (int), float, lafz (string), faisla (bool)
+    number counter = 0;
+    float gravity = 9.81;
+    lafz mission = "Mars Rover";
+    faisla is_active = sahi; // sahi = true, galat = false
+
+    // 1. dohrao loop (For Loop)
+    bolo("Starting Iteration:\n");
+    dohrao (number i = 1; i <= 5; i++) {
+        counter = counter + (i * 2);
+        bolo("Step ", i, ": Counter is ", counter, "\n");
+
+        // Conditional break
+        agar (counter > 20) {
+            bolo("Threshold crossed, stopping.\n");
+            bas_kar; // bas_kar = break
         }
     }
-    
-    bolo("\nKaam khatam ho gaya! \nFinal Score: ", score, "\n");
+
+    // 2. jabtak loop (While Loop)
+    bolo("\nWaiting for systems...\n");
+    number wait_time = 3;
+    jabtak (wait_time > 0) {
+        bolo("T-minus: ", wait_time, "\n");
+        wait_time = wait_time - 1;
+    }
+
+    // 3. karo-jabtak loop (Do-While Loop)
+    number attempts = 0;
+    karo {
+        attempts = attempts + 1;
+        bolo("Attempt #", attempts, " successful\n");
+    } jabtak (attempts < 2);
+
+    // 4. intekhab (Switch Case)
+    number status_code = 1;
+    bolo("\nSystem Status check: ");
+    intekhab (status_code) {
+        agar_ho 0:
+            bolo("CRITICAL ERROR\n");
+            bas_kar;
+        agar_ho 1:
+            bolo("SYSTEMS NOMINAL\n");
+            bas_kar;
+        aakhir:
+            bolo("UNKNOWN STATE\n");
+    }
+
+    // Function call and constant usage
+    number bonus = calculate_bonus(7);
+    bolo("\nFinal Mission Report:");
+    bolo("\n- Mission Name: ", mission);
+    bolo("\n- Bonus Points: ", bonus);
+    bolo("\n- Global Target: ", TARGET);
+    bolo("\n\nKaam khatam ho gaya! (Execution Finished)\n");
 }</textarea>
                 </div>
             </div>
@@ -457,8 +510,8 @@ asli_cheez {
             const tokens = [
                 { type: 'comment', regex: /\/\/.*|\/\*[\s\S]*?\*\// },
                 { type: 'string', regex: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/ },
-                { type: 'keyword', regex: /\b(?:agar|warna|jabtak|wapsi|asli_cheez|karo|dekh|mangwao|paki_cheez|sab_ke_liye|bas_kar|dohrao|baaki|phadda)\b/ },
-                { type: 'type', regex: /\b(?:number|float|double|char|void|sach_jhoot|lafz|enum)\b/ },
+                { type: 'keyword', regex: /\b(?:agar|warna|jabtak|wapsi|yaar|karo|mangwao|pakka|sab_ke_liye|bas_kar|dohrao|aakhir|agar_ho|intekhab)\b/ },
+                { type: 'type', regex: /\b(?:number|float|double|char|khaali|faisla|lafz|qism)\b/ },
                 { type: 'function', regex: /\b(?:bolo)\b/ },
                 { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
                 { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },

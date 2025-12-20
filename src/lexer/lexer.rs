@@ -16,9 +16,9 @@ impl Lexer {
         keywords.insert("float".to_string(), TokenType::Float);
         keywords.insert("double".to_string(), TokenType::Double);
         keywords.insert("char".to_string(), TokenType::Char);
-        keywords.insert("void".to_string(), TokenType::Void);
-        keywords.insert("sach_jhoot".to_string(), TokenType::Bool);
-        keywords.insert("enum".to_string(), TokenType::Enum);
+        keywords.insert("khaali".to_string(), TokenType::Void);
+        keywords.insert("faisla".to_string(), TokenType::Bool);
+        keywords.insert("qism".to_string(), TokenType::Enum);
         keywords.insert("sahi".to_string(), TokenType::BoolLit);
         keywords.insert("galat".to_string(), TokenType::BoolLit);
         keywords.insert("agar".to_string(), TokenType::If);
@@ -26,17 +26,17 @@ impl Lexer {
         keywords.insert("jabtak".to_string(), TokenType::While);
         keywords.insert("wapsi".to_string(), TokenType::Return);
         keywords.insert("bolo".to_string(), TokenType::Print);
-        keywords.insert("asli_cheez".to_string(), TokenType::Main);
+        keywords.insert("yaar".to_string(), TokenType::Main);
         keywords.insert("lafz".to_string(), TokenType::String);
         keywords.insert("karo".to_string(), TokenType::Do);
-        keywords.insert("dekh".to_string(), TokenType::Switch);
+        keywords.insert("intekhab".to_string(), TokenType::Switch);
         keywords.insert("mangwao".to_string(), TokenType::Include);
-        keywords.insert("paki_cheez".to_string(), TokenType::Const);
+        keywords.insert("pakka".to_string(), TokenType::Const);
         keywords.insert("sab_ke_liye".to_string(), TokenType::Global);
         keywords.insert("bas_kar".to_string(), TokenType::Break);
         keywords.insert("dohrao".to_string(), TokenType::For);
-        keywords.insert("baaki".to_string(), TokenType::Default);
-        keywords.insert("phadda".to_string(), TokenType::Case);
+        keywords.insert("aakhir".to_string(), TokenType::Default);
+        keywords.insert("agar_ho".to_string(), TokenType::Case);
 
         Lexer {
             input: source.chars().collect(),
