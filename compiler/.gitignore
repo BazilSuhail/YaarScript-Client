@@ -1,0 +1,18 @@
+# Build outputs
+/target/
+/pkg/
+**/*.rs.bk
+
+# Environment files
+.env
+
+# OS files
+.DS_Store
+
+# Editor files
+.vscode/
+.idea/
+Cargo.lock
+
+# Ignore all txt files globally
+*.txt
