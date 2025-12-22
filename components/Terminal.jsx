@@ -18,7 +18,7 @@ const Terminal = ({ output, setOutput, isCompiling, execTime, formatTerminal }) 
             </div>
 
             <div className="flex-1 p-6 overflow-auto bg-white/40 dark:bg-slate-950/40">
-                <pre className="mono text-sm leading-7 text-slate-800 dark:text-slate-300 whitespace-pre-wrap">
+                <pre className="text-sm leading-7 text-slate-800 dark:text-slate-300 whitespace-pre-wrap" style={{ fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace' }}>
                     {output ? (
                         <span dangerouslySetInnerHTML={{ __html: formatTerminal(output) }} />
                     ) : (
@@ -43,7 +43,7 @@ const Terminal = ({ output, setOutput, isCompiling, execTime, formatTerminal }) 
                         }`}
                     />
                 </div>
-                <div className="flex justify-between text-[9px] text-slate-400 dark:text-slate-600 mono">
+                <div className="flex justify-between text-[9px] text-slate-400 dark:text-slate-600" style={{ fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace' }}>
                     <span>VIRTUAL_MACHINE: READY</span>
                     <span>CORE: OPTIMIZED_WASM</span>
                 </div>

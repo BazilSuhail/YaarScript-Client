@@ -1,4 +1,5 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Outfit, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 
@@ -12,6 +13,18 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const outfit = Outfit({
+  subsets: ["latin"],
+  weight: ["300", "400", "600"],
+  variable: "--font-outfit",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-jetbrains",
+});
+
 export const metadata = {
   title: "YaarScript Pro | Cloud Compiler",
   description: "Advanced Urdu-inspired programming language toolchain",
@@ -19,14 +32,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html
+      lang="en"
+      className={`${outfit.variable} ${jetbrainsMono.variable}`}
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-sky-500/30`}
       >
         <Navbar />
-        <main className="pt-20">
-          {children}
-        </main>
+        <main className="pt-20">{children}</main>
       </body>
     </html>
   );

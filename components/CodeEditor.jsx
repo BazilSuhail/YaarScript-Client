@@ -24,6 +24,7 @@ const CodeEditor = ({
                     style={{
                         fontSize: '14px',
                         lineHeight: '1.5rem',
+                        fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace',
                     }}
                 >
                     {Array.from({ length: lineCount }).map((_, i) => (
@@ -34,12 +35,13 @@ const CodeEditor = ({
                 {/* Syntax Highlighted Code (background layer) */}
                 <pre
                     ref={highlightRef}
-                    className="absolute top-0 bottom-0 left-12 right-0 m-0 p-6 text-slate-900 dark:text-slate-100 pointer-events-none whitespace-pre overflow-hidden font-mono z-10"
+                    className="absolute top-0 bottom-0 left-12 right-0 m-0 p-6 text-slate-900 dark:text-slate-100 pointer-events-none whitespace-pre overflow-hidden z-10"
                     aria-hidden="true"
                     style={{
                         fontSize: '15px',
                         lineHeight: '1.5rem',
                         tabSize: 4,
+                        fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace',
                     }}
                     dangerouslySetInnerHTML={{ __html: highlightCode(code) + "\n" }}
                 />
@@ -55,13 +57,14 @@ const CodeEditor = ({
                     onKeyUp={updateLineCol}
                     spellCheck="false"
                     wrap="off"
-                    className="absolute top-0 bottom-0 left-12 right-0 m-0 p-6 bg-transparent text-transparent resize-none outline-none overflow-auto whitespace-pre font-mono z-20"
+                    className="absolute top-0 bottom-0 left-12 right-0 m-0 p-6 bg-transparent text-transparent resize-none outline-none overflow-auto whitespace-pre z-20"
                     style={{
                         fontSize: '15px',
                         lineHeight: '1.5rem',
                         tabSize: 4,
-                        caretColor: 'rgb(56, 189, 248)', // sky-500
+                        caretColor: 'rgb(56, 189, 248)',
                         border: 0,
+                        fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace',
                     }}
                 />
             </div>
