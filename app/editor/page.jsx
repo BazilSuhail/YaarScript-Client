@@ -14,12 +14,12 @@ import Terminal from "../../components/Terminal";
 
 const Editor = () => {
     const [code, setCode] = useState(`/* 
-   YaarScript Pro: Comprehensive Feature Demo
+   YaarScript: Comprehensive Feature Demo
    This code covers loops, functions, variables, and logic.
 */
 
 // pakka means constant, sab_ke_liye means global
-pakka sab_ke_liye number TARGET = 100;
+pakka number TARGET = 100;
 
 // qism creates an Enum
 qism Mausam { Garmi, Sardi, Barish };
@@ -173,9 +173,13 @@ yaar {
 
     const handleScroll = (e) => {
         const { scrollTop, scrollLeft } = e.target;
-        if (highlightRef.current) highlightRef.current.scrollTop = scrollTop;
-        if (highlightRef.current) highlightRef.current.scrollLeft = scrollLeft;
-        if (gutterRef.current) gutterRef.current.scrollTop = scrollTop;
+        if (highlightRef.current) {
+            highlightRef.current.scrollTop = scrollTop;
+            highlightRef.current.scrollLeft = scrollLeft;
+        }
+        if (gutterRef.current) {
+            gutterRef.current.scrollTop = scrollTop;
+        }
     };
 
     const handleKeyDown = (e) => {
@@ -186,13 +190,16 @@ yaar {
             const newValue = code.substring(0, start) + "    " + code.substring(end);
             setCode(newValue);
             setTimeout(() => {
-                e.target.selectionStart = e.target.selectionEnd = start + 4;
+                if (textareaRef.current) {
+                    textareaRef.current.selectionStart = textareaRef.current.selectionEnd = start + 4;
+                }
             }, 0);
         }
     };
 
     const updateLineCol = (e) => {
-        const textBefore = e.target.value.substr(0, e.target.selectionStart);
+        if (!e?.target) return;
+        const textBefore = e.target.value.substring(0, e.target.selectionStart);
         const lines = textBefore.split('\n');
         setLineCol({ line: lines.length, col: lines[lines.length - 1].length + 1 });
     };
@@ -306,6 +313,7 @@ yaar {
             </div>
 
             <style jsx global>{`
+                /* Dark mode tokens (default) */
                 .token-comment { color: #475569; font-style: italic; }
                 .token-string { color: #fbbf24; }
                 .token-keyword { color: #38bdf8; font-weight: 500; }
@@ -315,16 +323,17 @@ yaar {
                 .token-number { color: #f87171; }
                 .token-operator { color: #94a3b8; }
 
-                /* Light mode overrides */
-                html:not(.dark) .token-keyword { color: #0284c7; }
+                /* Light mode token overrides */
+                html:not(.dark) .token-keyword { color: #0284c7; font-weight: 500; }
                 html:not(.dark) .token-type { color: #4f46e5; }
                 html:not(.dark) .token-string { color: #b45309; }
                 html:not(.dark) .token-number { color: #dc2626; }
-                html:not(.dark) .token-comment { color: #94a3b8; }
+                html:not(.dark) .token-comment { color: #94a3b8; font-style: italic; }
                 html:not(.dark) .token-function { color: #16a34a; }
                 html:not(.dark) .token-operator { color: #64748b; }
                 html:not(.dark) .token-boolean { color: #be123c; }
 
+                /* Terminal colors */
                 .term-error-header { color: #facc15; font-weight: bold; }
                 .term-error-label { color: #f87171; font-weight: bold; }
                 .term-arrow { color: #22d3ee; }
@@ -335,10 +344,15 @@ yaar {
                 html:not(.dark) .term-arrow { color: #0891b2; }
                 html:not(.dark) .term-error-header { color: #a16207; }
 
-                /* Custom Scrollbar */
+                /* Caret color for light mode */
+                html:not(.dark) textarea {
+                    caret-color: #0f172a !important;
+                }
+
+                /* Scrollbar styling */
                 ::-webkit-scrollbar {
-                    width: 8px;
-                    height: 8px;
+                    width: 10px;
+                    height: 10px;
                 }
 
                 ::-webkit-scrollbar-track {
@@ -347,12 +361,14 @@ yaar {
 
                 .dark ::-webkit-scrollbar-thumb {
                     background: #1e293b;
-                    border-radius: 20px;
+                    border-radius: 5px;
+                    border: 2px solid #0f172a;
                 }
 
                 html:not(.dark) ::-webkit-scrollbar-thumb {
                     background: #e2e8f0;
-                    border-radius: 20px;
+                    border-radius: 5px;
+                    border: 2px solid #ffffff;
                 }
 
                 ::-webkit-scrollbar-thumb:hover {
