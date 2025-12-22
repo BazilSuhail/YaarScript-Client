@@ -5,12 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
     RiPlayFill,
     RiDeleteBin6Line,
-    RiTerminalBoxLine,
     RiCodeSSlashLine,
     RiFileCopyLine,
-    RiCheckLine,
-    RiCpuLine
+    RiCheckLine
 } from "react-icons/ri";
+import CodeEditor from "../../components/CodeEditor";
+import Terminal from "../../components/Terminal";
 
 const Editor = () => {
     const [code, setCode] = useState(`/* 
@@ -281,100 +281,28 @@ yaar {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex flex-1 overflow-hidden lg:flex-row flex-col">
-                {/* Editor Section */}
-                <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
-                    <div className="flex-1 relative font-mono text-[15px] leading-6">
-                        {/* Gutter */}
-                        <div
-                            ref={gutterRef}
-                            className="absolute left-0 top-0 bottom-0 w-12 bg-slate-50/50 dark:bg-slate-950/20 text-slate-400 dark:text-slate-600 text-right pr-3 pt-6 select-none overflow-hidden"
-                        >
-                            {Array.from({ length: lineCount }).map((_, i) => (
-                                <div key={i}>{i + 1}</div>
-                            ))}
-                        </div>
+            <div className="flex-1 flex overflow-hidden lg:flex-row flex-col">
+                <CodeEditor
+                    code={code}
+                    setCode={setCode}
+                    lineCol={lineCol}
+                    highlightCode={highlightCode}
+                    handleScroll={handleScroll}
+                    handleKeyDown={handleKeyDown}
+                    updateLineCol={updateLineCol}
+                    lineCount={lineCount}
+                    textareaRef={textareaRef}
+                    highlightRef={highlightRef}
+                    gutterRef={gutterRef}
+                />
 
-                        {/* Rendering Layers */}
-                        <div className="absolute left-12 right-0 top-0 bottom-0 overflow-hidden">
-                            <pre
-                                ref={highlightRef}
-                                className="absolute inset-0 p-6 m-0 pointer-events-none whitespace-pre overflow-hidden text-slate-900 dark:text-slate-100"
-                                dangerouslySetInnerHTML={{ __html: highlightCode(code) + "\n" }}
-                            />
-                            <textarea
-                                ref={textareaRef}
-                                value={code}
-                                onChange={(e) => setCode(e.target.value)}
-                                onScroll={handleScroll}
-                                onKeyDown={handleKeyDown}
-                                onClick={updateLineCol}
-                                onKeyUp={updateLineCol}
-                                spellCheck="false"
-                                className="absolute inset-0 p-6 bg-transparent text-transparent caret-sky-500 resize-none outline-none overflow-auto whitespace-pre font-mono transition-colors"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Editor Footer */}
-                    <div className="h-8 px-4 flex items-center justify-between bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                        <div className="flex items-center space-x-4">
-                            <span>Line: {lineCol.line}</span>
-                            <span>Col: {lineCol.col}</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <RiCpuLine className="w-3 h-3 text-sky-500" />
-                            <span>Lexical Core v1.0.4</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Terminal Section */}
-                <div className="lg:w-[450px] w-full flex flex-col bg-slate-50 dark:bg-black overflow-hidden border-t lg:border-t-0 dark:border-slate-800">
-                    <div className="flex items-center justify-between px-4 py-3 bg-white dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
-                        <div className="flex items-center space-x-2 text-slate-600 dark:text-slate-400">
-                            <RiTerminalBoxLine className="w-4 h-4" />
-                            <span className="text-[10px] font-black uppercase tracking-widest">Compiler Output</span>
-                        </div>
-                        <button
-                            onClick={() => setOutput("")}
-                            className="text-[9px] font-bold text-slate-400 hover:text-rose-500 uppercase transition-colors"
-                        >
-                            Clear
-                        </button>
-                    </div>
-
-                    <div className="flex-1 p-6 font-mono text-sm overflow-auto text-slate-800 dark:text-slate-300 leading-relaxed selection:bg-sky-500/20 whitespace-pre">
-                        {output ? (
-                            <div
-                                dangerouslySetInnerHTML={{ __html: formatTerminal(output) }}
-                            />
-                        ) : (
-                            <div className="text-slate-400 dark:text-slate-600 italic opacity-40">
-                                System standby. Press "Run Code" to compile...
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Terminal Stats */}
-                    <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 space-y-3">
-                        <div className="flex items-center justify-between text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">
-                            <span>Execution Performance</span>
-                            <span className="text-sky-500">{execTime}</span>
-                        </div>
-                        <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                            <motion.div
-                                initial={{ width: "0%" }}
-                                animate={{ width: isCompiling ? "60%" : (output.length > 0 ? "100%" : "0%") }}
-                                className={`h-full transition-all duration-500 ${isCompiling ? "bg-sky-400 animate-pulse" : "bg-sky-500"}`}
-                            />
-                        </div>
-                        <div className="flex items-center justify-between text-[9px] text-slate-400 font-mono italic">
-                            <span>YAARSCRIPT_VM: ACTIVE</span>
-                            <span>CORE_ARCH: WASM/x64</span>
-                        </div>
-                    </div>
-                </div>
+                <Terminal
+                    output={output}
+                    setOutput={setOutput}
+                    isCompiling={isCompiling}
+                    execTime={execTime}
+                    formatTerminal={formatTerminal}
+                />
             </div>
 
             <style jsx global>{`
@@ -387,12 +315,49 @@ yaar {
                 .token-number { color: #f87171; }
                 .token-operator { color: #94a3b8; }
 
+                /* Light mode overrides */
+                html:not(.dark) .token-keyword { color: #0284c7; }
+                html:not(.dark) .token-type { color: #4f46e5; }
+                html:not(.dark) .token-string { color: #b45309; }
+                html:not(.dark) .token-number { color: #dc2626; }
+                html:not(.dark) .token-comment { color: #94a3b8; }
+                html:not(.dark) .token-function { color: #16a34a; }
+                html:not(.dark) .token-operator { color: #64748b; }
+                html:not(.dark) .token-boolean { color: #be123c; }
+
                 .term-error-header { color: #facc15; font-weight: bold; }
                 .term-error-label { color: #f87171; font-weight: bold; }
                 .term-arrow { color: #22d3ee; }
                 .term-pointer { color: #ef4444; font-weight: bold; }
                 .term-caret { color: #ef4444; font-weight: bold; }
                 .term-gutter { color: #475569; }
+
+                html:not(.dark) .term-arrow { color: #0891b2; }
+                html:not(.dark) .term-error-header { color: #a16207; }
+
+                /* Custom Scrollbar */
+                ::-webkit-scrollbar {
+                    width: 8px;
+                    height: 8px;
+                }
+
+                ::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                .dark ::-webkit-scrollbar-thumb {
+                    background: #1e293b;
+                    border-radius: 20px;
+                }
+
+                html:not(.dark) ::-webkit-scrollbar-thumb {
+                    background: #e2e8f0;
+                    border-radius: 20px;
+                }
+
+                ::-webkit-scrollbar-thumb:hover {
+                    background: #334155;
+                }
             `}</style>
         </div>
     );
