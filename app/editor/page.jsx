@@ -93,7 +93,7 @@ yaar {
     bolo("\\n- Global Target: ", TARGET);
     bolo("\\n\\nKaam khatam ho gaya! (Execution Finished)\\n");
 }`);
-    const [output, setOutput] = useState([]);
+    const [output, setOutput] = useState("");
     const [execTime, setExecTime] = useState("0ms");
     const [isCompiling, setIsCompiling] = useState(false);
     const [wasmStatus, setWasmStatus] = useState("connecting");
@@ -105,15 +105,16 @@ yaar {
     const gutterRef = useRef(null);
     const compilerRef = useRef(null);
 
-    // Wasm Initialization (User mentioned they will handle import, 
-    // but the logic stays here for functional integration)
+    // WASM Init
     useEffect(() => {
         const initWasm = async () => {
             try {
-                // This is where the user's import will be used
-                // if (typeof init === 'function') await init();
+                const mod = await import("../../compiler/pkg/compiler.js");
+                await mod.default();
+                compilerRef.current = mod.compile_and_run;
                 setWasmStatus("online");
             } catch (e) {
+                console.error("WASM Init error:", e);
                 setWasmStatus("offline");
             }
         };
@@ -132,16 +133,43 @@ yaar {
             { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,]+/ }
         ];
 
-        let html = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const bigRegex = new RegExp(tokens.map(t => `(${t.regex.source})`).join('|'), 'g');
 
-        tokens.forEach(token => {
-            html = html.replace(new RegExp(`(${token.regex.source})`, 'g'), (match) => {
-                return `<span class="token-${token.type}">${match}</span>`;
-            });
+        let html = "";
+        let lastIndex = 0;
+
+        text.replace(bigRegex, (match, ...args) => {
+            const offset = args[args.length - 2];
+            html += escapeHTML(text.slice(lastIndex, offset));
+            const tokenIndex = args.slice(0, tokens.length).findIndex(val => val !== undefined);
+            if (tokenIndex !== -1) {
+                html += `<span class="token-${tokens[tokenIndex].type}">${escapeHTML(match)}</span>`;
+            } else {
+                html += escapeHTML(match);
+            }
+            lastIndex = offset + match.length;
+            return match;
         });
 
+        html += escapeHTML(text.slice(lastIndex));
         return html;
     };
+
+    const formatTerminal = (text) => {
+        if (!text) return "";
+        const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        let escaped = escapeHTML(text);
+
+        return escaped
+            .replace(/(\b\w+ Error:)/g, '<span class="term-error-header">$1</span>')
+            .replace(/(error:)/g, '<span class="term-error-label">$1</span>')
+            .replace(/(--&gt; \d+:\d+)/g, '<span class="term-arrow">$1</span>')
+            .replace(/(^|[\r\n])(\s*&gt;\s*)/g, '$1<span class="term-pointer">$2</span>')
+            .replace(/(\s+\^)/g, '<span class="term-caret">$1</span>')
+            .replace(/(\d+\s+\|\s+)/g, '<span class="term-gutter">$1</span>');
+    };
+
 
     const handleScroll = (e) => {
         const { scrollTop, scrollLeft } = e.target;
@@ -170,22 +198,26 @@ yaar {
     };
 
     const runCode = async () => {
+        if (!compilerRef.current) {
+            setOutput(">> Error: Compiler not initialized. Please wait or refresh.");
+            return;
+        }
+
         setIsCompiling(true);
         const start = performance.now();
+        setOutput("");
 
-        // Simulating compilation delay
+        // Artificial slight delay to show "Compiling" state if it's too fast
         setTimeout(() => {
             try {
-                // This would be the compile_and_run(code) from wasm
-                // const result = compile_and_run(code);
-                const fakeResult = ">> Running YaarScript Engine...\n--- YaarScript Pro Mission Control ---\nStarting Iteration:\nStep 1: Counter is 2\nStep 2: Counter is 6\nStep 3: Counter is 12\nStep 4: Counter is 20\nStep 5: Counter is 30\nThreshold crossed, stopping.\n\nWaiting for systems...\nT-minus: 3\nT-minus: 2\nT-minus: 1\nAttempt #1 successful\nAttempt #2 successful\n\nSystem Status check: SYSTEMS NOMINAL\n\nFinal Mission Report:\n- Mission Name: Mars Rover\n- Bonus Points: 70\n- Global Target: 100\n\nKaam khatam ho gaya! (Execution Finished)";
-                setOutput(fakeResult.split('\n'));
+                const result = compilerRef.current(code);
+                setOutput(result || ">> Process finished with return code 0.");
                 setExecTime(`${Math.floor(performance.now() - start)}ms`);
             } catch (err) {
-                setOutput([`BUILD FAILED: ${err.message}`]);
+                setOutput(`BUILD FAILED:\n${err.message || err}`);
             }
             setIsCompiling(false);
-        }, 300);
+        }, 100);
     };
 
     const copyCode = () => {
@@ -207,8 +239,8 @@ yaar {
                     </div>
                     <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
                     <div className={`flex items-center space-x-2 px-3 py-1 rounded-full border transition-all ${wasmStatus === 'online'
-                            ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                            : 'bg-amber-500/5 border-amber-500/20 text-amber-600 dark:text-amber-400'
+                        ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+                        : 'bg-amber-500/5 border-amber-500/20 text-amber-600 dark:text-amber-400'
                         }`}>
                         <div className={`w-1.5 h-1.5 rounded-full ${wasmStatus === 'online' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
                         <span className="text-[10px] font-black uppercase tracking-tighter">Wasm: {wasmStatus}</span>
@@ -224,7 +256,7 @@ yaar {
                         {copied ? <RiCheckLine className="w-5 h-5" /> : <RiFileCopyLine className="w-5 h-5" />}
                     </button>
                     <button
-                        onClick={() => { setCode(""); setOutput([]); }}
+                        onClick={() => { setCode(""); setOutput(""); }}
                         className="p-2 text-slate-500 hover:text-rose-500 hover:bg-rose-500/5 rounded-lg transition-all"
                         title="Clear Editor"
                     >
@@ -234,8 +266,8 @@ yaar {
                         onClick={runCode}
                         disabled={isCompiling}
                         className={`flex items-center space-x-2 px-6 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${isCompiling
-                                ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
-                                : 'bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/20'
+                            ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
+                            : 'bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/20'
                             }`}
                     >
                         {isCompiling ? (
@@ -252,7 +284,7 @@ yaar {
             <div className="flex flex-1 overflow-hidden lg:flex-row flex-col">
                 {/* Editor Section */}
                 <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
-                    <div className="flex-1 relative font-mono text-[14px] leading-[1.6]">
+                    <div className="flex-1 relative font-mono text-[15px] leading-6">
                         {/* Gutter */}
                         <div
                             ref={gutterRef}
@@ -305,7 +337,7 @@ yaar {
                             <span className="text-[10px] font-black uppercase tracking-widest">Compiler Output</span>
                         </div>
                         <button
-                            onClick={() => setOutput([])}
+                            onClick={() => setOutput("")}
                             className="text-[9px] font-bold text-slate-400 hover:text-rose-500 uppercase transition-colors"
                         >
                             Clear
@@ -313,28 +345,15 @@ yaar {
                     </div>
 
                     <div className="flex-1 p-6 font-mono text-sm overflow-auto text-slate-800 dark:text-slate-300 leading-relaxed selection:bg-sky-500/20 whitespace-pre">
-                        <AnimatePresence mode="popLayout">
-                            {output.length > 0 ? (
-                                output.map((line, i) => {
-                                    const isError = line.includes("Error:") || line.includes("FAILED");
-                                    return (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, x: -10 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: i * 0.01 }}
-                                            className={isError ? "text-rose-500" : ""}
-                                        >
-                                            {line}
-                                        </motion.div>
-                                    );
-                                })
-                            ) : (
-                                <div className="text-slate-400 dark:text-slate-600 italic opacity-40">
-                                    System standby. Press "Run Code" to compile...
-                                </div>
-                            )}
-                        </AnimatePresence>
+                        {output ? (
+                            <div
+                                dangerouslySetInnerHTML={{ __html: formatTerminal(output) }}
+                            />
+                        ) : (
+                            <div className="text-slate-400 dark:text-slate-600 italic opacity-40">
+                                System standby. Press "Run Code" to compile...
+                            </div>
+                        )}
                     </div>
 
                     {/* Terminal Stats */}
@@ -359,14 +378,21 @@ yaar {
             </div>
 
             <style jsx global>{`
-                .token-comment { color: #64748b; font-style: italic; }
+                .token-comment { color: #475569; font-style: italic; }
                 .token-string { color: #fbbf24; }
-                .token-keyword { color: #0ea5e9; font-weight: bold; }
+                .token-keyword { color: #38bdf8; font-weight: 500; }
                 .token-type { color: #818cf8; }
-                .token-function { color: #22c55e; }
-                .token-boolean { color: #f43f5e; }
+                .token-function { color: #4ade80; }
+                .token-boolean { color: #fb7185; }
                 .token-number { color: #f87171; }
                 .token-operator { color: #94a3b8; }
+
+                .term-error-header { color: #facc15; font-weight: bold; }
+                .term-error-label { color: #f87171; font-weight: bold; }
+                .term-arrow { color: #22d3ee; }
+                .term-pointer { color: #ef4444; font-weight: bold; }
+                .term-caret { color: #ef4444; font-weight: bold; }
+                .term-gutter { color: #475569; }
             `}</style>
         </div>
     );
