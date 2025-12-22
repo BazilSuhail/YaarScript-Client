@@ -238,51 +238,52 @@ yaar {
     return (
         <div className="flex flex-col h-[calc(100vh-80px)] bg-slate-50 dark:bg-slate-950 overflow-hidden" style={{ fontFamily: 'var(--font-outfit), "Outfit", sans-serif' }}>
             {/* Toolbar */}
-            <div className="flex items-center justify-between px-6 py-3 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
-                <div className="flex items-center space-x-6">
+            <div className="h-14 flex items-center justify-between px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
+                <div className="flex items-center space-x-4">
                     <div className="flex items-center space-x-2">
-                        <RiCodeSSlashLine className="text-sky-500 w-5 h-5" />
-                        <span className="text-xs font-bold uppercase tracking-widest text-slate-800 dark:text-slate-200">main.yr</span>
+                        <div className="w-2 h-2 rounded-full bg-sky-500"></div>
+                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">main.yr</span>
                     </div>
-                    <div className="h-4 w-px bg-slate-200 dark:bg-slate-800" />
-                    <div className={`flex items-center space-x-2 px-3 py-1 rounded-full border transition-all ${wasmStatus === 'online'
-                        ? 'bg-emerald-500/5 border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
-                        : 'bg-amber-500/5 border-amber-500/20 text-amber-600 dark:text-amber-400'
+                    <div className="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
+                    <div className={`flex items-center space-x-2 px-2.5 py-1 rounded-md transition-all ${wasmStatus === 'online'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400'
+                        : 'bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400'
                         }`}>
-                        <div className={`w-1.5 h-1.5 rounded-full ${wasmStatus === 'online' ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-                        <span className="text-[10px] font-black uppercase tracking-tighter">Wasm: {wasmStatus}</span>
+                        <div className={`w-1 h-1 rounded-full ${wasmStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+                        <span className="text-[10px] font-bold uppercase tracking-wider">{wasmStatus}</span>
                     </div>
                 </div>
 
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
                     <button
                         onClick={copyCode}
-                        className="p-2 text-slate-500 hover:text-sky-500 hover:bg-sky-500/5 rounded-lg transition-all"
+                        className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
                         title="Copy Code"
                     >
-                        {copied ? <RiCheckLine className="w-5 h-5" /> : <RiFileCopyLine className="w-5 h-5" />}
+                        {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
                     </button>
                     <button
                         onClick={() => { setCode(""); setOutput(""); }}
-                        className="p-2 text-slate-500 hover:text-rose-500 hover:bg-rose-500/5 rounded-lg transition-all"
-                        title="Clear Editor"
+                        className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-md transition-all"
+                        title="Clear"
                     >
-                        <RiDeleteBin6Line className="w-5 h-5" />
+                        <RiDeleteBin6Line className="w-4 h-4" />
                     </button>
+                    <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
                     <button
                         onClick={runCode}
                         disabled={isCompiling}
-                        className={`flex items-center space-x-2 px-6 py-2 rounded-xl font-bold text-sm transition-all active:scale-95 ${isCompiling
-                            ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
-                            : 'bg-sky-500 hover:bg-sky-400 text-white shadow-lg shadow-sky-500/20'
+                        className={`flex items-center space-x-2 px-5 py-2 rounded-md font-semibold text-sm transition-all ${isCompiling
+                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
+                            : 'bg-sky-500 hover:bg-sky-600 text-white shadow-sm'
                             }`}
                     >
                         {isCompiling ? (
-                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                            <div className="w-4 h-4 border-2 border-slate-300 dark:border-slate-600 border-t-slate-500 dark:border-t-slate-400 rounded-full animate-spin" />
                         ) : (
                             <RiPlayFill className="w-4 h-4" />
                         )}
-                        <span className="uppercase tracking-wide">{isCompiling ? 'Compiling...' : 'Run Code'}</span>
+                        <span>{isCompiling ? 'Running' : 'Run'}</span>
                     </button>
                 </div>
             </div>
@@ -301,13 +302,13 @@ yaar {
                     textareaRef={textareaRef}
                     highlightRef={highlightRef}
                     gutterRef={gutterRef}
+                    execTime={execTime}
+                    isCompiling={isCompiling}
                 />
 
                 <Terminal
                     output={output}
                     setOutput={setOutput}
-                    isCompiling={isCompiling}
-                    execTime={execTime}
                     formatTerminal={formatTerminal}
                 />
             </div>

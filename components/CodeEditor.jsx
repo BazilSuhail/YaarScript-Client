@@ -1,5 +1,5 @@
 import React from "react";
-import { RiCpuLine } from "react-icons/ri";
+import { RiCpuLine, RiTerminalBoxLine } from "react-icons/ri";
 
 const CodeEditor = ({
     code,
@@ -12,7 +12,9 @@ const CodeEditor = ({
     lineCount,
     textareaRef,
     highlightRef,
-    gutterRef
+    gutterRef,
+    execTime,
+    isCompiling
 }) => {
     return (
         <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 overflow-hidden">
@@ -72,12 +74,18 @@ const CodeEditor = ({
             {/* Editor Footer */}
             <div className="h-10 px-4 flex items-center justify-between bg-slate-50 dark:bg-slate-900/80 border-t border-slate-200 dark:border-slate-800 text-[10px] text-slate-500 font-bold uppercase tracking-widest">
                 <div className="flex items-center space-x-4">
-                    <span>Line: {lineCol.line}</span>
-                    <span>Col: {lineCol.col}</span>
+                    <span>Ln {lineCol.line}, Col {lineCol.col}</span>
+                    <div className="w-px h-3 bg-slate-300 dark:bg-slate-700"></div>
+                    <div className="flex items-center space-x-2">
+                        <RiTerminalBoxLine className="w-3 h-3" />
+                        <span className={`${isCompiling ? 'text-sky-500 animate-pulse' : 'text-slate-500'}`}>
+                            {isCompiling ? 'Compiling...' : execTime}
+                        </span>
+                    </div>
                 </div>
-                <div className="flex items-center space-x-2">
-                    <RiCpuLine className="w-3 h-3 text-sky-500" />
-                    <span>Lexical Core v1.0.4</span>
+                <div className="flex items-center space-x-2 text-slate-400">
+                    <RiCpuLine className="w-3 h-3" />
+                    <span>YaarScript v1.0</span>
                 </div>
             </div>
         </div>
