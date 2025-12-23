@@ -17,11 +17,27 @@ const Navbar = () => {
         };
         window.addEventListener("scroll", handleScroll);
 
+        // Initialize theme from localStorage or system preference
+        const initTheme = () => {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+                setIsDark(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                setIsDark(false);
+            }
+        };
+
+        initTheme();
+
+        // Watch for manual theme changes
         const checkTheme = () => {
             setIsDark(document.documentElement.classList.contains("dark"));
         };
 
-        checkTheme();
         const observer = new MutationObserver(checkTheme);
         observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
@@ -32,12 +48,16 @@ const Navbar = () => {
     }, []);
 
     const toggleTheme = () => {
-        if (document.documentElement.classList.contains("dark")) {
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        
+        if (isDarkMode) {
             document.documentElement.classList.remove("dark");
             localStorage.setItem("theme", "light");
+            setIsDark(false);
         } else {
             document.documentElement.classList.add("dark");
             localStorage.setItem("theme", "dark");
+            setIsDark(true);
         }
     };
 
@@ -49,7 +69,7 @@ const Navbar = () => {
 
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled
+            className={`z-50 transition-all duration-300 ${scrolled
                     ? "bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 shadow-sm"
                     : "bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800"
                 }`}
