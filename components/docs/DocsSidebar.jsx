@@ -96,13 +96,13 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
             </button>
 
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:block w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-[calc(100vh-64px)] sticky top-16 overflow-y-auto p-6">
+            <aside className="hidden lg:block w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 min-h-[calc(100vh-64px)] sticky top-16 self-start overflow-y-auto p-6">
                 <SidebarContent />
             </aside>
 
             {/* Mobile Sidebar */}
             {isOpen && (
-                <div className="lg:hidden fixed inset-0 z-40 bg-black/50" onClick={() => setIsOpen(false)}>
+                <div className="lg:hidden fixed inset-0 z-40 bg-black/50 mt-16" onClick={() => setIsOpen(false)}>
                     <aside
                         className="absolute left-0 top-0 bottom-0 w-72 bg-white dark:bg-slate-900 overflow-y-auto p-6"
                         onClick={(e) => e.stopPropagation()}
