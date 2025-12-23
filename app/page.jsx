@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pt-20">
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-6 py-20 lgLpy-5">
+      <section className="max-w-7xl mx-auto px-6 py-20 lg:py-5">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
