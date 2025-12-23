@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased selection:bg-sky-500/30`}
       >
         <Navbar />
-        <main className="pt-20">{children}</main>
+        {children}
       </body>
     </html>
   );

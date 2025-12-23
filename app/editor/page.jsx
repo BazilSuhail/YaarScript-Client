@@ -236,7 +236,7 @@ yaar {
     const lineCount = code.split('\n').length;
 
     return (
-        <div className="flex flex-col h-[calc(100vh-80px)] bg-slate-50 dark:bg-slate-950 overflow-hidden" style={{ fontFamily: 'var(--font-outfit), "Outfit", sans-serif' }}>
+        <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden" style={{ fontFamily: 'var(--font-outfit), "Outfit", sans-serif' }}>
             {/* Toolbar */}
             <div className="h-14 flex items-center justify-between px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
                 <div className="flex items-center space-x-4">
