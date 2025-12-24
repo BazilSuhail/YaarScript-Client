@@ -12,96 +12,175 @@ const DocSection = ({ title, description, content }) => {
             transition={{ duration: 0.3 }}
             className="flex-1 p-8 lg:p-12 max-w-4xl"
         >
-            <div className="prose prose-slate dark:prose-invert max-w-none prose-headings:font-bold prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4 prose-p:text-slate-600 dark:prose-p:text-slate-400 prose-p:leading-relaxed prose-li:text-slate-600 dark:prose-li:text-slate-400 prose-code:text-sky-600 dark:prose-code:text-sky-400 prose-code:bg-slate-100 dark:prose-code:bg-slate-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:font-semibold prose-code:before:content-none prose-code:after:content-none prose-a:text-sky-600 dark:prose-a:text-sky-400 prose-a:no-underline hover:prose-a:underline prose-strong:text-slate-900 dark:prose-strong:text-slate-100">
+            <article className="prose prose-slate dark:prose-invert max-w-none">
                 <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-50 mb-3">
                     {title}
                 </h1>
-                <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 border-b border-slate-200 dark:border-slate-800 pb-6">
+                <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
                     {description}
                 </p>
-                <div className="space-y-6">
+                <div className="doc-content space-y-6">
                     {content}
                 </div>
-            </div>
+            </article>
 
             <style jsx global>{`
-                /* Table styling for docs */
-                .prose table {
+                /* Base prose styling */
+                .doc-content h3 {
+                    font-size: 1.5rem;
+                    font-weight: 700;
+                    color: rgb(15 23 42);
+                    margin-top: 2rem;
+                    margin-bottom: 1rem;
+                }
+
+                .dark .doc-content h3 {
+                    color: rgb(241 245 249);
+                }
+
+                .doc-content p {
+                    color: rgb(71 85 105);
+                    line-height: 1.75;
+                    margin: 1rem 0;
+                }
+
+                .dark .doc-content p {
+                    color: rgb(148 163 184);
+                }
+
+                /* Inline code */
+                .doc-content code {
+                    background: rgb(226 232 240);
+                    color: rgb(14 116 144);
+                    padding: 0.125rem 0.375rem;
+                    border-radius: 0.25rem;
+                    font-size: 0.9em;
+                    font-weight: 600;
+                }
+
+                .dark .doc-content code {
+                    background: rgb(30 41 59);
+                    color: rgb(56 189 248);
+                }
+
+                /* Links */
+                .doc-content a {
+                    color: rgb(14 116 144);
+                    text-decoration: none;
+                    font-weight: 500;
+                }
+
+                .doc-content a:hover {
+                    text-decoration: underline;
+                }
+
+                .dark .doc-content a {
+                    color: rgb(56 189 248);
+                }
+
+                /* Strong text */
+                .doc-content strong {
+                    color: rgb(15 23 42);
+                    font-weight: 600;
+                }
+
+                .dark .doc-content strong {
+                    color: rgb(241 245 249);
+                }
+
+                /* Lists */
+                .doc-content ul {
+                    list-style-type: disc;
+                    padding-left: 1.5rem;
+                    margin: 1rem 0;
+                    color: rgb(71 85 105);
+                }
+
+                .dark .doc-content ul {
+                    color: rgb(148 163 184);
+                }
+
+                .doc-content ol {
+                    list-style-type: decimal;
+                    padding-left: 1.5rem;
+                    margin: 1rem 0;
+                    color: rgb(71 85 105);
+                }
+
+                .dark .doc-content ol {
+                    color: rgb(148 163 184);
+                }
+
+                .doc-content li {
+                    margin: 0.5rem 0;
+                    line-height: 1.75;
+                    color: rgb(71 85 105);
+                }
+
+                .dark .doc-content li {
+                    color: rgb(148 163 184);
+                }
+
+                /* Tables */
+                .doc-content table {
                     width: 100%;
                     border-collapse: collapse;
                     margin: 1.5rem 0;
                     font-size: 0.9rem;
                 }
 
-                .prose thead {
+                .doc-content thead {
                     background: rgb(241 245 249);
                     border-bottom: 2px solid rgb(226 232 240);
                 }
 
-                .dark .prose thead {
+                .dark .doc-content thead {
                     background: rgb(15 23 42);
                     border-bottom: 2px solid rgb(51 65 85);
                 }
 
-                .prose th {
+                .doc-content th {
                     padding: 0.75rem 1rem;
                     text-align: left;
                     font-weight: 600;
                     color: rgb(15 23 42);
                 }
 
-                .dark .prose th {
+                .dark .doc-content th {
                     color: rgb(241 245 249);
                 }
 
-                .prose td {
+                .doc-content td {
                     padding: 0.75rem 1rem;
                     border-bottom: 1px solid rgb(226 232 240);
                     color: rgb(71 85 105);
                 }
 
-                .dark .prose td {
+                .dark .doc-content td {
                     border-bottom: 1px solid rgb(51 65 85);
                     color: rgb(148 163 184);
                 }
 
-                .prose tbody tr:hover {
+                .doc-content tbody tr:hover {
                     background: rgb(248 250 252);
                 }
 
-                .dark .prose tbody tr:hover {
+                .dark .doc-content tbody tr:hover {
                     background: rgb(30 41 59);
                 }
 
-                .prose td code {
+                .doc-content td code {
                     background: rgb(226 232 240);
                     color: rgb(14 116 144);
                     padding: 0.125rem 0.375rem;
                     border-radius: 0.25rem;
                     font-size: 0.875em;
+                    font-weight: 600;
                 }
 
-                .dark .prose td code {
+                .dark .doc-content td code {
                     background: rgb(51 65 85);
                     color: rgb(56 189 248);
-                }
-
-                /* List styling */
-                .prose ul {
-                    list-style-type: disc;
-                    padding-left: 1.5rem;
-                    margin: 1rem 0;
-                }
-
-                .prose ol {
-                    list-style-type: decimal;
-                    padding-left: 1.5rem;
-                    margin: 1rem 0;
-                }
-
-                .prose li {
-                    margin: 0.5rem 0;
-                    line-height: 1.75;
                 }
             `}</style>
         </motion.main>

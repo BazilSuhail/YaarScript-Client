@@ -120,12 +120,12 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
             <div className="relative group my-6">
                 <button
                     onClick={copyCode}
-                    className="absolute top-3 right-3 p-2 bg-slate-700 hover:bg-slate-600 text-slate-300 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
+                    className="absolute top-3 right-3 p-2 bg-slate-600/80 hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-200 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
                     title="Copy code"
                 >
                     {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
                 </button>
-                <pre className="bg-slate-900 dark:bg-slate-950 text-slate-100 p-6 rounded-xl overflow-x-auto border border-slate-800">
+                <pre className="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-6 rounded-xl overflow-x-auto border border-slate-200 dark:border-slate-800">
                     <code 
                         style={{ fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace' }}
                         dangerouslySetInnerHTML={{ __html: highlightCode(code) }}
@@ -134,35 +134,31 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
             </div>
 
             <style jsx global>{`
-                /* Dark mode code tokens (default) */
-                .code-token-comment { color: #64748b; font-style: italic; }
-                .code-token-string { color: #fbbf24; }
-                .code-token-keyword { color: #38bdf8; font-weight: 600; }
-                .code-token-type { color: #a78bfa; }
-                .code-token-function { color: #4ade80; font-weight: 500; }
-                .code-token-boolean { color: #fb7185; font-weight: 500; }
-                .code-token-number { color: #f87171; }
-                .code-token-operator { color: #94a3b8; }
-                
-                /* Bash/Shell specific tokens */
-                .code-token-command { color: #4ade80; font-weight: 600; }
-                .code-token-flag { color: #a78bfa; }
-                
-                /* EBNF specific tokens */
-                .code-token-rule { color: #fbbf24; font-weight: 600; }
+                /* Dark mode code tokens */
+                .dark .code-token-comment { color: #64748b; font-style: italic; }
+                .dark .code-token-string { color: #fbbf24; }
+                .dark .code-token-keyword { color: #38bdf8; font-weight: 600; }
+                .dark .code-token-type { color: #a78bfa; }
+                .dark .code-token-function { color: #4ade80; font-weight: 500; }
+                .dark .code-token-boolean { color: #fb7185; font-weight: 500; }
+                .dark .code-token-number { color: #f87171; }
+                .dark .code-token-operator { color: #94a3b8; }
+                .dark .code-token-command { color: #4ade80; font-weight: 600; }
+                .dark .code-token-flag { color: #a78bfa; }
+                .dark .code-token-rule { color: #fbbf24; font-weight: 600; }
 
-                /* Light mode code token overrides */
-                html:not(.dark) .code-token-comment { color: #64748b; }
-                html:not(.dark) .code-token-string { color: #d97706; }
-                html:not(.dark) .code-token-keyword { color: #0284c7; }
-                html:not(.dark) .code-token-type { color: #7c3aed; }
-                html:not(.dark) .code-token-function { color: #16a34a; }
-                html:not(.dark) .code-token-boolean { color: #be123c; }
-                html:not(.dark) .code-token-number { color: #dc2626; }
-                html:not(.dark) .code-token-operator { color: #475569; }
-                html:not(.dark) .code-token-command { color: #16a34a; }
-                html:not(.dark) .code-token-flag { color: #7c3aed; }
-                html:not(.dark) .code-token-rule { color: #d97706; }
+                /* Light mode code tokens */
+                .code-token-comment { color: #64748b; font-style: italic; }
+                .code-token-string { color: #b45309; }
+                .code-token-keyword { color: #0369a1; font-weight: 600; }
+                .code-token-type { color: #7c3aed; }
+                .code-token-function { color: #15803d; font-weight: 500; }
+                .code-token-boolean { color: #be123c; font-weight: 500; }
+                .code-token-number { color: #dc2626; }
+                .code-token-operator { color: #475569; }
+                .code-token-command { color: #15803d; font-weight: 600; }
+                .code-token-flag { color: #7c3aed; }
+                .code-token-rule { color: #b45309; font-weight: 600; }
             `}</style>
         </>
     );
