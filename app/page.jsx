@@ -41,7 +41,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pt-20">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pt-20">
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-6 py-20 lg:py-5">
         <motion.div
@@ -57,7 +57,7 @@ export default function Home() {
           
           <h1 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-slate-50 mb-6 leading-tight">
             Write Code in Your
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600">
+            <span className="block text-transparent bg-clip-text bg-linear-to-r from-sky-500 to-blue-600">
               Own Language
             </span>
           </h1>
@@ -202,7 +202,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-sky-500 to-blue-600">
+      <section className="py-20 bg-linear-to-r from-sky-500 to-blue-600">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
             Ready to Start Coding?

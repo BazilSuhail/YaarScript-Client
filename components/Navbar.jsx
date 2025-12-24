@@ -78,7 +78,7 @@ const Navbar = () => {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-3 group">
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 dark:from-sky-500 dark:to-sky-700 group-hover:scale-110 transition-transform duration-300"></div>
+                        <div className="w-9 h-9 rounded-full bg-linear-to-br from-sky-400 to-sky-600 dark:from-sky-500 dark:to-sky-700 group-hover:scale-110 transition-transform duration-300"></div>
                         <div>
                             <h1 className="text-lg font-bold text-slate-900 dark:text-slate-50 leading-none">
                                 YaarScript

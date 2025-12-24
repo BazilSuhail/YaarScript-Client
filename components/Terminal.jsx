@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const Terminal = ({ output, setOutput, formatTerminal }) => {
     return (
-        <div className="lg:w-[500px] w-full flex flex-col bg-slate-50 dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="lg:w-125 w-full flex flex-col bg-slate-50 dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 overflow-hidden">
             <div className="h-10 px-4 flex items-center justify-between bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                     Output
