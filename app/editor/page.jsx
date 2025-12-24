@@ -109,7 +109,7 @@ yaar {
     useEffect(() => {
         const initWasm = async () => {
             try {
-                const mod = await import("../../compiler/pkg/compiler.js");
+                const mod = await import("@/pkg/compiler.js");
                 await mod.default();
                 compilerRef.current = mod.compile_and_run;
                 setWasmStatus("online");
