@@ -9,8 +9,8 @@ import {
     RiFileCopyLine,
     RiCheckLine
 } from "react-icons/ri";
-import CodeEditor from "../../components/CodeEditor";
-import Terminal from "../../components/Terminal";
+import CodeEditor from "../../components/editor/CodeEditor";
+import Terminal from "../../components/editor/Terminal";
 
 const Editor = () => {
     const [code, setCode] = useState(`/* 
