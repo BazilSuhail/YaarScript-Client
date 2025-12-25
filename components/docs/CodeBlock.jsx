@@ -117,15 +117,15 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
 
     return (
         <>
-            <div className="relative  group my-6">
+            <div className="relative group my-6 -mx-4 sm:mx-0">
                 <button
                     onClick={copyCode}
-                    className="absolute top-3 right-3 p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
+                    className="absolute top-2 right-2 sm:top-3 sm:right-3 p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
                     title="Copy code"
                 >
                     {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
                 </button>
-                <pre className="text-slate-900 dark:text-slate-100 p-6 rounded-xl overflow-x-auto border-2 bg-gray-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 ">
+                <pre className="text-slate-900 dark:text-slate-100 p-4 sm:p-6 rounded-xl overflow-x-auto border-2 bg-gray-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 text-xs sm:text-sm">
                     <div 
                         style={{ fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace' }}
                         dangerouslySetInnerHTML={{ __html: highlightCode(code) }}

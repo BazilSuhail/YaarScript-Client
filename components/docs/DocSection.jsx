@@ -10,13 +10,13 @@ const DocSection = ({ title, description, content }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="flex-1 p-8 lg:p-12 max-w-4xl"
+            className="flex-1 w-full min-w-0 p-4 sm:p-6 md:p-8 lg:p-12 max-w-4xl mx-auto"
         >
             <article className="prose prose-slate dark:prose-invert max-w-none">
-                <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-50 mb-3">
+                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-3 wrap-break-words">
                     {title}
                 </h1>
-                <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
+                <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
                     {description}
                 </p>
                 <div className="doc-content space-y-6">
@@ -27,11 +27,17 @@ const DocSection = ({ title, description, content }) => {
             <style jsx global>{`
                 /* Base prose styling */
                 .doc-content h3 {
-                    font-size: 1.5rem;
+                    font-size: 1.25rem;
                     font-weight: 700;
                     color: rgb(15 23 42);
                     margin-top: 2rem;
                     margin-bottom: 1rem;
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content h3 {
+                        font-size: 1.5rem;
+                    }
                 }
 
                 .dark .doc-content h3 {
@@ -54,8 +60,15 @@ const DocSection = ({ title, description, content }) => {
                     color: rgb(14 116 144);
                     padding: 0.125rem 0.375rem;
                     border-radius: 0.25rem;
-                    font-size: 0.9em;
+                    font-size: 0.875em;
                     font-weight: 600;
+                    word-break: break-word;
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content code {
+                        font-size: 0.9em;
+                    }
                 }
 
                 .dark .doc-content code {
@@ -68,6 +81,7 @@ const DocSection = ({ title, description, content }) => {
                     color: rgb(14 116 144);
                     text-decoration: none;
                     font-weight: 500;
+                    word-break: break-word;
                 }
 
                 .doc-content a:hover {
@@ -91,9 +105,15 @@ const DocSection = ({ title, description, content }) => {
                 /* Lists */
                 .doc-content ul {
                     list-style-type: disc;
-                    padding-left: 1.5rem;
+                    padding-left: 1.25rem;
                     margin: 1rem 0;
                     color: rgb(71 85 105);
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content ul {
+                        padding-left: 1.5rem;
+                    }
                 }
 
                 .dark .doc-content ul {
@@ -102,9 +122,15 @@ const DocSection = ({ title, description, content }) => {
 
                 .doc-content ol {
                     list-style-type: decimal;
-                    padding-left: 1.5rem;
+                    padding-left: 1.25rem;
                     margin: 1rem 0;
                     color: rgb(71 85 105);
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content ol {
+                        padding-left: 1.5rem;
+                    }
                 }
 
                 .dark .doc-content ol {
@@ -126,7 +152,22 @@ const DocSection = ({ title, description, content }) => {
                     width: 100%;
                     border-collapse: collapse;
                     margin: 1.5rem 0;
-                    font-size: 0.9rem;
+                    font-size: 0.8rem;
+                    display: block;
+                    overflow-x: auto;
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content table {
+                        font-size: 0.875rem;
+                        display: table;
+                    }
+                }
+
+                @media (min-width: 768px) {
+                    .doc-content table {
+                        font-size: 0.9rem;
+                    }
                 }
 
                 .doc-content thead {
@@ -140,10 +181,17 @@ const DocSection = ({ title, description, content }) => {
                 }
 
                 .doc-content th {
-                    padding: 0.75rem 1rem;
+                    padding: 0.5rem 0.75rem;
                     text-align: left;
                     font-weight: 600;
                     color: rgb(15 23 42);
+                    white-space: nowrap;
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content th {
+                        padding: 0.75rem 1rem;
+                    }
                 }
 
                 .dark .doc-content th {
@@ -151,9 +199,15 @@ const DocSection = ({ title, description, content }) => {
                 }
 
                 .doc-content td {
-                    padding: 0.75rem 1rem;
+                    padding: 0.5rem 0.75rem;
                     border-bottom: 1px solid rgb(226 232 240);
                     color: rgb(71 85 105);
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content td {
+                        padding: 0.75rem 1rem;
+                    }
                 }
 
                 .dark .doc-content td {
@@ -174,8 +228,14 @@ const DocSection = ({ title, description, content }) => {
                     color: rgb(14 116 144);
                     padding: 0.125rem 0.375rem;
                     border-radius: 0.25rem;
-                    font-size: 0.875em;
+                    font-size: 0.8em;
                     font-weight: 600;
+                }
+
+                @media (min-width: 640px) {
+                    .doc-content td code {
+                        font-size: 0.875em;
+                    }
                 }
 
                 .dark .doc-content td code {

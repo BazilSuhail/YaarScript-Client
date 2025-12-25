@@ -81,7 +81,7 @@ faisla active = sahi;`
   ];
 
   return (
-    <main ref={containerRef} className="min-h-screen relative bg-gradient-to-b from-slate-50 to-slate-300 dark:from-slate-950 dark:to-slate-900">
+    <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-50 to-slate-300 dark:from-slate-950 dark:to-slate-900">
       {/* RippleGrid Background - Fixed positioning with z-0 */}
       
       <div className="fixed inset-0 w-full h-full overflow-hidden z-0">

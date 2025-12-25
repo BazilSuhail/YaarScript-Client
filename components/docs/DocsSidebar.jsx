@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { RiCloseLine, RiMenuLine, RiArrowRightSLine } from "react-icons/ri";
+import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiCodeSSlashLine, RiBookOpenLine } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
 
 const DocsSidebar = ({ activeSection, setActiveSection }) => {
@@ -53,79 +53,118 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
     ];
 
     const SidebarContent = () => (
-        <nav className="space-y-8">
-            {navItems.map((section, idx) => (
-                <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.05 }}
-                >
-                    <h3 className="text-[11px] font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-3 px-2">
-                        {section.category}
-                    </h3>
-                    <ul className="space-y-0.5">
-                        {section.items.map((item) => {
-                            const isActive = activeSection === item.id;
-                            return (
-                                <li key={item.id}>
-                                    <button
-                                        onClick={() => {
-                                            setActiveSection(item.id);
-                                            setIsOpen(false);
-                                        }}
-                                        className={`
-                                            w-full text-left px-3 py-2.5 rounded-xl text-sm font-medium 
-                                            transition-all duration-200 flex items-center justify-between group
-                                            relative overflow-hidden
-                                            ${isActive
-                                                ? "text-sky-600 dark:text-sky-400"
-                                                : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200"
-                                            }
-                                        `}
-                                    >
-                                        {/* Active background with gradient */}
-                                        {isActive && (
-                                            <motion.div
-                                                layoutId="activeSection"
-                                                className="absolute inset-0 bg-gradient-to-r from-sky-50 to-blue-50 dark:from-sky-950/30 dark:to-blue-950/20 rounded-xl"
-                                                transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                                            />
-                                        )}
-                                        
-                                        {/* Hover background */}
-                                        {!isActive && (
-                                            <div className="absolute inset-0 bg-slate-50 dark:bg-slate-800/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                                        )}
+        <>
+            {/* Language Header */}
+            <div className="mb-8">
+                <div className="relative flex overflow-hidden rounded-xl bg-linear-to-br from-sky-500 to-blue-500 py-2 px-4 shadow-lg">
+                    <div className="flex w-full items-center justify-between gap-2">
+                        <div className="flex items-center gap-1.5  border-t border-white/20">
+                            <div className="p-2 bg-white/20 rounded-lg">
+                                <RiBookOpenLine className="w-4 h-4 text-white" />
+                            </div>
+                            <p className="text-md text-white/90 font-medium">
+                                Documentations
+                            </p>
+                        </div>
+                    </div>
 
-                                        <span className="relative z-10 flex items-center gap-2">
+
+                </div>
+
+            </div>
+
+            {/* Navigation */}
+            <nav className="space-y-6">
+                {navItems.map((section, idx) => (
+                    <motion.div
+                        key={idx}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                    >
+                        <div className="relative mb-3 px-3">
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-linear-to-b from-sky-500 to-blue-400 dark:from-sky-400 dark:to-blue-500 rounded-full"></div>
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 pl-4">
+                                {section.category}
+                            </h3>
+                        </div>
+                        <ul className="space-y-1">
+                            {section.items.map((item) => {
+                                const isActive = activeSection === item.id;
+                                return (
+                                    <li key={item.id}>
+                                        <button
+                                            onClick={() => {
+                                                setActiveSection(item.id);
+                                                setIsOpen(false);
+                                            }}
+                                            className={`
+                                                w-full text-left px-4 py-3 rounded-xl text-sm font-semibold
+                                                transition-all duration-200 flex items-center justify-between group
+                                                relative overflow-hidden
+                                                ${isActive
+                                                    ? "text-white dark:text-white shadow-lg"
+                                                    : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                                                }
+                                            `}
+                                        >
+                                            {/* Active background with linear */}
                                             {isActive && (
-                                                <motion.span
-                                                    initial={{ scale: 0 }}
-                                                    animate={{ scale: 1 }}
-                                                    className="w-1.5 h-1.5 rounded-full bg-sky-500 dark:bg-sky-400"
+                                                <motion.div
+                                                    layoutId="activeSection"
+                                                    className="absolute inset-0 bg-linear-to-r from-sky-500 to-sky-600 dark:from-sky-600 dark:via-blue-700 dark:to-sky-700 rounded-xl"
+                                                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                                 />
                                             )}
-                                            {item.label}
-                                        </span>
-                                        
-                                        {isActive && (
+
+                                            {/* Hover background */}
+                                            {!isActive && (
+                                                <>
+                                                    <div className="absolute inset-0 bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-800/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-sky-500 to-blue-400 dark:from-sky-400 dark:to-blue-500 rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+                                                </>
+                                            )}
+
+                                            <span className="relative z-10 flex items-center gap-3">
+                                                {isActive && (
+                                                    <motion.span
+                                                        initial={{ scale: 0, rotate: -180 }}
+                                                        animate={{ scale: 1, rotate: 0 }}
+                                                        className="w-1.5 h-1.5 rounded-full bg-white shadow-lg"
+                                                    />
+                                                )}
+                                                <span className={isActive ? "" : "group-hover:translate-x-0.5 transition-transform duration-200"}>
+                                                    {item.label}
+                                                </span>
+                                            </span>
+
                                             <motion.div
-                                                initial={{ x: -5, opacity: 0 }}
-                                                animate={{ x: 0, opacity: 1 }}
                                                 className="relative z-10"
+                                                animate={{
+                                                    x: isActive ? 0 : -5,
+                                                    opacity: isActive ? 1 : 0
+                                                }}
+                                                transition={{ duration: 0.2 }}
                                             >
-                                                <RiArrowRightSLine className="w-4 h-4" />
+                                                <RiArrowRightSLine className="w-5 h-5" />
                                             </motion.div>
-                                        )}
-                                    </button>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </motion.div>
-            ))}
-        </nav>
+                                        </button>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </motion.div>
+                ))}
+            </nav>
+
+            {/* Bottom Decorative Element */}
+            <div className="mt-12 px-3">
+                <div className="h-px bg-linear-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"></div>
+                <p className="text-center text-xs text-slate-400 dark:text-slate-600 mt-4 font-medium">
+                    v1.0.0 Pro
+                </p>
+            </div>
+        </>
     );
 
     return (
@@ -135,7 +174,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden fixed bottom-6 right-6 z-50 p-4 bg-linear-to-br from-sky-500 to-blue-600 text-white rounded-2xl shadow-lg shadow-sky-500/30"
+                className="lg:hidden fixed bottom-6 right-6 z-50 p-4 bg-linear-to-br from-sky-500  to-sky-600 text-white rounded-2xl shadow-2xl shadow-sky-500/40"
             >
                 <AnimatePresence mode="wait">
                     {isOpen ? (
@@ -163,8 +202,8 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
             </motion.button>
 
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:block w-72 border-r border-slate-100 dark:border-slate-800/50 bg-white/50 dark:bg-slate-900/50 backdrop-blur-xl min-h-screen sticky top-20 self-start overflow-y-auto">
-                <div className="p-8 pt-12">
+            <aside className="hidden lg:block w-80 border-r border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl fixed h-screen self-start overflow-y-auto shadow-xl">
+                <div className="p-6 pb-20">
                     <SidebarContent />
                 </div>
             </aside>
@@ -178,7 +217,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="lg:hidden fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm mt-16"
+                            className="lg:hidden fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-md"
                             onClick={() => setIsOpen(false)}
                         />
                         <motion.aside
@@ -186,10 +225,10 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             animate={{ x: 0 }}
                             exit={{ x: -300 }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800 overflow-y-auto shadow-2xl"
+                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 max-w-[85vw] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800 overflow-y-auto shadow-2xl"
                             onClick={(e) => e.stopPropagation()}
                         >
-                            <div className="p-8">
+                            <div className="p-6 pb-24">
                                 <SidebarContent />
                             </div>
                         </motion.aside>
