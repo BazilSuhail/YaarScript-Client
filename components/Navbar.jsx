@@ -116,7 +116,7 @@ const Navbar = () => {
                         </button>
 
                         <Link
-                            href="https://github.com"
+                            href="https://github.com/BazilSuhail/YaarScript-Client/"
                             target="_blank"
                             className="hidden lg:flex items-center space-x-2 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200 dark:border-slate-700 rounded-lg hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-200"
                         >
