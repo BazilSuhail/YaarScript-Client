@@ -125,7 +125,7 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
                 >
                     {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
                 </button>
-                <pre className="text-slate-900 dark:text-slate-100 p-6 rounded-xl overflow-x-auto border dark:bg-slate-700 border-slate-200 dark:border-slate-800 ">
+                <pre className="text-slate-900 dark:text-slate-100 p-6 rounded-xl overflow-x-auto border-2 bg-gray-100 dark:bg-slate-900 border-slate-300 dark:border-slate-800 ">
                     <div 
                         style={{ fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace' }}
                         dangerouslySetInnerHTML={{ __html: highlightCode(code) }}

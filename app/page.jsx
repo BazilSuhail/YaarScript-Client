@@ -81,24 +81,24 @@ faisla active = sahi;`
   ];
 
   return (
-    <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+    <main ref={containerRef} className="min-h-screen relative bg-gradient-to-b from-slate-50 to-slate-300 dark:from-slate-950 dark:to-slate-900">
       {/* RippleGrid Background - Fixed positioning with z-0 */}
-      <div className="fixed opacity-30 inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
-        {/* Replace this comment with your actual RippleGrid component */}
-         <RippleGrid
-          enableRainbow={true}
-          gridColor="#ffffff"
-          rippleIntensity={0.03}
-          gridSize={35}
-          gridThickness={15}
-          mouseInteraction={true}
-          mouseInteractionRadius={1.5}
-          opacity={0.8} 
-        /> 
-      </div>
       
+      <div className="fixed inset-0 w-full h-full overflow-hidden z-0">
+  <RippleGrid
+    enableRainbow={true}
+    gridColor="#ffffff"
+    rippleIntensity={0.03}
+    gridSize={35}
+    gridThickness={15}
+    mouseInteraction={true}
+    mouseInteractionRadius={1.5}
+    opacity={0.8} 
+  />
+</div>
+
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
+      <section className="relative min-h-screen pt-16 flex items-center justify-center overflow-hidden z-10">
         <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -112,7 +112,7 @@ faisla active = sahi;`
             
             <h1 className="text-6xl md:text-7xl font-black text-slate-900 dark:text-slate-50 mb-8 leading-tight">
               <span className="text-6xl md:text-[110px]">Code in Your</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600">
+              <span className="block text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-blue-500 to-indigo-600">
                 Language
               </span>
             </h1>
@@ -124,7 +124,7 @@ faisla active = sahi;`
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
               <Link
                 href="/editor"
-                className="group inline-flex items-center justify-center space-x-3 px-10 py-5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold rounded-2xl shadow-2xl shadow-sky-500/30 transition-all hover:scale-105"
+                className="group inline-flex items-center justify-center space-x-3 px-10 py-5 bg-linear-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold rounded-2xl shadow-2xl shadow-sky-500/30 transition-all hover:scale-105"
               >
                 <RiRocket2Line className="w-6 h-6 group-hover:rotate-12 transition-transform" />
                 <span className="text-lg">Launch Playground</span>
@@ -146,7 +146,7 @@ faisla active = sahi;`
               className="max-w-2xl mx-auto mt-12"
             >
               <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-sky-500 to-blue-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition"></div>
+                <div className="absolute -inset-1 bg-linear-to-r from-sky-500 to-blue-600 rounded-3xl blur opacity-25 group-hover:opacity-50 transition"></div>
                 <div className="relative bg-slate-900 dark:bg-slate-950 rounded-2xl shadow-2xl overflow-hidden border border-slate-800">
                   <div className="bg-slate-800 dark:bg-slate-900 px-6 py-4 flex items-center justify-between border-b border-slate-700">
                     <div className="flex space-x-2">

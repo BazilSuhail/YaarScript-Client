@@ -80,7 +80,7 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="fixed top-4 left-1/2 -translate-x-1/2 z-[999] w-[90%] max-w-4xl"
         >
-            <div className="backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border-2 border-slate-200/30 dark:border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/5 dark:shadow-slate-900/30">
+            <div className="backdrop-blur-[2px] dark:backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border-2 border-slate-500/30 dark:border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/5 dark:shadow-slate-900/30">
                 <div className="flex justify-between items-center px-6 py-3">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 group">
