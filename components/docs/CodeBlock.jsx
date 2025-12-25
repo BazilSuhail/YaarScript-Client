@@ -117,16 +117,16 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
 
     return (
         <>
-            <div className="relative group my-6">
+            <div className="relative  group my-6">
                 <button
                     onClick={copyCode}
-                    className="absolute top-3 right-3 p-2 bg-slate-600/80 hover:bg-slate-500 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-200 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
+                    className="absolute top-3 right-3 p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
                     title="Copy code"
                 >
                     {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
                 </button>
-                <pre className="bg-slate-100 dark:bg-slate-900 text-slate-900 dark:text-slate-100 p-6 rounded-xl overflow-x-auto border border-slate-200 dark:border-slate-800">
-                    <code 
+                <pre className="text-slate-900 dark:text-slate-100 p-6 rounded-xl overflow-x-auto border dark:bg-slate-700 border-slate-200 dark:border-slate-800 ">
+                    <div 
                         style={{ fontFamily: 'var(--font-jetbrains), "JetBrains Mono", monospace' }}
                         dangerouslySetInnerHTML={{ __html: highlightCode(code) }}
                     />
@@ -134,6 +134,21 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
             </div>
 
             <style jsx global>{`
+                /* Remove any background colors from tokens */
+                .code-token-comment,
+                .code-token-string,
+                .code-token-keyword,
+                .code-token-type,
+                .code-token-function,
+                .code-token-boolean,
+                .code-token-number,
+                .code-token-operator,
+                .code-token-command,
+                .code-token-flag,
+                .code-token-rule {
+                    background: transparent !important;
+                }
+
                 /* Dark mode code tokens */
                 .dark .code-token-comment { color: #64748b; font-style: italic; }
                 .dark .code-token-string { color: #fbbf24; }

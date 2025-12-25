@@ -12,7 +12,7 @@ const DocsContent = ({ activeSection }) => {
             content: (
                 <>
                     <p>YaarScript Pro is a professional, industrial-grade multi-pass compiler that brings the warmth of the Urdu language to modern programming. It compiles to optimized Three-Address Code (TAC) and runs natively in the browser via WebAssembly.</p>
-                    
+
                     <h3>Key Features</h3>
                     <ul>
                         <li>🚀 <strong>WebAssembly Powered</strong> - Entire compiler compiled to wasm32-unknown-unknown</li>
@@ -46,13 +46,25 @@ const DocsContent = ({ activeSection }) => {
                         <li><strong>Node.js</strong> - For running the development server</li>
                     </ul>
 
-                    <h3>Build from Source</h3>
-                    <CodeBlock code={`# Clone the repository
+                    <h3>Step 1: Build the WASM Compiler</h3>
+                    <p>First, you need to build the YaarScript compiler to WebAssembly:</p>
+                    <CodeBlock code={`# Clone the compiler repository (wasm-compiler branch)
+git clone -b wasm-compiler https://github.com/YourUsername/YaarScript-Compiler.git
+cd YaarScript-Compiler
+
+# Build the WASM package
+wasm-pack build --target web
+
+# This generates a 'pkg' folder with the compiled WASM files`} language="bash" />
+
+                    <h3>Step 2: Setup the Web Interface</h3>
+                    <p>Now clone and setup the web interface:</p>
+                    <CodeBlock code={`# Clone the web client repository
 git clone https://github.com/BazilSuhail/YaarScript-Client.git
 cd YaarScript-Client
 
-# Build WebAssembly package
-wasm-pack build --target web
+# Copy the compiled WASM package
+# Copy the 'pkg' folder from compiler to the client root directory
 
 # Install dependencies
 npm install
@@ -60,8 +72,25 @@ npm install
 # Run development server
 npm run dev`} language="bash" />
 
+                    <h3>Directory Structure</h3>
+                    <CodeBlock code={`YaarScript-Client/
+├── pkg/                    # WASM compiled files (from compiler)
+    ├── compiler.js
+    ├── compiler_bg.wasm
+    └── ...
+├── app/
+├── components/
+└── ...`} language="text" />
+
                     <h3>Online Playground</h3>
                     <p>No installation needed! Use our <a href="/editor">online playground</a> to start coding immediately.</p>
+
+                    <h3>Troubleshooting</h3>
+                    <ul>
+                        <li>Make sure the <code>pkg</code> folder is in the root of YaarScript-Client</li>
+                        <li>If WASM fails to load, check browser console for errors</li>
+                        <li>Ensure you're using a modern browser with WebAssembly support</li>
+                    </ul>
                 </>
             )
         },
