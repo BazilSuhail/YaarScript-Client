@@ -2,10 +2,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
+import { RiHome4Line, RiBookReadLine, RiSunLine, RiMoonLine } from "react-icons/ri";
+import Link from "next/link";
+
 import {
     RiPlayFill,
     RiDeleteBin6Line,
-    RiCodeSSlashLine,
     RiFileCopyLine,
     RiCheckLine
 } from "react-icons/ri";
@@ -13,6 +16,7 @@ import CodeEditor from "../../components/editor/CodeEditor";
 import Terminal from "../../components/editor/Terminal";
 
 const Editor = () => {
+    const [isDark, setIsDark] = useState(false);
     const [code, setCode] = useState(`/* 
    YaarScript: Comprehensive Feature Demo
    This code covers loops, functions, variables, and logic.
@@ -120,6 +124,20 @@ yaar {
         };
         initWasm();
     }, []);
+
+    const toggleTheme = () => {
+        const isDarkMode = document.documentElement.classList.contains("dark");
+        if (isDarkMode) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            setIsDark(false);
+        } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            setIsDark(true);
+        }
+    };
+
 
     const highlightCode = (text) => {
         const tokens = [
@@ -238,55 +256,90 @@ yaar {
     return (
         <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden" style={{ fontFamily: 'var(--font-outfit), "Outfit", sans-serif' }}>
             {/* Toolbar */}
-            <div className="h-14 flex items-center justify-between px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
-                <div className="flex items-center space-x-4">
-                    <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 rounded-full bg-sky-500"></div>
-                        <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">main.yr</span>
-                    </div>
-                    <div className="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
-                    <div className={`flex items-center space-x-2 px-2.5 py-1 rounded-md transition-all ${wasmStatus === 'online'
-                        ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400'
-                        : 'bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400'
-                        }`}>
-                        <div className={`w-1 h-1 rounded-full ${wasmStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
-                        <span className="text-[10px] font-bold uppercase tracking-wider">{wasmStatus}</span>
-                    </div>
-                </div>
+          <div className="h-14 flex items-center justify-between px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
+    {/* Left Side: Navigation & File Info */}
+    <div className="flex items-center space-x-4">
+        <div className="flex items-center space-x-1 mr-2">
+            <Link 
+                href="/" 
+                className="p-2 text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+                title="Go Home"
+            >
+                <RiHome4Line className="w-5 h-5" />
+            </Link>
+            <Link 
+                href="/docs" 
+                className="p-2 text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+                title="Documentation"
+            >
+                <RiBookReadLine className="w-5 h-5" />
+            </Link>
+        </div>
 
-                <div className="flex items-center space-x-2">
-                    <button
-                        onClick={copyCode}
-                        className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
-                        title="Copy Code"
-                    >
-                        {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
-                    </button>
-                    <button
-                        onClick={() => { setCode(""); setOutput(""); }}
-                        className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-md transition-all"
-                        title="Clear"
-                    >
-                        <RiDeleteBin6Line className="w-4 h-4" />
-                    </button>
-                    <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
-                    <button
-                        onClick={runCode}
-                        disabled={isCompiling}
-                        className={`flex items-center space-x-2 px-5 py-2 rounded-md font-semibold text-sm transition-all ${isCompiling
-                            ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
-                            : 'bg-sky-500 hover:bg-sky-600 text-white shadow-sm'
-                            }`}
-                    >
-                        {isCompiling ? (
-                            <div className="w-4 h-4 border-2 border-slate-300 dark:border-slate-600 border-t-slate-500 dark:border-t-slate-400 rounded-full animate-spin" />
-                        ) : (
-                            <RiPlayFill className="w-4 h-4" />
-                        )}
-                        <span>{isCompiling ? 'Running' : 'Run'}</span>
-                    </button>
-                </div>
-            </div>
+        <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+
+        <div className="flex items-center space-x-2">
+            <div className="w-2 h-2 rounded-full bg-sky-500"></div>
+            <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">main.yr</span>
+        </div>
+        
+        <div className={`flex items-center space-x-2 px-2.5 py-1 rounded-md transition-all ${wasmStatus === 'online'
+            ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400'
+            : 'bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400'
+            }`}>
+            <div className={`w-1 h-1 rounded-full ${wasmStatus === 'online' ? 'bg-emerald-500' : 'bg-amber-500'}`} />
+            <span className="text-[10px] font-bold uppercase tracking-wider">{wasmStatus}</span>
+        </div>
+    </div>
+
+    {/* Right Side: Theme, Copy, Clear, Run */}
+    <div className="flex items-center space-x-2">
+        {/* Theme Toggle integrated here */}
+        <button
+            onClick={toggleTheme}
+            className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+            aria-label="Toggle Theme"
+        >
+            {isDark ? <RiSunLine className="w-4 h-4" /> : <RiMoonLine className="w-4 h-4" />}
+        </button>
+
+        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+
+        <button
+            onClick={copyCode}
+            className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+            title="Copy Code"
+        >
+            {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
+        </button>
+        
+        <button
+            onClick={() => { setCode(""); setOutput(""); }}
+            className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-md transition-all"
+            title="Clear"
+        >
+            <RiDeleteBin6Line className="w-4 h-4" />
+        </button>
+
+        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+
+        <button
+            onClick={runCode}
+            disabled={isCompiling}
+            className={`flex items-center space-x-2 px-5 py-2 rounded-md font-semibold text-sm transition-all ${isCompiling
+                ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
+                : 'bg-sky-500 hover:bg-sky-600 text-white shadow-sm'
+                }`}
+        >
+            {isCompiling ? (
+                <div className="w-4 h-4 border-2 border-slate-300 dark:border-slate-600 border-t-slate-500 dark:border-t-slate-400 rounded-full animate-spin" />
+            ) : (
+                <RiPlayFill className="w-4 h-4" />
+            )}
+            <span>{isCompiling ? 'Running' : 'Run'}</span>
+        </button>
+    </div>
+</div>
 
             {/* Main Content Area */}
             <div className="flex-1 flex overflow-hidden lg:flex-row flex-col">

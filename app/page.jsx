@@ -2,9 +2,8 @@
 
 import React, { useRef } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { RiCodeSSlashLine, RiRocket2Line, RiSparklingLine, RiTerminalBoxLine, RiFlashlightLine, RiGlobalLine, RiCpuLine, RiShieldCheckLine, RiLightbulbLine } from "react-icons/ri";
-
 import RippleGrid from "@/components/home/FaultyTerminal";
 
 export default function Home() {
@@ -81,26 +80,12 @@ faisla active = sahi;`
     }
   ];
 
-  const syntaxExamples = [
-    { standard: "main", yaar: "yaar", desc: "Entry point" },
-    { standard: "if/else", yaar: "agar/warna", desc: "Conditionals" },
-    { standard: "for", yaar: "dohrao", desc: "For loop" },
-    { standard: "while", yaar: "jabtak", desc: "While loop" },
-    { standard: "do-while", yaar: "karo-jabtak", desc: "Do-while" },
-    { standard: "switch", yaar: "intekhab", desc: "Switch" },
-    { standard: "print", yaar: "bolo", desc: "Output" },
-    { standard: "return", yaar: "wapsi", desc: "Return" },
-    { standard: "break", yaar: "bas_kar", desc: "Break" },
-    { standard: "true/false", yaar: "sahi/galat", desc: "Booleans" },
-    { standard: "const", yaar: "pakka", desc: "Constant" },
-    { standard: "global", yaar: "sab_ke_liye", desc: "Global" }
-  ];
-
   return (
-    <div ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
-      {/* Background Ripple Grid */}
-      <div className="absolute inset-0 w-full h-screen overflow-hidden z-999 ">
-        <RippleGrid
+    <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      {/* RippleGrid Background - Fixed positioning with z-0 */}
+      <div className="fixed opacity-30 inset-0 w-full h-full overflow-hidden z-0 pointer-events-none">
+        {/* Replace this comment with your actual RippleGrid component */}
+         <RippleGrid
           enableRainbow={true}
           gridColor="#ffffff"
           rippleIntensity={0.03}
@@ -109,13 +94,12 @@ faisla active = sahi;`
           mouseInteraction={true}
           mouseInteractionRadius={1.5}
           opacity={0.8} 
-        />
+        /> 
       </div>
       
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        
-        <div className="relative max-w-7xl mx-auto px-6 py-5 text-center z-10">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden z-10">
+        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -127,8 +111,8 @@ faisla active = sahi;`
             </div>
             
             <h1 className="text-6xl md:text-7xl font-black text-slate-900 dark:text-slate-50 mb-8 leading-tight">
-             <span className="text-6xl md:text-[110px]">Code in Your</span>
-              <span className="block text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-blue-500 to-indigo-600">
+              <span className="text-6xl md:text-[110px]">Code in Your</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600">
                 Language
               </span>
             </h1>
@@ -172,7 +156,7 @@ faisla active = sahi;`
                     </div>
                     <span className="text-slate-400 text-sm font-mono">main.yr</span>
                   </div>
-                  <pre className="p-8 text-left overflow-x-auto" style={{ fontFamily: 'var(--font-jetbrains), monospace' }}>
+                  <pre className="p-8 text-left overflow-x-auto font-mono">
                     <code className="text-slate-300 text-sm leading-7">
 {`yaar {
     bolo("Assalam-o-Alaikum, World!\\n");
@@ -194,8 +178,8 @@ faisla active = sahi;`
         </div>
       </section>
 
-      {/* Sticky Code Examples Section */}
-      <section className="py-32">
+      {/* Code Examples Section */}
+      <section className="relative py-32 z-10">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -221,15 +205,15 @@ faisla active = sahi;`
                 transition={{ delay: index * 0.1 }}
                 className="group"
               >
-                <div className="bg-slate-50 dark:bg-slate-800 rounded-2xl p-8 border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-xl">
+                <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-xl">
                   <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-2">
                     {example.title}
                   </h3>
                   <p className="text-slate-600 dark:text-slate-400 mb-6">
                     {example.description}
                   </p>
-                  <pre className="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto">
-                    <code className="text-slate-800 dark:text-slate-200 text-sm" style={{ fontFamily: 'var(--font-jetbrains), monospace' }}>
+                  <pre className="bg-slate-50 dark:bg-slate-900/80 p-6 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto">
+                    <code className="text-slate-800 dark:text-slate-200 text-sm font-mono">
                       {example.code}
                     </code>
                   </pre>
@@ -241,7 +225,7 @@ faisla active = sahi;`
       </section>
 
       {/* Features Grid */}
-      <section className="py-32">
+      <section className="relative py-32 z-10">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -265,9 +249,8 @@ faisla active = sahi;`
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-2xl group"
+                className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-2xl group"
               >
-                
                 <div className="w-14 h-14 bg-sky-100 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   {feature.icon}
                 </div>
@@ -282,84 +265,6 @@ faisla active = sahi;`
           </div>
         </div>
       </section>
-
-      {/* Syntax Comparison */}
-      <section className="py-32">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-slate-50 mb-6">
-              Familiar Yet Unique
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              YaarScript keywords map naturally to concepts you already know
-            </p>
-          </motion.div>
-
-          <div className="max-w-5xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {syntaxExamples.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                className="bg-slate-50 dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition-all"
-              >
-                <div className="text-sm text-slate-500 dark:text-slate-400 mb-2 font-semibold">
-                  {item.desc}
-                </div>
-                <div className="flex items-center justify-between">
-                  <code className="text-slate-600 dark:text-slate-400 font-mono text-sm">
-                    {item.standard}
-                  </code>
-                  <span className="text-slate-300 dark:text-slate-600 mx-3">→</span>
-                  <code className="text-sky-600 dark:text-sky-400 font-mono text-sm font-bold">
-                    {item.yaar}
-                  </code>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-32 relative overflow-hidden">
-        <div className="relative max-w-5xl mx-auto px-6 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-5xl md:text-6xl font-black text-white mb-8">
-              Start Coding Today
-            </h2>
-            <p className="text-2xl text-sky-100 mb-12 max-w-3xl mx-auto">
-              No installation needed. Jump into the playground and write your first YaarScript program in seconds.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <Link
-                href="/editor"
-                className="inline-flex items-center space-x-3 px-10 py-5 bg-white hover:bg-slate-50 text-sky-600 font-bold rounded-2xl shadow-2xl transition-all hover:scale-105"
-              >
-                <RiCodeSSlashLine className="w-6 h-6" />
-                <span className="text-lg">Launch Editor</span>
-              </Link>
-              <Link
-                href="/docs"
-                className="inline-flex items-center space-x-3 px-10 py-5 bg-transparent hover:bg-white/10 text-white font-bold rounded-2xl border-2 border-white transition-all"
-              >
-                <span className="text-lg">Documentation</span>
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section> 
-    </div>
+    </main>
   );
 }
