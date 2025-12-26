@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { RiCodeSSlashLine, RiRocket2Line, RiSparklingLine, RiTerminalBoxLine, RiFlashlightLine, RiGlobalLine, RiCpuLine, RiShieldCheckLine, RiLightbulbLine } from "react-icons/ri";
 
+import RippleGrid from "@/components/home/FaultyTerminal";
+
 export default function Home() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -95,11 +97,23 @@ faisla active = sahi;`
   ];
 
   return (
-    <div ref={containerRef} className="min-h-screen bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pt-16">
+    <div ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900">
+      {/* Background Ripple Grid */}
+      <div className="absolute inset-0 w-full h-screen overflow-hidden z-999 ">
+        <RippleGrid
+          enableRainbow={true}
+          gridColor="#ffffff"
+          rippleIntensity={0.03}
+          gridSize={35}
+          gridThickness={15}
+          mouseInteraction={true}
+          mouseInteractionRadius={1.5}
+          opacity={0.8} 
+        />
+      </div>
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0 `bg-[radial-gradient(ellipse_at_top,var(--tw-gradient-stops))]` from-sky-100 via-slate-50 to-white dark:from-sky-950/20 dark:via-slate-950 dark:to-slate-950"></div>
         
         <div className="relative max-w-7xl mx-auto px-6 py-5 text-center z-10">
           <motion.div
@@ -181,7 +195,7 @@ faisla active = sahi;`
       </section>
 
       {/* Sticky Code Examples Section */}
-      <section className="py-32 ">
+      <section className="py-32">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -227,7 +241,7 @@ faisla active = sahi;`
       </section>
 
       {/* Features Grid */}
-      <section className="py-32 ">
+      <section className="py-32">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -253,7 +267,7 @@ faisla active = sahi;`
                 transition={{ delay: index * 0.1 }}
                 className="bg-white dark:bg-slate-900 p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-2xl group"
               >
-                 
+                
                 <div className="w-14 h-14 bg-sky-100 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                   {feature.icon}
                 </div>
@@ -270,7 +284,7 @@ faisla active = sahi;`
       </section>
 
       {/* Syntax Comparison */}
-      <section className="py-32 bg-white dark:bg-slate-900">
+      <section className="py-32">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -315,8 +329,7 @@ faisla active = sahi;`
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-gradient-to-br from-sky-500 via-blue-600 to-indigo-700 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
+      <section className="py-32 relative overflow-hidden">
         <div className="relative max-w-5xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -346,40 +359,7 @@ faisla active = sahi;`
             </div>
           </motion.div>
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-slate-900 dark:bg-black border-t border-slate-800 py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-12 mb-12">
-            <div>
-              <h3 className="text-white font-bold text-xl mb-4">YaarScript</h3>
-              <p className="text-slate-400 leading-relaxed">
-                A modern programming language with Urdu-inspired syntax, designed for the next generation of developers.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-4">Resources</h4>
-              <ul className="space-y-2">
-                <li><Link href="/docs" className="text-slate-400 hover:text-sky-400 transition-colors">Documentation</Link></li>
-                <li><Link href="/editor" className="text-slate-400 hover:text-sky-400 transition-colors">Playground</Link></li>
-                <li><a href="#" className="text-slate-400 hover:text-sky-400 transition-colors">Examples</a></li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-bold mb-4">Community</h4>
-              <ul className="space-y-2">
-                <li><a href="https://github.com" className="text-slate-400 hover:text-sky-400 transition-colors">GitHub</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-sky-400 transition-colors">Discord</a></li>
-                <li><a href="#" className="text-slate-400 hover:text-sky-400 transition-colors">Contribute</a></li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-slate-800 pt-8 text-center text-slate-400">
-            <p>© 2024 YaarScript. Built with ❤️ for the Urdu developer community.</p>
-          </div>
-        </div>
-      </footer>
+      </section> 
     </div>
   );
 }
