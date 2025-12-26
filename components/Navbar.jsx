@@ -78,13 +78,13 @@ const Navbar = () => {
             initial={{ y: 0 }}
             animate={{ y: isVisible ? 0 : -100 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-[999] w-[90%] max-w-4xl"
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-999 w-[90%] max-w-4xl"
         >
             <div className="backdrop-blur-[2px] dark:backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border-2 border-slate-500/30 dark:border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/5 dark:shadow-slate-900/30">
                 <div className="flex justify-between items-center px-6 py-3">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 group">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-400 to-sky-600 dark:from-sky-500 dark:to-sky-700 group-hover:scale-110 transition-transform duration-300"></div>
+                        <div className="w-8 h-8 rounded-full bg-linear-to-br from-sky-400 to-sky-600 dark:from-sky-500 dark:to-sky-700 group-hover:scale-110 transition-transform duration-300"></div>
                         <div className="hidden sm:block">
                             <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 leading-none">
                                 YaarScript
