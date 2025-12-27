@@ -46,8 +46,7 @@ const Navbar = () => {
     }
 
     const navLinks = [
-        { name: "Docs", href: "/docs" },
-        { name: "Examples", href: "/examples" },
+        { name: "Documentation", href: "/docs" }, 
         { name: "Playground", href: "/editor", active: true },
     ];
 
@@ -79,7 +78,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Navigation */}
-                    <div className="flex items-center space-x-1">
+                    <div className="flex md:ml-[-35px] items-center space-x-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
@@ -96,16 +95,17 @@ const Navbar = () => {
                     </div>
 
                     {/* GitHub Link */}
-                    <div className="flex items-center space-x-2">
-                        <a
-                            href="https://github.com/bazilsuhail/YaarScript"
+                    <div className="flex justify-center  items-center space-x-2">
+                        <Link
+                            href="https://github.com/BazilSuhail/Custom-Compiler"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+                            className=" flex items-center p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
                             aria-label="View on GitHub"
                         >
                             <RiGithubFill className="w-5 h-5" />
-                        </a>
+                            <span className="ml-2 text-[16px]">Github</span>
+                        </Link>
                     </div>
                 </div>
             </div>
