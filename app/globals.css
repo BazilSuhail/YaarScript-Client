@@ -6,3 +6,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+
+.titleFont {
+  font-family: poppins, Arial, ;
+  font-weight: 800;
+}

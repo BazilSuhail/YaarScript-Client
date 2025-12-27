@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiCodeSSlashLine, RiBookOpenLine } from "react-icons/ri";
+import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiCodeSSlashLine, RiBookOpenLine, RiHome4Line } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 const DocsSidebar = ({ activeSection, setActiveSection }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -56,25 +57,33 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
         <>
             {/* Language Header */}
             <div className="mb-8">
-                <div className="relative flex overflow-hidden rounded-xl bg-linear-to-br from-sky-500 to-blue-500 py-2 px-4 shadow-lg">
+                <div className="flex border-b-2 border-sky-500 pb-4">
                     <div className="flex w-full items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5  border-t border-white/20">
-                            <div className="p-2 bg-white/20 rounded-lg">
+                        <div className="flex items-center ">
+                            <div className="p-1.5 bg-white/20 rounded-md">
                                 <RiBookOpenLine className="w-4 h-4 text-white" />
                             </div>
-                            <p className="text-md text-white/90 font-medium">
+                            <p className="text-md ml-2 text-white/90 font-medium">
                                 Documentations
                             </p>
                         </div>
                     </div>
 
+                    <div className="flex space-x-2">
+                        <Link
+                            href="/"
+                            className="p-2 text-slate-500 dark:text-sky-50 bg-sky-800 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
+                            title="Go Home"
+                        >
+                            <RiHome4Line className="w-4 h-4" />
+                        </Link>
 
+                    </div>
                 </div>
-
             </div>
 
             {/* Navigation */}
-            <nav className="space-y-6">
+            <nav className="space-y-4">
                 {navItems.map((section, idx) => (
                     <motion.div
                         key={idx}
@@ -112,17 +121,9 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activeSection"
-                                                    className="absolute inset-0 bg-linear-to-r from-sky-500 to-sky-600 dark:from-sky-600 dark:via-blue-700 dark:to-sky-700 rounded-xl"
+                                                    className="absolute inset-0 bg-linear-to-r from-sky-500 to-sky-00 dark:from-sky-600 dark:to-sky-700 rounded-xl"
                                                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                                 />
-                                            )}
-
-                                            {/* Hover background */}
-                                            {!isActive && (
-                                                <>
-                                                    <div className="absolute inset-0 bg-linear-to-r from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-800/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                                                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-linear-to-b from-sky-500 to-blue-400 dark:from-sky-400 dark:to-blue-500 rounded-r-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                                                </>
                                             )}
 
                                             <span className="relative z-10 flex items-center gap-3">
@@ -158,7 +159,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
             </nav>
 
             {/* Bottom Decorative Element */}
-            <div className="mt-12 px-3">
+            <div className="mt-6 px-3">
                 <div className="h-px bg-linear-to-r from-transparent via-slate-300 dark:via-slate-700 to-transparent"></div>
                 <p className="text-center text-xs text-slate-400 dark:text-slate-600 mt-4 font-medium">
                     v1.0.0 Pro
@@ -202,7 +203,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
             </motion.button>
 
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:block w-80 border-r border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl fixed h-screen self-start overflow-y-auto shadow-xl">
+            <aside className="hidden lg:block w-80 border-r border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl fixed h-screen self-start overflow-y-auto shadow-xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <div className="p-6 pb-20">
                     <SidebarContent />
                 </div>
@@ -225,7 +226,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             animate={{ x: 0 }}
                             exit={{ x: -300 }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 max-w-[85vw] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800 overflow-y-auto shadow-2xl"
+                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 max-w-[85vw] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="p-6 pb-24">

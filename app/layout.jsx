@@ -27,7 +27,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "YaarScript Pro | Cloud Compiler",
+  title: "YaarScript | Urdu Styled Compiler",
   description: "Advanced Urdu-inspired programming language toolchain",
 };
 

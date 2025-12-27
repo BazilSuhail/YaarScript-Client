@@ -83,23 +83,23 @@ faisla active = sahi;`
   return (
     <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-50 to-slate-300 dark:from-slate-950 dark:to-slate-900">
       {/* RippleGrid Background - Fixed positioning with z-0 */}
-      
-      <div className="fixed inset-0 w-full h-full overflow-hidden z-0">
-  <RippleGrid
-    enableRainbow={true}
-    gridColor="#ffffff"
-    rippleIntensity={0.03}
-    gridSize={35}
-    gridThickness={15}
-    mouseInteraction={true}
-    mouseInteractionRadius={1.5}
-    opacity={0.8} 
-  />
-</div>
+
+      <div className="fixed inset-0 w-full h-full overflow-hidden z-0" aria-hidden="true">
+        <RippleGrid
+          enableRainbow={true}
+          gridColor="#ffffff"
+          rippleIntensity={0.03}
+          gridSize={35}
+          gridThickness={15}
+          mouseInteraction={true}
+          mouseInteractionRadius={1.5}
+          opacity={0.8}
+        />
+      </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen pt-16 flex items-center justify-center overflow-hidden z-10">
-        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
+      <section className="relative min-h-screen pt-16 flex items-center justify-center overflow-hidden z-10 pointer-events-none">
+        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center ">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -109,14 +109,14 @@ faisla active = sahi;`
               <RiGlobalLine className="w-4 h-4" />
               <span>Open Source • Urdu-Inspired • WebAssembly Powered</span>
             </div>
-            
-            <h1 className="text-6xl md:text-7xl font-black text-slate-900 dark:text-slate-50 mb-8 leading-tight">
+
+            <h1 className="text-6xl  md:text-7xl font-black text-slate-900 dark:text-slate-50 mb-8 leading-tight">
               <span className="text-6xl md:text-[110px]">Code in Your</span>
               <span className="block text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-blue-500 to-indigo-600">
                 Language
               </span>
             </h1>
-            
+
             <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto mb-12 leading-relaxed">
               YaarScript is a professional compiler that brings <strong>Urdu keywords</strong> to modern programming. Write clean, powerful code with familiar words.
             </p>
@@ -158,7 +158,7 @@ faisla active = sahi;`
                   </div>
                   <pre className="p-8 text-left overflow-x-auto font-mono">
                     <code className="text-slate-300 text-sm leading-7">
-{`yaar {
+                      {`yaar {
     bolo("Assalam-o-Alaikum, World!\\n");
     
     number counter = 0;
@@ -178,93 +178,6 @@ faisla active = sahi;`
         </div>
       </section>
 
-      {/* Code Examples Section */}
-      <section className="relative py-32 z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-24"
-          >
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-slate-50 mb-6">
-              Simple Yet Powerful
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
-              From basic scripts to complex applications, YaarScript handles it all with elegant Urdu syntax
-            </p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-8">
-            {codeExamples.map((example, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: index * 0.1 }}
-                className="group"
-              >
-                <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-2xl p-8 border border-slate-200 dark:border-slate-700 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-xl">
-                  <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-50 mb-2">
-                    {example.title}
-                  </h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-6">
-                    {example.description}
-                  </p>
-                  <pre className="bg-slate-50 dark:bg-slate-900/80 p-6 rounded-xl border border-slate-200 dark:border-slate-700 overflow-x-auto">
-                    <code className="text-slate-800 dark:text-slate-200 text-sm font-mono">
-                      {example.code}
-                    </code>
-                  </pre>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Features Grid */}
-      <section className="relative py-32 z-10">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-20"
-          >
-            <h2 className="text-5xl md:text-6xl font-black text-slate-900 dark:text-slate-50 mb-6">
-              Why YaarScript?
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-              Built for the modern developer with love for Urdu
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-8 rounded-2xl border border-slate-200 dark:border-slate-800 hover:border-sky-500 dark:hover:border-sky-500 transition-all hover:shadow-2xl group"
-              >
-                <div className="w-14 h-14 bg-sky-100 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50 mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

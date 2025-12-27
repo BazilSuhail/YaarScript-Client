@@ -15,7 +15,7 @@ const Navbar = () => {
     // All hooks must stay at the top level!
     useEffect(() => {
         // Don't run scroll logic if we are on the editor page
-        if (pathname === "/editor") return;
+        if (pathname === "/editor" || pathname === "/docs") return;
 
         let ticking = false;
         const handleScroll = () => {
@@ -63,7 +63,7 @@ const Navbar = () => {
     };
 
     // 1. Check condition here instead of an early return
-    if (pathname === "/editor") {
+    if (pathname === "/editor" || pathname === "/docs") {
         return null; 
     }
 
@@ -84,7 +84,12 @@ const Navbar = () => {
                 <div className="flex justify-between items-center px-6 py-3">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 group">
-                        <div className="w-8 h-8 rounded-full bg-linear-to-br from-sky-400 to-sky-600 dark:from-sky-500 dark:to-sky-700 group-hover:scale-110 transition-transform duration-300"></div>
+                        <img 
+                            src="/yaar-script.webp" 
+                            alt="YaarScript Logo" 
+                            className="w-10 h-10 rounded-full group-hover:scale-110 transition-transform duration-300"
+                        />
+                      
                         <div className="hidden sm:block">
                             <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 leading-none">
                                 YaarScript
