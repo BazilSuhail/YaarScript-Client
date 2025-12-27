@@ -6,9 +6,9 @@ import { RiGithubFill, RiUser3Line, RiCodeSSlashLine } from "react-icons/ri";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
-  weight: ['700', '900'],
-  subsets: ['latin'],
-  display: 'swap',
+  weight: ["500", "700"],
+  subsets: ["latin"],
+  display: "swap",
 });
 
 const HomeFooter = () => {
@@ -16,51 +16,64 @@ const HomeFooter = () => {
     {
       icon: <RiUser3Line className="w-6 h-6 md:w-8 md:h-8" />,
       label: "Bazil Suhail",
-      href: "bazilsuhail.netlify.app",
-      description: "Creator"
+      href: "https://bazilsuhail.netlify.app",
+      description: "Creator",
     },
     {
       icon: <RiGithubFill className="w-6 h-6 md:w-8 md:h-8" />,
       label: "Client Repo",
       href: "https://github.com/BazilSuhail/YaarScript-Client",
-      description: "Frontend"
+      description: "Frontend",
     },
     {
       icon: <RiCodeSSlashLine className="w-6 h-6 md:w-8 md:h-8" />,
       label: "Compiler Repo",
       href: "https://github.com/BazilSuhail/YaarScript",
-      description: "Rust Backend"
-    }
+      description: "Rust Backend",
+    },
   ];
 
   return (
-    <footer className="relative lg:mt-25 ">
-        <div className="max-w-5xl bg-linear-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
+    <footer className="relative lg:mt-25">
+      <div className="max-w-5xl bg-gradient-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
+
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Main Footer Content */}
         <div className="flex flex-col items-center justify-center space-y-8">
-          
-          {/* Logo/Brand */}
+          {/* Logo / Brand */}
           <div className="text-center">
-            <h3 className={`text-4xl md:text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 via-sky-600 to-sky-800 animate-linear bg-[length:200%_auto] ${poppins.className}`}>
+            <h3
+              className={`${poppins.className} text-4xl md:text-6xl lg:text-[110px] font-bold`}
+              style={{
+                background: "linear-gradient(90deg, #fff, #38bdf8, #0284c7, #fff)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundSize: "200% 200%",
+                animation: "gradientShift 3s ease infinite",
+              }}
+            >
               YaarScript
             </h3>
-             <style jsx>{`
-            @keyframes linear {
-              0%, 100% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-            }
-            .animate-linear {
-              animation: linear 2s ease infinite;
-            }
-          `}</style>
-            <p className={`text-lg mt-6 text-sky-700 ${poppins.className}`}>
+
+            <p
+              className={`${poppins.className} text-lg lg:text-2xl mt-4 text-sky-200`}
+              style={{ fontWeight: 500 }}
+            >
               Apki Zuban, Apki Marzi ka Code
             </p>
+
+            <style jsx>{`
+              @keyframes gradientShift {
+                0% {
+                  background-position: 0% 50%;
+                }
+                50% {
+                  background-position: 100% 50%;
+                }
+                100% {
+                  background-position: 0% 50%;
+                }
+              }
+            `}</style>
           </div>
 
           {/* Links */}
@@ -74,17 +87,21 @@ const HomeFooter = () => {
                 className="group relative w-full sm:w-auto"
               >
                 <div className="flex items-center space-x-4 md:space-x-5 px-8 py-5 md:px-10 md:py-6 lg:px-12 lg:py-7 bg-slate-800/50 hover:bg-slate-800/70 border border-slate-800/50 hover:border-sky-500/50 rounded-2xl transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-sky-500/25">
-                  {/* Icon */}
                   <div className="text-sky-400 group-hover:text-sky-300 transition-colors">
                     {link.icon}
                   </div>
-                  
-                  {/* Text */}
+
                   <div className="text-left">
-                    <div className={`text-base md:text-lg lg:text-xl font-semibold text-slate-200 group-hover:text-white transition-colors ${poppins.className}`}>
+                    <div
+                      className={`${poppins.className} text-base md:text-lg lg:text-xl font-semibold text-slate-200 group-hover:text-white transition-colors`}
+                      style={{ fontWeight: 400 }}
+                    >
                       {link.label}
                     </div>
-                    <div className={`text-sm md:text-base text-slate-500 group-hover:text-slate-400 transition-colors ${poppins.className}`}>
+                    <div
+                      className={`${poppins.className} text-sm md:text-base text-slate-500 group-hover:text-slate-400 transition-colors`}
+                      style={{ fontWeight: 400 }}
+                    >
                       {link.description}
                     </div>
                   </div>
@@ -98,7 +115,10 @@ const HomeFooter = () => {
 
           {/* Copyright */}
           <div className="text-center">
-            <p className={`text-xs text-slate-500 ${poppins.className}`}>
+            <p
+              className={`${poppins.className} text-xs text-slate-300`}
+              style={{ fontWeight: 400 }}
+            >
               © {new Date().getFullYear()} YaarScript. Built with{" "}
               <span className="text-sky-400">♥</span> by Bazil Suhail
             </p>
