@@ -1,21 +1,19 @@
 "use client";
 
-import React, { useRef } from "react";
-import { useScroll } from "framer-motion";
+import React, { useRef } from "react"; 
 import RippleGrid from "@/components/animations/FaultyTerminal";
 import ScrollVelocity from "@/components/animations/ScrollVelocity";
 import HeroSection from "@/components/home-page/HeroSection";
 import CodePreview from "@/components/home-page/CodePreview";
 import StatsSection from "@/components/home-page/StatsSection";
 import FeaturesSection from "@/components/home-page/FeaturesSection";
-import CTASection from "@/components/home-page/CTASection";
-import VariableProximity from "@/components/animations/VariableProximity";
-import ScrollWordReveal from "@/components/home-page/ScrollWordReveal";
+import CTASection from "@/components/home-page/CTASection"; 
+import ScrollWordReveal from "@/components/home-page/ScrollWordReveal"; 
+import HomeFooter from "@/components/home-page/HomeFooter";
 
 export default function Home() {
-  const containerRef = useRef(null);
-  const textcontainerRef = useRef(null);
-
+  const containerRef = useRef(null); 
+  
   return (
     <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-950 to-slate-900">
       {/* RippleGrid Background */}
@@ -58,6 +56,8 @@ export default function Home() {
 
       {/* CTA Section */}
       <CTASection />
+
+      <HomeFooter /> 
     </main>
   );
 }

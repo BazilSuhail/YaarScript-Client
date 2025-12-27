@@ -27,12 +27,12 @@ const HeroSection = () => {
             <span className="sm:hidden">Open Source • Urdu Based</span>
           </div>
 
-          <h1 className={`text-4xl md:text-6xl lg:text-7xl font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
+          <h1 className={`text-4xl mb-2 md:text-6xl lg:text-6xl font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
             <span className="text-4xl md:text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 via-sky-600 to-sky-800 animate-linear bg-[length:200%_auto]">
               Apki Zuban
             </span>
             <span className="block text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-blue-500 to-indigo-600">
-              Apka Code
+              Apki marzi ka Code
             </span>
           </h1>
 

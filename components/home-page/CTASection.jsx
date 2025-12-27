@@ -45,7 +45,7 @@ const CTASection = () => {
             />
 
             <div className="relative z-10 pointer-events-none">
-              <h2 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-linear-to-br from-sky-900 via-sky-400 to-sky-700 animate-gradient-cta bg-[length:200%_auto] mb-6">
+              <h2 className="text-5xl md:text-6xl pb-4 font-black text-transparent bg-clip-text bg-linear-to-br from-sky-900 via-sky-400 to-sky-700 animate-gradient-cta bg-[length:200%_auto] mb-6">
                 Start Exploring
               </h2>
               
