@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import DocsSidebar from "../../components/docs/DocsSidebar";
 import DocsContent from "../../components/docs/DocsContent";
+import Footer from "@/components/Footer";
 
 export default function DocsPage() {
     const [activeSection, setActiveSection] = useState("getting-started");
@@ -18,6 +19,7 @@ export default function DocsPage() {
                     <DocsContent activeSection={activeSection} />
                 </div>
             </div>
+            <Footer/>
         </div>
     );
 }
