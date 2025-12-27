@@ -2,20 +2,18 @@
 
 import React, { useRef } from "react";
 import { useScroll } from "framer-motion";
-import RippleGrid from "@/components/home/FaultyTerminal";
-import ScrollVelocity from "@/components/home/ScrollVelocity";
+import RippleGrid from "@/components/animations/FaultyTerminal";
+import ScrollVelocity from "@/components/animations/ScrollVelocity";
 import HeroSection from "@/components/home-page/HeroSection";
 import CodePreview from "@/components/home-page/CodePreview";
 import StatsSection from "@/components/home-page/StatsSection";
 import FeaturesSection from "@/components/home-page/FeaturesSection";
 import CTASection from "@/components/home-page/CTASection";
+import VariableProximity from "@/components/animations/VariableProximity";
 
 export default function Home() {
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+  const textcontainerRef = useRef(null);
 
   return (
     <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-950 to-slate-900">
@@ -37,9 +35,9 @@ export default function Home() {
       <HeroSection />
 
       {/* Scroll Velocity */}
-      <section className="max-w-5xl mx-auto mb-20 px-4 z-10 text-white">
+      <section className="max-w-5xl mx-auto mb-20 px-4 z-10 text-sky-200">
         <ScrollVelocity
-          texts={['React Bits', 'Scroll Down']}
+          texts={['YaarScript •', 'Urdu Styled Compiler •']}
           velocity={50}
           className="custom-scroll-text"
         />
@@ -47,6 +45,24 @@ export default function Home() {
 
       {/* Code Preview Section */}
       <CodePreview />
+
+      {/* Variable Proximity Section */}
+      <section className="relative z-900 py-30 px-6">
+        <div
+          ref={textcontainerRef}
+          className="relative mx-auto text-4xl md:text-7xl text-white max-w-4xl text-center pointer-events-auto"
+        >
+          <VariableProximity
+            label={'Hover me! And then star React Bits on GitHub, or else...'}
+            className={'variable-proximity-demo'}
+            fromFontVariationSettings="'wght' 400, 'opsz' 9"
+            toFontVariationSettings="'wght' 1000, 'opsz' 40"
+            containerRef={textcontainerRef}
+            radius={150}
+            falloff='linear'
+          />
+        </div>
+      </section>
 
       {/* Stats Section */}
       <StatsSection />

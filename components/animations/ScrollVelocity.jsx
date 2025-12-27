@@ -135,7 +135,9 @@ export const ScrollVelocity = ({
           parallaxStyle={parallaxStyle}
           scrollerStyle={scrollerStyle}
         >
+          <span className='bg-linear-to-br from-sky-700 via-sky-300 to-sky-700 bg-clip-text text-transparent'>
           {text}&nbsp;
+          </span>
         </VelocityText>
       ))}
     </section>
