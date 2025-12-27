@@ -4,11 +4,10 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { RiMoonLine, RiSunLine } from "react-icons/ri";
+import { RiGithubFill } from "react-icons/ri";
 
 const Navbar = () => {
     const pathname = usePathname();
-    const [isDark, setIsDark] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -37,30 +36,9 @@ const Navbar = () => {
         };
 
         window.addEventListener("scroll", handleScroll, { passive: true });
-        
-        // Theme initialization
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            document.documentElement.classList.add('dark');
-            setIsDark(true);
-        }
 
         return () => window.removeEventListener("scroll", handleScroll);
     }, [lastScrollY, pathname]); // Added pathname to dependency array
-
-    const toggleTheme = () => {
-        const isDarkMode = document.documentElement.classList.contains("dark");
-        if (isDarkMode) {
-            document.documentElement.classList.remove("dark");
-            localStorage.setItem("theme", "light");
-            setIsDark(false);
-        } else {
-            document.documentElement.classList.add("dark");
-            localStorage.setItem("theme", "dark");
-            setIsDark(true);
-        }
-    };
 
     // 1. Check condition here instead of an early return
     if (pathname === "/editor" || pathname === "/docs") {
@@ -80,7 +58,7 @@ const Navbar = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="fixed top-4 left-1/2 -translate-x-1/2 z-999 w-[90%] max-w-4xl"
         >
-            <div className="backdrop-blur-[2px] dark:backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border-2 border-slate-500/30 dark:border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/5 dark:shadow-slate-900/30">
+            <div className="backdrop-blur-xl bg-slate-900/80 border-2 border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/30">
                 <div className="flex justify-between items-center px-6 py-3">
                     {/* Logo */}
                     <Link href="/" className="flex items-center space-x-2 group">
@@ -91,10 +69,10 @@ const Navbar = () => {
                         />
                       
                         <div className="hidden sm:block">
-                            <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 leading-none">
+                            <h1 className="text-base font-bold text-slate-50 leading-none">
                                 YaarScript
                             </h1>
-                            <p className="text-[8px] uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+                            <p className="text-[8px] uppercase tracking-wider text-slate-400 font-semibold">
                                 Compiler
                             </p>
                         </div>
@@ -108,8 +86,8 @@ const Navbar = () => {
                                 href={link.href}
                                 className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all duration-200 ${
                                     link.active
-                                        ? "text-sky-600 dark:text-sky-400 bg-sky-50/80 dark:bg-sky-950/50"
-                                        : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-800/50"
+                                        ? "text-sky-400 bg-sky-950/50"
+                                        : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
                                 }`}
                             >
                                 {link.name}
@@ -117,14 +95,17 @@ const Navbar = () => {
                         ))}
                     </div>
 
-                    {/* Theme Toggle */}
+                    {/* GitHub Link */}
                     <div className="flex items-center space-x-2">
-                        <button
-                            onClick={toggleTheme}
-                            className="p-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 transition-all duration-200"
+                        <a
+                            href="https://github.com/bazilsuhail/YaarScript"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+                            aria-label="View on GitHub"
                         >
-                            {isDark ? <RiSunLine className="w-5 h-5" /> : <RiMoonLine className="w-5 h-5" />}
-                        </button>
+                            <RiGithubFill className="w-5 h-5" />
+                        </a>
                     </div>
                 </div>
             </div>
