@@ -28,16 +28,16 @@ const HeroSection = () => {
           </div>
 
           <h1 className={`text-4xl md:text-6xl lg:text-7xl font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
-            <span className="text-4xl md:text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 via-sky-600 to-sky-800 animate-gradient bg-[length:200%_auto]">
+            <span className="text-4xl md:text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 via-sky-600 to-sky-800 animate-linear bg-[length:200%_auto]">
               Apki Zuban
             </span>
-            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600">
+            <span className="block text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-blue-500 to-indigo-600">
               Apka Code
             </span>
           </h1>
 
           <style jsx>{`
-            @keyframes gradient {
+            @keyframes linear {
               0%, 100% {
                 background-position: 0% 50%;
               }
@@ -45,8 +45,8 @@ const HeroSection = () => {
                 background-position: 100% 50%;
               }
             }
-            .animate-gradient {
-              animation: gradient 2s ease infinite;
+            .animate-linear {
+              animation: linear 2s ease infinite;
             }
           `}</style>
 
@@ -58,7 +58,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
             <Link
               href="/editor"
-              className="group pointer-events-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-sky-500/20 transition-all hover:shadow-xl hover:shadow-sky-500/30"
+              className="group pointer-events-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-linear-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-sky-500/20 transition-all hover:shadow-xl hover:shadow-sky-500/30"
             >
               <RiRocket2Line className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               <span>Try Editor</span>

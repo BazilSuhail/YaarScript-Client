@@ -10,6 +10,7 @@ import StatsSection from "@/components/home-page/StatsSection";
 import FeaturesSection from "@/components/home-page/FeaturesSection";
 import CTASection from "@/components/home-page/CTASection";
 import VariableProximity from "@/components/animations/VariableProximity";
+import ScrollWordReveal from "@/components/home-page/ScrollWordReveal";
 
 export default function Home() {
   const containerRef = useRef(null);
@@ -46,23 +47,8 @@ export default function Home() {
       {/* Code Preview Section */}
       <CodePreview />
 
-      {/* Variable Proximity Section */}
-      <section className="relative z-900 py-30 px-6">
-        <div
-          ref={textcontainerRef}
-          className="relative mx-auto text-4xl md:text-7xl text-white max-w-4xl text-center pointer-events-auto"
-        >
-          <VariableProximity
-            label={'Hover me! And then star React Bits on GitHub, or else...'}
-            className={'variable-proximity-demo'}
-            fromFontVariationSettings="'wght' 400, 'opsz' 9"
-            toFontVariationSettings="'wght' 1000, 'opsz' 40"
-            containerRef={textcontainerRef}
-            radius={150}
-            falloff='linear'
-          />
-        </div>
-      </section>
+        <ScrollWordReveal />
+      
 
       {/* Stats Section */}
       <StatsSection />
