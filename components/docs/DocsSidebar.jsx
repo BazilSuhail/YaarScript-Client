@@ -72,7 +72,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                     <div className="flex space-x-2">
                         <Link
                             href="/"
-                            className="p-2 text-slate-500 dark:text-sky-50 bg-sky-800 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-all"
+                            className="p-2 text-sky-50 bg-sky-800 hover:text-sky-500 hover:bg-slate-800 rounded-xl transition-all"
                             title="Go Home"
                         >
                             <RiHome4Line className="w-4 h-4" />
@@ -92,8 +92,8 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         transition={{ delay: idx * 0.05 }}
                     >
                         <div className="relative mb-3 px-3">
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-linear-to-b from-sky-500 to-blue-400 dark:from-sky-400 dark:to-blue-500 rounded-full"></div>
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400 pl-4">
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-gradient-to-b from-sky-500 to-blue-400 rounded-full"></div>
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-4">
                                 {section.category}
                             </h3>
                         </div>
@@ -112,8 +112,8 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                                                 transition-all duration-200 flex items-center justify-between group
                                                 relative overflow-hidden
                                                 ${isActive
-                                                    ? "text-white dark:text-white shadow-lg"
-                                                    : "text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
+                                                    ? "text-white shadow-lg"
+                                                    : "text-slate-300 hover:text-white"
                                                 }
                                             `}
                                         >
@@ -121,7 +121,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activeSection"
-                                                    className="absolute inset-0 bg-linear-to-r from-sky-500 to-sky-00 dark:from-sky-600 dark:to-sky-700 rounded-xl"
+                                                    className="absolute inset-0 bg-gradient-to-r from-sky-500 to-sky-600 rounded-xl"
                                                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                                 />
                                             )}
@@ -203,7 +203,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
             </motion.button>
 
             {/* Desktop Sidebar */}
-            <aside className="hidden lg:block w-80 border-r border-slate-200/80 dark:border-slate-800/80 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl fixed h-screen self-start overflow-y-auto shadow-xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <aside className="hidden lg:block w-80 border-r border-slate-800/80 bg-slate-900/80 backdrop-blur-xl sticky top-0 h-screen self-start overflow-y-auto shadow-xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <div className="p-6 pb-20">
                     <SidebarContent />
                 </div>
@@ -226,7 +226,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             animate={{ x: 0 }}
                             exit={{ x: -300 }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 max-w-[85vw] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border-r border-slate-200 dark:border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 max-w-[85vw] bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="p-6 pb-24">

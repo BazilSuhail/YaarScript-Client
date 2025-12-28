@@ -8,29 +8,116 @@ const DocsContent = ({ activeSection }) => {
     const sections = {
         "getting-started": {
             title: "Getting Started with YaarScript",
-            description: "Welcome to YaarScript - an industrial-grade compiler with Urdu-inspired syntax.",
+            description: "Welcome to YaarScript - an industrial-grade compiler with Urdu-inspired syntax that makes programming accessible and intuitive.",
             content: (
                 <>
-                    <p>YaarScript Pro is a professional, industrial-grade multi-pass compiler that brings the warmth of the Urdu language to modern programming. It compiles to optimized Three-Address Code (TAC) and runs natively in the browser via WebAssembly.</p>
+                    <div className="bg-gradient-to-br from-sky-900/30 to-blue-900/30 border border-sky-800/50 rounded-2xl p-6 sm:p-8 mb-8">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-sky-400 mb-4 border-0">What is YaarScript?</h3>
+                        <p className="text-lg leading-relaxed">
+                            YaarScript is a slang-infused Urdu styled programming language that turns regular code into cool slang. It is a professional, close to industrial-grade programming language that brings the warmth and familiarity of the Urdu language to modern coding. Built with <strong>Rust</strong> and compiled to <strong>WebAssembly</strong>, it offers blazing-fast performance while maintaining an intuitive, culturally-resonant syntax.
+                        </p>
+                        <p className="text-lg leading-relaxed mt-4">
+                            Whether you're a beginner learning programming concepts in your native linguistic context, or an experienced developer building production applications, YaarScript provides the tools and features you need.
+                        </p>
+                    </div>
 
-                    <h3>Key Features</h3>
+                    <h3>🎯 Design Philosophy</h3>
+                    <div className="grid gap-4 sm:grid-cols-2 my-6">
+                        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                            <h4 className="text-lg font-bold text-sky-400 mb-2">Cultural Accessibility</h4>
+                            <p className="text-sm text-slate-300">Keywords inspired by Urdu/Hindi make programming intuitive for South Asian developers.</p>
+                        </div>
+                        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                            <h4 className="text-lg font-bold text-sky-400 mb-2">Industrial Strength</h4>
+                            <p className="text-sm text-slate-300">Multi-pass compiler with optimization, type safety, and production-ready features.</p>
+                        </div>
+                        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                            <h4 className="text-lg font-bold text-sky-400 mb-2">Modern Tooling</h4>
+                            <p className="text-sm text-slate-300">Web-based IDE with syntax highlighting, instant compilation, and zero setup required.</p>
+                        </div>
+                        <div className="bg-slate-800/50 border border-slate-700 rounded-xl p-5">
+                            <h4 className="text-lg font-bold text-sky-400 mb-2">Zero Dependencies</h4>
+                            <p className="text-sm text-slate-300">Runs entirely in the browser via WebAssembly - no server required.</p>
+                        </div>
+                    </div>
+
+                    <h3>✨ Key Features</h3>
                     <ul>
-                        <li>🚀 <strong>WebAssembly Powered</strong> - Entire compiler compiled to wasm32-unknown-unknown</li>
-                        <li>🎭 <strong>Urdu Keywords</strong> - Natural, intuitive Urdu-inspired syntax</li>
-                        <li>⚡ <strong>Multi-Pass Optimizer</strong> - Fixed-point optimization with constant folding and DCE</li>
-                        <li>🔒 <strong>Strong Type System</strong> - Strict typing with no implicit coercion</li>
-                        <li>🎨 <strong>Modern IDE</strong> - Professional editor with syntax highlighting</li>
+                        <li><strong>WebAssembly Powered</strong> - Entire compiler compiled to wasm32-unknown-unknown for native browser performance</li>
+                        <li><strong>Urdu-Inspired Keywords</strong> - Natural, intuitive syntax using familiar words like <code>agar</code>, <code>warna</code>, <code>dohrao</code></li>
+                        <li><strong>Multi-Pass Optimizer</strong> - Fixed-point optimization with constant folding, dead code elimination, and peephole optimization</li>
+                        <li><strong>Strong Type System</strong> - Strict typing with no implicit coercion ensures code safety and reliability</li>
+                        <li><strong>Modern IDE Experience</strong> - Professional editor with syntax highlighting, auto-completion, and real-time error detection</li>
+                        <li><strong>Three-Address Code</strong> - Generates optimized intermediate representation for efficient execution</li>
+                        <li><strong>Rich Data Types</strong> - Support for integers, floats, doubles, characters, strings, and booleans</li>
+                        <li><strong>Control Flow Mastery</strong> - Complete set of control structures including loops, conditionals, and switch statements</li>
                     </ul>
 
-                    <h3>Compiler Architecture</h3>
+                    <h3>🏗️ Compiler Architecture</h3>
+                    <p>YaarScript features a sophisticated multi-stage compilation pipeline:</p>
                     <ol>
-                        <li><strong>Lexical Analysis</strong> - Scans source code into tokens with Unicode support</li>
-                        <li><strong>Syntax Analysis</strong> - Top-Down Operator Precedence (Pratt) Parser</li>
-                        <li><strong>Semantic Analysis</strong> - Scope management and type checking</li>
-                        <li><strong>IR Generation</strong> - Generates Three-Address Code (TAC)</li>
-                        <li><strong>Optimization</strong> - Fixed-point passes for optimization</li>
-                        <li><strong>Execution</strong> - High-performance WASM VM</li>
+                        <li><strong>Lexical Analysis (Scanner)</strong> - Tokenizes source code with full Unicode support, handling Urdu keywords and special characters</li>
+                        <li><strong>Syntax Analysis (Parser)</strong> - Top-Down Operator Precedence (Pratt) Parser builds an Abstract Syntax Tree (AST) with proper operator precedence</li>
+                        <li><strong>Semantic Analysis</strong> - Comprehensive scope management, symbol table construction, and type checking with detailed error reporting</li>
+                        <li><strong>IR Generation</strong> - Generates Three-Address Code (TAC), a low-level intermediate representation optimized for analysis</li>
+                        <li><strong>Optimization Passes</strong> - Fixed-point optimization including constant folding, common subexpression elimination, and dead code removal</li>
+                        <li><strong>Execution Engine</strong> - High-performance virtual machine executes optimized TAC with runtime type safety</li>
                     </ol>
+
+                    <h3>🎓 Who is YaarScript For?</h3>
+                    <div className="bg-slate-800/30 border-l-4 border-sky-500 rounded-r-xl p-6 my-6">
+                        <ul className="space-y-3">
+                            <li><strong>Students & Beginners</strong> - Learn programming concepts in a linguistically familiar environment</li>
+                            <li><strong>Educators</strong> - Teach computer science using culturally relevant syntax that resonates with students</li>
+                            <li><strong>Hobbyists</strong> - Experiment with compiler design and language implementation</li>
+                            <li><strong>Developers</strong> - Build tools and applications with a unique, expressive language</li>
+                            <li><strong>Researchers</strong> - Study programming language design with focus on cultural adaptation</li>
+                        </ul>
+                    </div>
+
+                    <h3>🚀 Quick Example</h3>
+                    <p>Here's a taste of YaarScript's intuitive syntax:</p>
+                    <CodeBlock code={`// Your first YaarScript program
+yaar {
+    // Variables with Urdu-inspired types
+    lafz greeting = "Assalam-o-Alaikum";
+    number count = 10;
+    faisla isActive = sahi;
+    
+    // Print output
+    bolo(greeting, " from YaarScript!\\n");
+    bolo("Count: ", count, "\\n");
+    
+    // Conditional logic
+    agar (isActive) {
+        bolo("System is active!\\n");
+    } warna {
+        bolo("System inactive.\\n");
+    }
+    
+    // Loops made simple
+    dohrao (number i = 1; i <= 5; i++) {
+        bolo("Iteration #", i, "\\n");
+    }
+}`} />
+
+                    <h3>📚 What You'll Learn</h3>
+                    <p>This documentation covers everything you need to master YaarScript:</p>
+                    <ul>
+                        <li>Complete language syntax and semantics</li>
+                        <li>Type system and variable declarations</li>
+                        <li>Functions, control flow, and loops</li>
+                        <li>Advanced features like enums and constants</li>
+                        <li>Best practices and coding patterns</li>
+                        <li>Real-world examples and use cases</li>
+                    </ul>
+
+                    <div className="bg-gradient-to-br from-amber-900/20 to-orange-900/20 border border-amber-700/50 rounded-xl p-6 mt-8">
+                        <h4 className="text-lg font-bold text-amber-400 mb-3">💡 Pro Tip</h4>
+                        <p className="text-slate-300">
+                            Start with the <strong>Quick Start</strong> section to write your first program, then explore <strong>Variables & Types</strong> to understand the type system. Use the online playground to experiment as you learn!
+                        </p>
+                    </div>
                 </>
             )
         },

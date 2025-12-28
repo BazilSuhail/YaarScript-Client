@@ -58,7 +58,7 @@ const HomeFooter = () => {
               className={`${poppins.className} text-lg lg:text-2xl mt-4 text-sky-200`}
               style={{ fontWeight: 500 }}
             >
-              Apki Zuban, Apki Marzi ka Code
+              Apki Zuban, Apki Marzi wala Code
             </p>
 
             <style jsx>{`

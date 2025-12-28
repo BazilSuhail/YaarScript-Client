@@ -55,12 +55,12 @@ const FeaturesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-sky-400 via-sky-600 to-sky-800 animate-gradient-features bg-[length:200%_auto] mb-4">
+          <h2 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-linear-to-r from-white  via-sky-600 to-sky-800 animate-linear-features bg-size-[200%_auto] mb-4">
             Powerful Features
           </h2>
           
           <style jsx>{`
-            @keyframes gradient-features {
+            @keyframes linear-features {
               0%, 100% {
                 background-position: 0% 50%;
               }
@@ -68,8 +68,8 @@ const FeaturesSection = () => {
                 background-position: 100% 50%;
               }
             }
-            .animate-gradient-features {
-              animation: gradient-features 2s ease infinite;
+            .animate-linear-features {
+              animation: linear-features 2s ease infinite;
             }
           `}</style>
           <p className="text-xl text-slate-400">

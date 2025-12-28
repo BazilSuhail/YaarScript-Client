@@ -38,7 +38,7 @@ const ScrollWordReveal = ({
           ))}
         </div>
 
-        {/* Animated gradient foreground */}
+        {/* Animated linear foreground */}
         <div className="relative flex flex-wrap justify-center">
           {words.map((word, i) => {
             const start = (i / words.length) * SCROLL_END;
@@ -51,7 +51,7 @@ const ScrollWordReveal = ({
               <motion.span
                 key={`motion-${i}`}
                 style={{ opacity, x }}
-                className="inline-block mr-2 text-transparent bg-clip-text bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 animate-gradient-text"
+                className="inline-block mr-2 text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-sky-600 to-sky-700 animate-linear-text"
               >
                 {word}
               </motion.span>
@@ -62,7 +62,7 @@ const ScrollWordReveal = ({
 
       {/* Gradient animation style */}
       <style jsx>{`
-        @keyframes gradient-text {
+        @keyframes linear-text {
           0% {
             background-position: 0% 50%;
           }
@@ -70,9 +70,9 @@ const ScrollWordReveal = ({
             background-position: 200% 50%;
           }
         }
-        .animate-gradient-text {
-          background-size: 200% 100%; /* important to make gradient move */
-          animation: gradient-text 3s linear infinite;
+        .animate-linear-text {
+          background-size: 200% 100%; /* important to make linear move */
+          animation: linear-text 3s linear infinite;
         }
       `}</style>
     </section>

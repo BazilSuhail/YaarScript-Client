@@ -2,6 +2,13 @@
 
 import React from "react";
 import { motion } from "framer-motion";
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+    weight: ['600'],
+    subsets: ['latin'],
+    display: 'swap',
+});
 
 const DocSection = ({ title, description, content }) => {
     return (
@@ -10,16 +17,16 @@ const DocSection = ({ title, description, content }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="flex-1 w-full min-w-0 p-4 sm:p-6 md:p-8 lg:p-12 max-w-4xl"
+            className="flex-1 w-full min-w-0 p-4 sm:p-6 md:p-8 lg:p-12 max-w-5xl"
         >
-            <article className="prose prose-slate dark:prose-invert max-w-none">
-                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-slate-50 mb-3 wrap-break-words">
+            <article className="prose prose-slate prose-invert max-w-none">
+                <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-50 mb-4 wrap-break-words ${poppins.className}`}>
                     {title}
                 </h1>
-                <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-400 mb-8 pb-6 border-b border-slate-200 dark:border-slate-800">
+                <p className="text-base sm:text-lg lg:text-xl text-slate-400 mb-8 pb-6 border-b border-slate-800">
                     {description}
                 </p>
-                <div className="doc-content space-y-6">
+                <div className="doc-content space-y-8">
                     {content}
                 </div>
             </article>
@@ -39,9 +46,11 @@ const DocSection = ({ title, description, content }) => {
                 .doc-content h3 {
                     font-size: 1.25rem;
                     font-weight: 700;
-                    color: rgb(15 23 42);
-                    margin-top: 2rem;
-                    margin-bottom: 1rem;
+                    color: rgb(241 245 249);
+                    margin-top: 2.5rem;
+                    margin-bottom: 1.25rem;
+                    padding-left: 1rem;
+                    border-left: 4px solid rgb(56 189 248);
                 }
 
                 @media (min-width: 640px) {
@@ -50,29 +59,35 @@ const DocSection = ({ title, description, content }) => {
                     }
                 }
 
-                .dark .doc-content h3 {
-                    color: rgb(241 245 249);
+                @media (min-width: 1024px) {
+                    .doc-content h3 {
+                        font-size: 1.75rem;
+                    }
                 }
 
                 .doc-content p {
-                    color: rgb(71 85 105);
-                    line-height: 1.75;
-                    margin: 1rem 0;
+                    color: rgb(148 163 184);
+                    line-height: 1.875;
+                    margin: 1.25rem 0;
+                    font-size: 1rem;
                 }
 
-                .dark .doc-content p {
-                    color: rgb(148 163 184);
+                @media (min-width: 640px) {
+                    .doc-content p {
+                        font-size: 1.0625rem;
+                    }
                 }
 
                 /* Inline code */
                 .doc-content code {
-                    background: rgb(226 232 240);
-                    color: rgb(14 116 144);
-                    padding: 0.125rem 0.375rem;
-                    border-radius: 0.25rem;
+                    background: rgb(30 41 59);
+                    color: rgb(56 189 248);
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 0.375rem;
                     font-size: 0.875em;
                     font-weight: 600;
                     word-break: break-word;
+                    border: 1px solid rgb(51 65 85);
                 }
 
                 @media (min-width: 640px) {
@@ -81,79 +96,66 @@ const DocSection = ({ title, description, content }) => {
                     }
                 }
 
-                .dark .doc-content code {
-                    background: rgb(30 41 59);
-                    color: rgb(56 189 248);
-                }
-
                 /* Links */
                 .doc-content a {
-                    color: rgb(14 116 144);
+                    color: rgb(56 189 248);
                     text-decoration: none;
                     font-weight: 500;
                     word-break: break-word;
+                    transition: all 0.2s;
                 }
 
                 .doc-content a:hover {
+                    color: rgb(125 211 252);
                     text-decoration: underline;
-                }
-
-                .dark .doc-content a {
-                    color: rgb(56 189 248);
                 }
 
                 /* Strong text */
                 .doc-content strong {
-                    color: rgb(15 23 42);
-                    font-weight: 600;
-                }
-
-                .dark .doc-content strong {
                     color: rgb(241 245 249);
+                    font-weight: 700;
                 }
 
                 /* Lists */
                 .doc-content ul {
-                    list-style-type: disc;
-                    padding-left: 1.25rem;
-                    margin: 1rem 0;
-                    color: rgb(71 85 105);
-                }
-
-                @media (min-width: 640px) {
-                    .doc-content ul {
-                        padding-left: 1.5rem;
-                    }
-                }
-
-                .dark .doc-content ul {
+                    list-style-type: none;
+                    padding-left: 0;
+                    margin: 1.5rem 0;
                     color: rgb(148 163 184);
+                }
+
+                .doc-content ul li {
+                    position: relative;
+                    padding-left: 2rem;
+                }
+
+                .doc-content ul li::before {
+                    content: "▹";
+                    position: absolute;
+                    left: 0.5rem;
+                    color: rgb(56 189 248);
+                    font-weight: bold;
                 }
 
                 .doc-content ol {
                     list-style-type: decimal;
-                    padding-left: 1.25rem;
-                    margin: 1rem 0;
-                    color: rgb(71 85 105);
-                }
-
-                @media (min-width: 640px) {
-                    .doc-content ol {
-                        padding-left: 1.5rem;
-                    }
-                }
-
-                .dark .doc-content ol {
+                    padding-left: 1.75rem;
+                    margin: 1.5rem 0;
                     color: rgb(148 163 184);
                 }
 
-                .doc-content li {
-                    margin: 0.5rem 0;
-                    line-height: 1.75;
-                    color: rgb(71 85 105);
+                .doc-content ol li {
+                    padding-left: 0.5rem;
                 }
 
-                .dark .doc-content li {
+                .doc-content ol li::marker {
+                    color: rgb(56 189 248);
+                    font-weight: bold;
+                }
+
+                .doc-content li {
+                    margin: 0.75rem 0;
+                    line-height: 1.875;
                     color: rgb(148 163 184);
                 }
 
@@ -161,10 +163,12 @@ const DocSection = ({ title, description, content }) => {
                 .doc-content table {
                     width: 100%;
                     border-collapse: collapse;
-                    margin: 1.5rem 0;
+                    margin: 2rem 0;
                     font-size: 0.8rem;
                     display: block;
                     overflow-x: auto;
+                    border-radius: 0.75rem;
+                    border: 1px solid rgb(51 65 85);
                 }
 
                 @media (min-width: 640px) {
@@ -181,62 +185,44 @@ const DocSection = ({ title, description, content }) => {
                 }
 
                 .doc-content thead {
-                    background: rgb(241 245 249);
-                    border-bottom: 2px solid rgb(226 232 240);
-                }
-
-                .dark .doc-content thead {
                     background: rgb(15 23 42);
-                    border-bottom: 2px solid rgb(51 65 85);
+                    border-bottom: 2px solid rgb(56 189 248);
                 }
 
                 .doc-content th {
-                    padding: 0.5rem 0.75rem;
+                    padding: 0.75rem 1rem;
                     text-align: left;
-                    font-weight: 600;
-                    color: rgb(15 23 42);
+                    font-weight: 700;
+                    color: rgb(241 245 249);
                     white-space: nowrap;
                 }
 
                 @media (min-width: 640px) {
                     .doc-content th {
-                        padding: 0.75rem 1rem;
+                        padding: 1rem 1.25rem;
                     }
-                }
-
-                .dark .doc-content th {
-                    color: rgb(241 245 249);
                 }
 
                 .doc-content td {
-                    padding: 0.5rem 0.75rem;
-                    border-bottom: 1px solid rgb(226 232 240);
-                    color: rgb(71 85 105);
-                }
-
-                @media (min-width: 640px) {
-                    .doc-content td {
-                        padding: 0.75rem 1rem;
-                    }
-                }
-
-                .dark .doc-content td {
+                    padding: 0.75rem 1rem;
                     border-bottom: 1px solid rgb(51 65 85);
                     color: rgb(148 163 184);
                 }
 
-                .doc-content tbody tr:hover {
-                    background: rgb(248 250 252);
+                @media (min-width: 640px) {
+                    .doc-content td {
+                        padding: 1rem 1.25rem;
+                    }
                 }
 
-                .dark .doc-content tbody tr:hover {
+                .doc-content tbody tr:hover {
                     background: rgb(30 41 59);
                 }
 
                 .doc-content td code {
-                    background: rgb(226 232 240);
-                    color: rgb(14 116 144);
-                    padding: 0.125rem 0.375rem;
+                    background: rgb(51 65 85);
+                    color: rgb(56 189 248);
+                    padding: 0.25rem 0.5rem;
                     border-radius: 0.25rem;
                     font-size: 0.8em;
                     font-weight: 600;
@@ -248,9 +234,12 @@ const DocSection = ({ title, description, content }) => {
                     }
                 }
 
-                .dark .doc-content td code {
-                    background: rgb(51 65 85);
-                    color: rgb(56 189 248);
+                /* Custom h4 for info boxes */
+                .doc-content h4 {
+                    font-size: 1.125rem;
+                    font-weight: 700;
+                    margin-top: 1rem;
+                    margin-bottom: 0.75rem;
                 }
             `}</style>
         </motion.main>

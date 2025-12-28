@@ -45,9 +45,8 @@ export default function Home() {
       {/* Code Preview Section */}
       <CodePreview />
 
-        <ScrollWordReveal />
+      <ScrollWordReveal />
       
-
       {/* Stats Section */}
       <StatsSection />
 

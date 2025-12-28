@@ -40,8 +40,8 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative lg:mt-25">
-      <div className="max-w-5xl bg-gradient-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
+    <footer className="relative">
+      <div className="w-full bg-linear-to-l from-slate-600 via-slate-700 to-slate-600 h-1 mx-auto"></div>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col items-center justify-center space-y-8">
@@ -64,7 +64,7 @@ const Footer = () => {
               className={`${poppins.className} text-lg lg:text-2xl mt-4 text-sky-200`}
               style={{ fontWeight: 500 }}
             >
-              Apki Zuban, Apki Marzi ka Code
+              Apki Zuban, Apki Marzi wala Code
             </p>
 
             <style jsx>{`
@@ -117,7 +117,7 @@ const Footer = () => {
           </div>
 
           {/* Divider */}
-          <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
+          <div className="w-full max-w-md h-px bg-linear-to-r from-transparent via-slate-700 to-transparent" />
 
           {/* Copyright */}
           <div className="text-center">

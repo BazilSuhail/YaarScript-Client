@@ -9,13 +9,13 @@ export default function DocsPage() {
     const [activeSection, setActiveSection] = useState("getting-started");
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 ">
-            <div className="max-w-[1920px] mx-auto flex">
+        <div className="min-h-screen bg-slate-950 flex flex-col">
+            <div className="flex relative flex-1">
                 <DocsSidebar 
                     activeSection={activeSection} 
                     setActiveSection={setActiveSection} 
                 />
-                <div className="lg:ml-80 w-full">
+                <div className="lg:ml-5 md:mt-0 mt-5 w-full flex flex-col">
                     <DocsContent activeSection={activeSection} />
                 </div>
             </div>
