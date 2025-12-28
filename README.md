@@ -1,10 +1,7 @@
-# 🚀 YaarScript
+# YaarScript ![YaarScript Logo](https://img.shields.io/badge/YaarScript-Apki%20Zuban%2C%20Apki%20Code-00D9FF?style=for-the-badge)
 
-<div align="center">
 
-![YaarScript Logo](https://img.shields.io/badge/YaarScript-Apki%20Zuban%2C%20Apki%20Code-00D9FF?style=for-the-badge)
-
-**An industrial-grade programming language with Urdu-inspired syntax, compiled to WebAssembly**
+**A slang-infused Urdu styled programming language that turns regular code into cool slang**
 
 [![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
@@ -12,7 +9,7 @@
 [![Rust](https://img.shields.io/badge/Rust-Backend-000000?style=flat-square&logo=rust)](https://www.rust-lang.org/)
 [![License](https://img.shields.io/badge/License-Open%20Source-green?style=flat-square)](LICENSE)
 
-[**Try Online Playground**](#) • [**Documentation**](#documentation) • [**Examples**](#quick-examples) • [**Contributing**](#contributing)
+[**Try Online Playground**](https://yaarscript.netlify.app/editor) • [**Documentation**](https://yaarscript.netlify.app/docs) • [**Examples**](#quick-examples) • [**Actual Compiler**](https://github.com/BazilSuhail/Custom-Compiler)
 
 </div>
 
@@ -268,7 +265,7 @@ yaar {
 
 ## 🎮 Online Playground
 
-Visit our [**Online Editor**](http://localhost:3000/editor) to start coding immediately without any installation. The playground features:
+Visit our [**Online Editor**](https://yaarscript.netlify.app/editor) to start coding immediately without any installation. The playground features:
 
 - 🎨 **Syntax Highlighting** – Clean, readable code editor
 - ⚡ **Instant Compilation** – Real-time compilation and execution
