@@ -117,7 +117,7 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
 
     return (
         <>
-            <div className="relative group my-6 -mx-4 sm:mx-0">
+            <div className="relative group my-6 md:-mx-4 sm:mx-0">
                 <button
                     onClick={copyCode}
                     className="absolute top-2 right-2 sm:top-3 sm:right-3 p-2 bg-slate-700 hover:bg-slate-600 text-slate-200 rounded-lg opacity-0 group-hover:opacity-100 transition-all z-10"
