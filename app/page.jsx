@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useRef } from "react"; 
-import RippleGrid from "@/components/animations/FaultyTerminal";
+import { useRef } from "react"; 
 import ScrollVelocity from "@/components/animations/ScrollVelocity";
 import HeroSection from "@/components/home-page/HeroSection";
 import CodePreview from "@/components/home-page/CodePreview";
