@@ -36,6 +36,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${outfit.variable} ${jetbrainsMono.variable}`}
     >
       <body

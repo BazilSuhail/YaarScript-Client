@@ -10,6 +10,7 @@ import FeaturesSection from "@/components/home-page/FeaturesSection";
 import CTASection from "@/components/home-page/CTASection"; 
 import ScrollWordReveal from "@/components/home-page/ScrollWordReveal"; 
 import HomeFooter from "@/components/home-page/HomeFooter";
+import NeuralGlow from "@/components/animations/NeuralGlow";
 
 export default function Home() {
   const containerRef = useRef(null); 
@@ -18,16 +19,7 @@ export default function Home() {
     <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-950 to-slate-900">
       {/* RippleGrid Background */}
       <div className="fixed inset-0 w-full h-full overflow-hidden opacity-55 z-0" aria-hidden="true">
-        <RippleGrid
-          enableRainbow={true}
-          gridColor="#ffffff"
-          rippleIntensity={0.03}
-          gridSize={45}
-          gridThickness={15}
-          mouseInteraction={true}
-          mouseInteractionRadius={2}
-          opacity={0.8}
-        />
+         <NeuralGlow />
       </div>
 
       {/* Hero Section */}
