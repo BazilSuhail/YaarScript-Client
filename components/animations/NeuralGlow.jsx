@@ -70,9 +70,18 @@ const NeuralGlow = () => {
         noise = max(.0, noise - .5);
         noise *= (1. - length(vUv - .5));
 
-        // Blue/indigo color palette
-        color = vec3(0.1, 0.2, 0.8); // Base blue color
-        color += vec3(0.0, 0.1, 0.4) * sin(3.0 * u_scroll_progress + 1.5); // Indigo variation
+        // Sky blue color palette matching app theme - darker shade
+        // Base: sky-700 (#0369a1), with sky-600 (#0284c7) and sky-900 (#082f49) accents
+        vec3 skyBlueBase = vec3(0.01, 0.41, 0.63); // sky-700
+        vec3 skyBlueLight = vec3(0.01, 0.52, 0.78); // sky-600
+        vec3 skyBlueDark = vec3(0.03, 0.18, 0.29); // sky-900
+        
+        // Create a smooth gradient between sky blue tones
+        color = mix(skyBlueDark, skyBlueBase, 0.5);
+        color = mix(color, skyBlueLight, sin(u_scroll_progress * 2.0) * 0.5 + 0.5);
+        
+        // Add pointer interaction with light sky blue
+        color += skyBlueLight * p * 0.4;
 
         color = color * noise;
 

@@ -31,7 +31,7 @@ const HeroSection = () => {
             <span className="text-4xl md:text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 to-sky-800 animate-linear bg-size-[200%_auto]">
               Apki Zuban
             </span>
-            <span className="block text-transparent lg:mt-2 bg-clip-text bg-linear-to-r from-sky-500 via-blue-500 to-indigo-600">
+            <span className="block text-transparent lg:mt-2 bg-clip-text bg-linear-to-r from-sky-300 via-blue-400 to-sky-600">
               Apki marzi wala Code
             </span>
           </h1>
@@ -58,7 +58,7 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
             <Link
               href="/editor"
-              className="group pointer-events-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-linear-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-sky-500/20 transition-all hover:shadow-xl hover:shadow-sky-500/30"
+              className="group pointer-events-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-linear-to-r from-sky-500 to-sky-800 hover:from-sky-600 hover:to-blue-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-sky-500/20 transition-all hover:shadow-xl hover:shadow-sky-500/30"
             >
               <RiRocket2Line className="w-4 h-4 group-hover:rotate-12 transition-transform" />
               <span>Try Editor</span>
