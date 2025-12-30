@@ -15,7 +15,7 @@ const CTASection = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-[3rem] backdrop-blur-xs bg-sky-800/20 p-1"
+          className="relative overflow-hidden rounded-[3rem] backdrop-blur-xs bg-sky-900/10 p-1"
         >
           <div className="relative bg-transparent rounded-[2.8rem] px-12 py-30 text-center overflow-hidden">
             
