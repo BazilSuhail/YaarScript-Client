@@ -25,7 +25,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Scroll Velocity */}
-      <section className="max-w-5xl mx-auto mb-20 px-4 z-10 text-sky-200">
+      <section className="max-w-5xl mx-auto mb-20 px-4 z-10 text-sky-200 ]">
         <ScrollVelocity
           texts={['YaarScript •', 'Urdu Styled Compiler •']}
           velocity={50}

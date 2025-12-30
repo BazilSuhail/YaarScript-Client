@@ -59,7 +59,7 @@ const CodeEditor = ({
                     onKeyUp={updateLineCol}
                     spellCheck="false"
                     wrap="off"
-                    className="absolute top-0 bottom-0 left-10 md:left-12 right-0 m-0 p-4 md:p-6 bg-transparent text-transparent resize-none outline-none overflow-auto whitespace-pre z-20"
+                    className="absolute top-0 bottom-0 left-10 md:left-12 right-0 m-0 p-4 md:p-6 bg-transparent text-transparent resize-none outline-none overflow-auto whitespace-pre z-20 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                     style={{
                         fontSize: '13px',
                         lineHeight: '1.5rem',

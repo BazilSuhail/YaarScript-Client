@@ -27,8 +27,8 @@ const HeroSection = () => {
             <span className="sm:hidden">Open Source • Urdu Based</span>
           </div>
 
-          <h1 className={`text-3xl  md:text-6xl lg:text-[55px] font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
-            <span className="text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 to-sky-800 animate-linear bg-size-[200%_auto]">
+          <h1 className={`text-[28px]  md:text-6xl lg:text-[55px] font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
+            <span className="text-[52px] lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 to-sky-800 animate-linear bg-size-[200%_auto]">
               Apki Zuban
             </span>
             <span className="block text-transparent mt-2 bg-clip-text bg-linear-to-r from-sky-300 via-sky-400 to-sky-600">
@@ -50,7 +50,7 @@ const HeroSection = () => {
             }
           `}</style>
 
-          <p className={`text-base md:text-lg text-slate-100 max-w-2xl mx-auto mb-10 leading-relaxed font-medium ${poppins.className}`}>
+          <p className={`text-[13px] sm:text-base md:text-lg text-slate-100 max-w-2xl mx-auto mb-10 leading-relaxed font-medium ${poppins.className}`}>
             YaarScript ek modern compiler hai jo <strong>Urdu/Roman Urdu keywords</strong> ke sath programming ko asaan banata hai.
             Apni zuban mein clean aur powerful code likho.
           </p>
@@ -65,7 +65,7 @@ const HeroSection = () => {
             </Link>
             <Link
               href="/docs"
-              className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-semibold rounded-xl border border-slate-700 transition-all hover:border-sky-500"
+              className="inline-flex pointer-events-auto items-center justify-center gap-2 px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-100 text-sm font-semibold rounded-xl border border-slate-700 transition-all hover:border-sky-500"
             >
               <RiLightbulbLine className="w-4 h-4" />
               <span>Documentation</span>

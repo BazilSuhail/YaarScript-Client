@@ -55,7 +55,7 @@ const FeaturesSection = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl md:text-6xl font-black text-transparent bg-clip-text bg-linear-to-r from-white  via-sky-600 to-sky-800 animate-linear-features bg-size-[200%_auto] mb-4">
+          <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-linear-to-r from-white  via-sky-600 to-sky-800 animate-linear-features bg-size-[200%_auto] mb-4">
             Powerful Features
           </h2>
           
@@ -72,7 +72,7 @@ const FeaturesSection = () => {
               animation: linear-features 2s ease infinite;
             }
           `}</style>
-          <p className="text-xl text-slate-400">
+          <p className="text-[13px] sm:text-xl text-slate-400">
             Everything you need to write modern code
           </p>
         </motion.div>
@@ -83,8 +83,7 @@ const FeaturesSection = () => {
               key={feature.title}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
+              transition={{ duration: 0.6}}
               className="group bg-slate-800/30 backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50 hover:border-sky-500/50 transition-all hover:shadow-xl hover:shadow-sky-500/10"
             >
               <div className="w-14 h-14 rounded-2xl bg-linear-to-r from-sky-500 to-sky-700 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">

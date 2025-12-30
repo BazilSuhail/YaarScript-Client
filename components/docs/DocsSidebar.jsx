@@ -17,7 +17,6 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                 { id: "quick-start", label: "Quick Start" },
             ]
         },
-        
         {
             category: "Reference",
             items: [
