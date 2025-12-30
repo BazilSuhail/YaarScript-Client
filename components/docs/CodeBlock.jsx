@@ -117,7 +117,7 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
 
     return (
         <>
-            <div className="relative group my-6 md:-mx-4 sm:mx-0 rounded-xl overflow-hidden border border-slate-800 bg-slate-900/50 backdrop-blur-sm">
+            <div className="relative group my-6  sm:mx-0 rounded-xl overflow-hidden border border-slate-800 bg-slate-900/50 backdrop-blur-sm">
                 <div className="flex items-center justify-between px-4 py-2 border-b border-slate-800 bg-slate-900/80">
                     <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
                         {language === "yaarscript" ? "YaarScript" : language}

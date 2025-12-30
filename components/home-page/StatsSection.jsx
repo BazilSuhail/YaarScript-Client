@@ -83,7 +83,7 @@ const StatsSection = () => {
             viewport={{ once: true }}
             className={`col-span-1 ${stat.span} ${stat.rowSpan} bg-slate-800/30 backdrop-blur-sm rounded-3xl p-6 md:p-10 border border-slate-700/50 hover:border-sky-500/50 transition-all`}
           >
-            <div className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-blue-600 mb-3 md:mb-4 ${poppins.className}`}>
+            <div className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-sky-700 mb-3 md:mb-4 ${poppins.className}`}>
               {stat.value}
             </div>
             <h3 className={`text-lg sm:text-xl md:text-2xl font-medium text-slate-50 mb-2 ${poppins.className}`}>

@@ -87,7 +87,7 @@ const FeaturesSection = () => {
               viewport={{ once: true }}
               className="group bg-slate-800/30 backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50 hover:border-sky-500/50 transition-all hover:shadow-xl hover:shadow-sky-500/10"
             >
-              <div className="w-14 h-14 rounded-2xl bg-linear-to-r from-sky-500 to-blue-600 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-2xl bg-linear-to-r from-sky-500 to-sky-700 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
                 {feature.icon}
               </div>
               <h3 className="text-xl font-bold text-slate-50 mb-3">

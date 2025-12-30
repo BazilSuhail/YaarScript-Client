@@ -137,7 +137,7 @@ yaar {
                     <h3>Step 1: Build the WASM Compiler</h3>
                     <p>First, you need to build the YaarScript compiler to WebAssembly:</p>
                     <CodeBlock code={`# Clone the compiler repository (wasm-compiler branch)
-git clone -b wasm-compiler https://github.com/YourUsername/YaarScript-Compiler.git
+git clone -b wasm-compiler https://github.com/BazilSuhail/YaarScript.git
 cd YaarScript-Compiler
 
 # Build the WASM package
@@ -343,28 +343,31 @@ yaar {
             content: (
                 <>
                     <h3>Basic If Statement</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">agar</strong> (if in C/C++) executes a block of code only when a condition is <code>sahi</code> (true). The condition is evaluated, and if true, the code inside the braces executes. If false, the block is skipped.
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>if (condition) &#123; ... &#125;</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`agar (condition) {
     // Execute if true
 }`} />
 
                     <h3>If-Else</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">warna</strong> (else in C/C++) provides an alternative block to execute when the <code>agar</code> condition is <code>galat</code> (false). This allows you to handle both true and false cases.
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>if (...) &#123; ... &#125; else &#123; ... &#125;</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`agar (score >= 50) {
     bolo("Pass\\n");
 } warna {
     bolo("Fail\\n");
-}`} />
-
-                    <h3>If-Else If-Else</h3>
-                    <CodeBlock code={`number grade = 85;
-
-agar (grade >= 90) {
-    bolo("Grade: A\\n");
-} warna agar (grade >= 80) {
-    bolo("Grade: B\\n");
-} warna agar (grade >= 70) {
-    bolo("Grade: C\\n");
-} warna {
-    bolo("Grade: F\\n");
 }`} />
                 </>
             )
@@ -375,16 +378,37 @@ agar (grade >= 90) {
             content: (
                 <>
                     <h3>Syntax</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">dohrao</strong> (for in C/C++) creates a loop that repeats a block of code a specific number of times. It has three parts: initialization (set starting value), condition (check when to stop), and increment (change value each loop).
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>for (init; condition; increment) &#123; ... &#125;</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`dohrao (initialization; condition; increment) {
     // Loop body
 }`} />
 
                     <h3>Basic Example</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            This loop starts with <code>i = 0</code>, repeats while <code>i &lt; 5</code>, and increments <code>i</code> by 1 after each iteration. The loop body executes 5 times total (i = 0, 1, 2, 3, 4).
+                        </p>
+                    </div>
                     <CodeBlock code={`dohrao (number i = 0; i < 5; i++) {
     bolo("Iteration: ", i, "\\n");
 }`} />
 
                     <h3>With Break (bas_kar)</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">bas_kar</strong> (break in C/C++) immediately exits the loop, skipping any remaining iterations. Useful for stopping early when a condition is met.
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>break;</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`dohrao (number i = 1; i <= 10; i++) {
     agar (i > 5) {
         bas_kar;  // Exit loop
@@ -393,6 +417,11 @@ agar (grade >= 90) {
 }`} />
 
                     <h3>Nested Loops</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            You can place loops inside other loops. The inner loop completes all its iterations for each iteration of the outer loop. This creates a multiplication effect - with two nested loops of 3 iterations each, the body executes 9 times total.
+                        </p>
+                    </div>
                     <CodeBlock code={`dohrao (number i = 1; i <= 3; i++) {
     dohrao (number j = 1; j <= 3; j++) {
         bolo(i, " x ", j, " = ", i * j, "\\n");
@@ -408,11 +437,24 @@ agar (grade >= 90) {
             content: (
                 <>
                     <h3>Syntax</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">jabtak</strong> (while in C/C++) repeats a block as long as a condition remains <code>sahi</code> (true). It checks the condition before each iteration. If the condition is false from the start, the loop never executes.
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>while (condition) &#123; ... &#125;</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`jabtak (condition) {
     // Loop body
 }`} />
 
                     <h3>Basic Example</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            This loop repeats while <code>count &lt; 5</code>. Each iteration, count increases by 1. When count reaches 5, the condition becomes false and the loop stops. Without the increment, the loop would run forever (infinite loop).
+                        </p>
+                    </div>
                     <CodeBlock code={`number count = 0;
 jabtak (count < 5) {
     bolo("Count: ", count, "\\n");
@@ -420,6 +462,11 @@ jabtak (count < 5) {
 }`} />
 
                     <h3>Input Validation Pattern</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            While loops are ideal for validation - repeat until a valid input is received. This example keeps asking for input while both conditions are true: success hasn't happened AND attempts haven't exceeded 3.
+                        </p>
+                    </div>
                     <CodeBlock code={`number attempts = 0;
 faisla success = galat;
 
@@ -437,11 +484,24 @@ jabtak (!success && attempts < 3) {
             content: (
                 <>
                     <h3>Syntax</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">karo...jabtak</strong> (do...while in C/C++) executes a block at least once before checking the condition. Unlike <code>jabtak</code>, the loop body always runs at minimum one time, then repeats if the condition is <code>sahi</code> (true).
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>do &#123; ... &#125; while (condition);</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`karo {
     // Loop body (executes at least once)
 } jabtak (condition);`} />
 
                     <h3>Example</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            This loop will execute at least once (attempts becomes 1), then check if attempts &lt; 3. If true, it repeats. Perfect for ensuring an action happens at least one time before checking a repeat condition.
+                        </p>
+                    </div>
                     <CodeBlock code={`number attempts = 0;
 karo {
     attempts = attempts + 1;
@@ -449,6 +509,11 @@ karo {
 } jabtak (attempts < 3);`} />
 
                     <h3>Menu Loop Pattern</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            Do-while loops are perfect for menu systems. Display the menu at least once, get user input, then repeat if they don't choose exit. This ensures users always see the menu before choosing.
+                        </p>
+                    </div>
                     <CodeBlock code={`number choice;
 karo {
     bolo("\\n=== Menu ===\\n");
@@ -469,6 +534,14 @@ karo {
             content: (
                 <>
                     <h3>Syntax</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">intekhab</strong> (switch in C/C++) evaluates an expression once and compares it to multiple cases. Use <strong className="text-sky-400">agar_ho</strong> (case) to match values and <strong className="text-sky-400">bas_kar</strong> (break) to exit each case. <strong className="text-sky-400">aakhir</strong> (default) handles unmatched values.
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>switch (expr) &#123; case val: ... break; default: ... &#125;</code>
+                        </p>
+                    </div>
                     <CodeBlock code={`intekhab (expression) {
     agar_ho value1:
         // Code
@@ -481,6 +554,11 @@ karo {
 }`} />
 
                     <h3>Example</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            This switch evaluates <code>day</code> and matches it against cases 1, 2, and 3. When a match is found, code executes until <code>bas_kar</code> is reached. The <code>aakhir</code> case handles all other values.
+                        </p>
+                    </div>
                     <CodeBlock code={`number day = 3;
 
 intekhab (day) {
@@ -498,6 +576,11 @@ intekhab (day) {
 }`} />
 
                     <h3>Status Code Example</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            Switch statements are excellent for handling status codes or enum-like values. Each status gets its own case with appropriate handling, making the code clean and easy to maintain.
+                        </p>
+                    </div>
                     <CodeBlock code={`number status = 200;
 
 intekhab (status) {
@@ -699,22 +782,63 @@ yaar {
             description: "Formal grammar specification for YaarScript.",
             content: (
                 <>
+                    <div className="bg-gradient-to-br from-sky-900/30 to-blue-900/30 border border-sky-800/50 rounded-2xl p-6 sm:p-8 mb-8">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-sky-400 mb-4 border-0">Understanding YaarScript Syntax</h3>
+                        <p className="text-lg leading-relaxed">
+                            YaarScript follows a clean, intuitive syntax inspired by Urdu language conventions while maintaining the rigor and structure of traditional programming languages like C and C++. The grammar is designed to be accessible to Urdu speakers while remaining familiar to developers with C/C++ experience.
+                        </p>
+                        <p className="text-lg leading-relaxed mt-4">
+                            This section documents the formal grammar using Extended Backus-Naur Form (EBNF), which is a standard notation for describing programming language syntax. Each rule defines how language constructs can be formed.
+                        </p>
+                    </div>
+
+                    <h3>Key Syntax Principles</h3>
+                    <ul>
+                        <li><strong>Block-based Structure</strong> - Like C/C++, YaarScript uses curly braces <code>{ }</code> to define code blocks for functions, loops, and conditionals</li>
+                        <li><strong>Statement Termination</strong> - All statements end with semicolons <code>;</code>, just like in C/C++</li>
+                        <li><strong>Type Declarations</strong> - Variables require explicit type declarations similar to C/C++ (e.g., <code>number x = 10;</code> is like <code>int x = 10;</code>)</li>
+                        <li><strong>Expression Syntax</strong> - Standard operator precedence and associativity rules match C/C++ conventions</li>
+                        <li><strong>Urdu-First Keywords</strong> - Control flow keywords use Urdu words instead of English, but follow the same logical structure as C/C++</li>
+                        <li><strong>Function Definition</strong> - Functions are declared with return type first, followed by name and parameters, identical to C/C++ function syntax</li>
+                    </ul>
+
                     <h3>Declarations & Types</h3>
+                    <p>Variable and type declarations form the foundation of YaarScript programs:</p>
                     <CodeBlock code={`VarDecl ::= ("pakka" | "sab_ke_liye")? Type Identifier ("=" Expression)? ";"
 Type    ::= "number" | "float" | "double" | "char" 
           | "faisla" | "lafz" | "khaali" | Identifier
 EnumDecl ::= "qism" Identifier "{" Identifier ("," Identifier)* "}" ";"
 MainDecl ::= "yaar" Block`} language="ebnf" />
+                    <ul>
+                        <li><code>pakka</code> modifier = <code>const</code> in C/C++ (immutable constant)</li>
+                        <li><code>sab_ke_liye</code> = <code>static</code> or global scope in C/C++</li>
+                        <li><code>number</code> = <code>int</code> in C/C++</li>
+                        <li><code>faisla</code> = <code>bool</code> in C/C++</li>
+                        <li><code>lafz</code> = <code>std::string</code> or <code>char*</code> in C/C++</li>
+                        <li><code>khaali</code> = <code>void</code> in C/C++</li>
+                        <li><code>yaar</code> = <code>main</code> function entry point</li>
+                    </ul>
 
                     <h3>Control Flow</h3>
+                    <p>Control flow structures handle program logic and looping:</p>
                     <CodeBlock code={`IfStmt      ::= "agar" "(" Expression ")" Block ("warna" Block)?
 WhileStmt   ::= "jabtak" "(" Expression ")" Block
 DoWhileStmt ::= "karo" Block "jabtak" "(" Expression ")" ";"
 ForStmt     ::= "dohrao" "(" (VarDecl | ";") Expression? ";" Expression? ")" Block
 PrintStmt   ::= "bolo" "(" ExpressionList? ")" ";"
 SwitchStmt  ::= "intekhab" "(" Expression ")" "{" CaseBlock* DefaultBlock? "}"`} language="ebnf" />
+                    <ul>
+                        <li><code>agar</code> = <code>if</code> in C/C++</li>
+                        <li><code>warna</code> = <code>else</code> in C/C++</li>
+                        <li><code>jabtak</code> = <code>while</code> loop in C/C++</li>
+                        <li><code>karo...jabtak</code> = <code>do...while</code> loop in C/C++</li>
+                        <li><code>dohrao</code> = <code>for</code> loop in C/C++</li>
+                        <li><code>bolo</code> = <code>printf()</code> or <code>cout</code> in C/C++</li>
+                        <li><code>intekhab</code> = <code>switch</code> statement in C/C++</li>
+                    </ul>
 
                     <h3>Expressions</h3>
+                    <p>Expression grammar follows standard operator precedence rules familiar to C/C++ programmers:</p>
                     <CodeBlock code={`Expression     ::= Assignment
 Assignment     ::= LogicalOr ("=" Assignment)?
 LogicalOr      ::= LogicalAnd ("||" LogicalAnd)*
@@ -725,6 +849,12 @@ Term           ::= Factor (("+" | "-") Factor)*
 Factor         ::= Unary (("*" | "/" | "%") Unary)*
 Unary          ::= ("!" | "-") Unary | Primary
 Primary        ::= Literal | Identifier | "(" Expression ")" | FunctionCall`} language="ebnf" />
+                    <ul>
+                        <li><strong>Operator Precedence</strong> - Same as C/C++: multiplication/division before addition/subtraction</li>
+                        <li><strong>Logical Operators</strong> - <code>&&</code> (AND), <code>||</code> (OR), <code>!</code> (NOT) work identically to C/C++</li>
+                        <li><strong>Comparison Operators</strong> - <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> match C/C++ conventions</li>
+                        <li><strong>Arithmetic Operators</strong> - <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo) are identical to C/C++</li>
+                    </ul>
                 </>
             )
         },

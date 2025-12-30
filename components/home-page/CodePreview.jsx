@@ -15,7 +15,7 @@ const CodePreview = () => {
       >
         <div className="relative group">
           {/* Animated background */}
-          <div className="absolute -inset-1 bg-gradient-to-r from-sky-500 via-blue-500 to-indigo-600 rounded-md blur-xl opacity-20 group-hover:opacity-30 transition-all duration-500"></div>
+          <div className="absolute -inset-1 bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 rounded-md blur-xl opacity-20 group-hover:opacity-30 transition-all duration-500"></div>
 
           {/* Main terminal container */}
           <div className="relative bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 rounded-lg shadow-2xl overflow-hidden border border-slate-700/50 backdrop-blur-sm">
@@ -80,15 +80,15 @@ const CodePreview = () => {
                     {/* Code content */}
                     <pre className="flex-1 text-left font-mono">
                       <code className="text-sm leading-7">
-                        <span className="text-purple-400 font-semibold">yaar</span> <span className="text-slate-500">{'{'}</span>{'\n'}
-                        {'  '}<span className="text-blue-400 font-medium">bolo</span><span className="text-slate-500">(</span><span className="text-emerald-400">"Assalam-o-Alaikum!"</span><span className="text-slate-500">);</span>{'\n'}
+                        <span className="text-sky-400 font-semibold">yaar</span> <span className="text-slate-500">{'{'}</span>{'\n'}
+                        {'  '}<span className="text-sky-400 font-medium">bolo</span><span className="text-slate-500">(</span><span className="text-emerald-400">"Assalam-o-Alaikum!"</span><span className="text-slate-500">);</span>{'\n'}
                         {'\n'}
                         {'  '}<span className="text-cyan-400">number</span> <span className="text-slate-200">counter</span> <span className="text-pink-400">=</span> <span className="text-orange-400">0</span><span className="text-slate-500">;</span>{'\n'}
                         {'  '}<span className="text-cyan-400">faisla</span> <span className="text-slate-200">is_active</span> <span className="text-pink-400">=</span> <span className="text-orange-400">sahi</span><span className="text-slate-500">;</span>{'\n'}
                         {'\n'}
                         {'  '}<span className="text-purple-400 font-semibold">dohrao</span> <span className="text-slate-500">(</span><span className="text-cyan-400">number</span> <span className="text-slate-200">i</span> <span className="text-pink-400">=</span> <span className="text-orange-400">1</span><span className="text-slate-500">;</span> <span className="text-slate-200">i</span> <span className="text-pink-400">{'<='}</span> <span className="text-orange-400">3</span><span className="text-slate-500">;</span> <span className="text-slate-200">i</span><span className="text-pink-400">++</span><span className="text-slate-500">) {'{'}</span>{'\n'}
                         {'    '}<span className="text-slate-200">counter</span> <span className="text-pink-400">=</span> <span className="text-slate-200">counter</span> <span className="text-pink-400">+</span> <span className="text-slate-200">i</span><span className="text-slate-500">;</span>{'\n'}
-                        {'    '}<span className="text-blue-400 font-medium">bolo</span><span className="text-slate-500">(</span><span className="text-emerald-400">"Count: "</span><span className="text-slate-500">,</span> <span className="text-slate-200">counter</span><span className="text-slate-500">);</span>{'\n'}
+                        {'    '}<span className="text-sky-400 font-medium">bolo</span><span className="text-slate-500">(</span><span className="text-emerald-400">"Count: "</span><span className="text-slate-500">,</span> <span className="text-slate-200">counter</span><span className="text-slate-500">);</span>{'\n'}
                         {'  '}<span className="text-slate-500">{'}'}</span>{'\n'}
                         <span className="text-slate-500">{'}'}</span>
                       </code>
