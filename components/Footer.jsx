@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import { RiGithubFill, RiUser3Line, RiCodeSSlashLine } from "react-icons/ri";
 import { Poppins } from "next/font/google";
 import { usePathname } from "next/navigation";
