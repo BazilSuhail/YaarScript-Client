@@ -87,9 +87,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                 {navItems.map((section, idx) => (
                     <motion.div
                         key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: idx * 0.05 }}
+                        
                     >
                         <div className="relative mb-3 px-3">
                             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-gradient-to-b from-sky-500 to-blue-400 rounded-full"></div>
@@ -139,16 +137,11 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                                                 </span>
                                             </span>
 
-                                            <motion.div
-                                                className="relative z-10"
-                                                animate={{
-                                                    x: isActive ? 0 : -5,
-                                                    opacity: isActive ? 1 : 0
-                                                }}
-                                                transition={{ duration: 0.2 }}
-                                            >
-                                                <RiArrowRightSLine className="w-5 h-5" />
-                                            </motion.div>
+                                            {isActive && (
+                                                <div className="relative z-10">
+                                                    <RiArrowRightSLine className="w-5 h-5" />
+                                                </div>
+                                            )}
                                         </button>
                                     </li>
                                 );

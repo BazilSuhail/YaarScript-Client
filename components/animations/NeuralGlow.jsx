@@ -221,7 +221,7 @@ const NeuralGlow = () => {
     <>
       <canvas
         ref={canvasRef}
-        className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-95"
+        className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-75"
         style={{ backgroundColor: '#000000' }}
       />
     </>

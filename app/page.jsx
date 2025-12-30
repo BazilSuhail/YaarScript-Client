@@ -17,7 +17,7 @@ export default function Home() {
   return (
     <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-950 to-slate-900">
       {/* RippleGrid Background */}
-      <div className="fixed inset-0 w-full h-full overflow-hidden opacity-55 z-0" aria-hidden="true">
+      <div className="fixed inset-0 w-full h-full overflow-hidden " aria-hidden="true">
          <NeuralGlow />
       </div>
 
