@@ -17,6 +17,15 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                 { id: "quick-start", label: "Quick Start" },
             ]
         },
+        
+        {
+            category: "Reference",
+            items: [
+                { id: "keywords", label: "Keyword Reference" },
+                { id: "syntax", label: "Syntax Guide" },
+                { id: "examples", label: "Code Examples" },
+            ]
+        },
         {
             category: "Basics",
             items: [
@@ -41,14 +50,6 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                 { id: "enums", label: "Enums (qism)" },
                 { id: "constants", label: "Constants (pakka)" },
                 { id: "scope", label: "Scope & Globals" },
-            ]
-        },
-        {
-            category: "Reference",
-            items: [
-                { id: "keywords", label: "Keyword Reference" },
-                { id: "syntax", label: "Syntax Guide" },
-                { id: "examples", label: "Code Examples" },
             ]
         }
     ];
