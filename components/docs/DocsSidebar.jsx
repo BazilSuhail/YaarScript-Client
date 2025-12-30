@@ -169,6 +169,24 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
 
     return (
         <aside >
+            {/* Mobile Navigation Buttons */}
+            <div className="lg:hidden fixed bottom-24 right-6 z-50 flex flex-col gap-2">
+                <Link
+                    href="/editor"
+                    className="p-3 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all"
+                    title="Go to Playground"
+                >
+                    <RiPlayCircleLine className="w-5 h-5" />
+                </Link>
+                <Link
+                    href="/"
+                    className="p-3 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all"
+                    title="Go Home"
+                >
+                    <RiHome4Line className="w-5 h-5" />
+                </Link>
+            </div>
+
             {/* Mobile Toggle Button */}
             <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -220,12 +238,12 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             className="lg:hidden fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-md"
                             onClick={() => setIsOpen(false)}
                         />
-                        <motion.aside
+                                        <motion.aside
                             initial={{ x: -300 }}
                             animate={{ x: 0 }}
                             exit={{ x: -300 }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="lg:hidden fixed left-0 top-16 bottom-0 z-50 w-80 max-w-[85vw] bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                            className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-80 max-w-[85vw] bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="p-6 pb-24">

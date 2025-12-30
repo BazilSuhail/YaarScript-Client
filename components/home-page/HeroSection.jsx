@@ -27,11 +27,11 @@ const HeroSection = () => {
             <span className="sm:hidden">Open Source • Urdu Based</span>
           </div>
 
-          <h1 className={`text-4xl  md:text-6xl lg:text-[55px] font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
-            <span className="text-4xl md:text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 to-sky-800 animate-linear bg-size-[200%_auto]">
+          <h1 className={`text-3xl  md:text-6xl lg:text-[55px] font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
+            <span className="text-6xl lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 to-sky-800 animate-linear bg-size-[200%_auto]">
               Apki Zuban
             </span>
-            <span className="block text-transparent lg:mt-2 bg-clip-text bg-linear-to-r from-sky-300 via-sky-400 to-sky-600">
+            <span className="block text-transparent mt-2 bg-clip-text bg-linear-to-r from-sky-300 via-sky-400 to-sky-600">
               Apki marzi wala Code
             </span>
           </h1>
@@ -55,7 +55,7 @@ const HeroSection = () => {
             Apni zuban mein clean aur powerful code likho.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
+          <div className="flex gap-3 justify-center mb-16">
             <Link
               href="/editor"
               className="group pointer-events-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-linear-to-r from-sky-500 to-sky-800 hover:from-sky-600 hover:to-sky-700 text-white text-sm font-semibold rounded-xl shadow-lg shadow-sky-500/20 transition-all hover:shadow-xl hover:shadow-sky-500/30"
