@@ -108,6 +108,7 @@ yaar {
     const highlightRef = useRef(null);
     const gutterRef = useRef(null);
     const compilerRef = useRef(null);
+    const terminalRef = useRef(null);
 
     // WASM Init
     useEffect(() => {
@@ -242,6 +243,13 @@ yaar {
                 setOutput(`BUILD FAILED:\n${err.message || err}`);
             }
             setIsCompiling(false);
+            
+            // Auto-scroll to terminal on mobile screens (< 1024px width)
+            if (window.innerWidth < 1024 && terminalRef.current) {
+                setTimeout(() => {
+                    terminalRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            }
         }, 100);
     };
 
@@ -255,35 +263,37 @@ yaar {
 
     return (
         <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden" style={{ fontFamily: 'var(--font-outfit), "Outfit", sans-serif' }}>
-            {/* Toolbar */}
-          <div className="h-14 flex items-center justify-between px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors">
+            {/* Toolbar - Mobile Optimized */}
+          <div className="h-12 md:h-14 flex items-center justify-between px-3 md:px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors gap-2 md:gap-4">
     {/* Left Side: Navigation & File Info */}
-    <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-1 mr-2">
+    <div className="flex items-center space-x-1 md:space-x-4 min-w-0">
+        <div className="flex items-center space-x-0.5 md:space-x-1">
             <Link 
                 href="/" 
-                className="p-2 text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+                className="flex items-center space-x-1 md:space-x-2 px-2 md:px-3 py-1.5 md:py-2 text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all text-xs md:text-sm"
                 title="Go Home"
             >
-                <RiHome4Line className="w-5 h-5" />
+                <RiHome4Line className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="hidden md:inline font-medium">Home</span>
             </Link>
             <Link 
                 href="/docs" 
-                className="p-2 text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+                className="flex items-center space-x-1 md:space-x-2 px-2 md:px-3 py-1.5 md:py-2 text-slate-500 hover:text-sky-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all text-xs md:text-sm"
                 title="Documentation"
             >
-                <RiBookReadLine className="w-5 h-5" />
+                <RiBookReadLine className="w-4 h-4 md:w-5 md:h-5" />
+                <span className="hidden md:inline font-medium">Docs</span>
             </Link>
         </div>
 
-        <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+        <div className="hidden md:block h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
 
-        <div className="flex items-center space-x-2">
+        <div className="hidden md:flex items-center space-x-2">
             <div className="w-2 h-2 rounded-full bg-sky-500"></div>
             <span className="text-xs font-semibold text-slate-700 dark:text-slate-300">main.yr</span>
         </div>
         
-        <div className={`flex items-center space-x-2 px-2.5 py-1 rounded-md transition-all ${wasmStatus === 'online'
+        <div className={`hidden md:flex items-center space-x-2 px-2.5 py-1 rounded-md transition-all ${wasmStatus === 'online'
             ? 'bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-400'
             : 'bg-amber-50 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400'
             }`}>
@@ -293,21 +303,21 @@ yaar {
     </div>
 
     {/* Right Side: Theme, Copy, Clear, Run */}
-    <div className="flex items-center space-x-2">
-        {/* Theme Toggle integrated here */}
+    <div className="flex items-center space-x-0.5 md:space-x-2 flex-shrink-0">
+        {/* Theme Toggle */}
         <button
             onClick={toggleTheme}
-            className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+            className="p-1.5 md:p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
             aria-label="Toggle Theme"
         >
-            {isDark ? <RiSunLine className="w-4 h-4" /> : <RiMoonLine className="w-4 h-4" />}
+            {isDark ? <RiSunLine className="w-4 h-4 md:w-4 md:h-4" /> : <RiMoonLine className="w-4 h-4 md:w-4 md:h-4" />}
         </button>
 
-        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+        <div className="hidden md:block w-px h-6 bg-slate-200 dark:bg-slate-700"></div>
 
         <button
             onClick={copyCode}
-            className="p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
+            className="p-1.5 md:p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all"
             title="Copy Code"
         >
             {copied ? <RiCheckLine className="w-4 h-4" /> : <RiFileCopyLine className="w-4 h-4" />}
@@ -315,28 +325,29 @@ yaar {
         
         <button
             onClick={() => { setCode(""); setOutput(""); }}
-            className="p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-md transition-all"
+            className="p-1.5 md:p-2 text-slate-500 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-md transition-all"
             title="Clear"
         >
             <RiDeleteBin6Line className="w-4 h-4" />
         </button>
 
-        <div className="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+        <div className="hidden md:block w-px h-6 bg-slate-200 dark:bg-slate-700"></div>
 
         <button
             onClick={runCode}
             disabled={isCompiling}
-            className={`flex items-center space-x-2 px-5 py-2 rounded-md font-semibold text-sm transition-all ${isCompiling
+            className={`flex items-center space-x-1 md:space-x-2 px-2.5 md:px-5 py-1.5 md:py-2 rounded-md font-semibold text-xs md:text-sm transition-all ${isCompiling
                 ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 cursor-not-allowed'
                 : 'bg-sky-500 hover:bg-sky-600 text-white shadow-sm'
                 }`}
         >
             {isCompiling ? (
-                <div className="w-4 h-4 border-2 border-slate-300 dark:border-slate-600 border-t-slate-500 dark:border-t-slate-400 rounded-full animate-spin" />
+                <div className="w-3 h-3 md:w-4 md:h-4 border-2 border-slate-300 dark:border-slate-600 border-t-slate-500 dark:border-t-slate-400 rounded-full animate-spin" />
             ) : (
-                <RiPlayFill className="w-4 h-4" />
+                <RiPlayFill className="w-4 h-4 md:w-4 md:h-4" />
             )}
-            <span>{isCompiling ? 'Running' : 'Run'}</span>
+            <span className="hidden md:inline">{isCompiling ? 'Running' : 'Run'}</span>
+            <span className="md:hidden">{isCompiling ? '...' : 'Run'}</span>
         </button>
     </div>
 </div>
@@ -360,6 +371,7 @@ yaar {
                 />
 
                 <Terminal
+                    ref={terminalRef}
                     output={output}
                     setOutput={setOutput}
                     formatTerminal={formatTerminal}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiCodeSSlashLine, RiBookOpenLine, RiHome4Line } from "react-icons/ri";
+import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiCodeSSlashLine, RiBookOpenLine, RiHome4Line, RiPlayCircleLine } from "react-icons/ri";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 
@@ -69,7 +69,14 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         </div>
                     </div>
 
-                    <div className="flex space-x-2">
+                    <div className="flex items-center space-x-2">
+                        <Link
+                            href="/editor"
+                            className="p-2 text-sky-50 bg-sky-800 hover:text-sky-500 hover:bg-slate-800 rounded-xl transition-all"
+                            title="Go to Playground"
+                        >
+                            <RiPlayCircleLine className="w-4 h-4" />
+                        </Link>
                         <Link
                             href="/"
                             className="p-2 text-sky-50 bg-sky-800 hover:text-sky-500 hover:bg-slate-800 rounded-xl transition-all"
@@ -77,7 +84,6 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         >
                             <RiHome4Line className="w-4 h-4" />
                         </Link>
-
                     </div>
                 </div>
             </div>
