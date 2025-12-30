@@ -69,7 +69,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         </div>
                     </div>
 
-                    <div className="flex items-center space-x-2">
+                    <div className="hidden sm:flex items-center space-x-2">
                         <Link
                             href="/editor"
                             className="p-2 text-sky-50 bg-sky-800 hover:text-sky-500 hover:bg-slate-800 rounded-xl transition-all"
@@ -172,7 +172,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
             {/* Mobile Navigation Buttons */}
             <AnimatePresence>
                 {isOpen && (
-                    <div className="lg:hidden fixed bottom-24 right-6 z-50 flex flex-col gap-3">
+                    <div className="lg:hidden fixed bottom-24 right-5 z-50 flex flex-col gap-3">
                         <motion.div
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
@@ -181,7 +181,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         >
                             <Link
                                 href="/editor"
-                                className="p-4 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all flex items-center justify-center"
+                                className="p-5 text-sky-50 bg-sky-700 hover:bg-sky-700 rounded-full shadow-lg transition-all flex items-center justify-center"
                                 title="Go to Playground"
                             >
                                 <RiPlayCircleLine className="w-5 h-5" />
@@ -195,7 +195,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         >
                             <Link
                                 href="/"
-                                className="p-4 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all flex items-center justify-center"
+                                className="p-4  text-sky-50 bg-sky-700 hover:bg-sky-700 rounded-full shadow-lg transition-all flex items-center justify-center"
                                 title="Go Home"
                             >
                                 <RiHome4Line className="w-5 h-5" />
@@ -253,7 +253,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.2 }}
-                            className="lg:hidden fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-md"
+                            className="lg:hidden fixed inset-0 z-40 bg-slate-900/70 backdrop-blur-[2px]"
                             onClick={() => setIsOpen(false)}
                         />
                                         <motion.aside
@@ -261,7 +261,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                             animate={{ x: 0 }}
                             exit={{ x: -300 }}
                             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                            className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-80 max-w-[85vw] bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+                            className="lg:hidden fixed left-0 top-0 bottom-0 z-50 w-80 max-w-[75vw] bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 overflow-y-auto shadow-2xl [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
                             onClick={(e) => e.stopPropagation()}
                         >
                             <div className="p-6 pb-24">
