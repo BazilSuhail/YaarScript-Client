@@ -170,22 +170,40 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
     return (
         <aside >
             {/* Mobile Navigation Buttons */}
-            <div className="lg:hidden fixed bottom-24 right-6 z-50 flex flex-col gap-2">
-                <Link
-                    href="/editor"
-                    className="p-3 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all"
-                    title="Go to Playground"
-                >
-                    <RiPlayCircleLine className="w-5 h-5" />
-                </Link>
-                <Link
-                    href="/"
-                    className="p-3 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all"
-                    title="Go Home"
-                >
-                    <RiHome4Line className="w-5 h-5" />
-                </Link>
-            </div>
+            <AnimatePresence>
+                {isOpen && (
+                    <div className="lg:hidden fixed bottom-24 right-6 z-50 flex flex-col gap-3">
+                        <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <Link
+                                href="/editor"
+                                className="p-4 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all flex items-center justify-center"
+                                title="Go to Playground"
+                            >
+                                <RiPlayCircleLine className="w-5 h-5" />
+                            </Link>
+                        </motion.div>
+                        <motion.div
+                            initial={{ scale: 0, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0, opacity: 0 }}
+                            transition={{ duration: 0.2, delay: 0.1 }}
+                        >
+                            <Link
+                                href="/"
+                                className="p-4 text-sky-50 bg-sky-600 hover:bg-sky-700 rounded-2xl shadow-lg transition-all flex items-center justify-center"
+                                title="Go Home"
+                            >
+                                <RiHome4Line className="w-5 h-5" />
+                            </Link>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
 
             {/* Mobile Toggle Button */}
             <motion.button
