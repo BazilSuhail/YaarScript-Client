@@ -74,13 +74,13 @@ const StatsSection = () => {
       </motion.div>
 
       <article className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-20">
-        {stats.map((stat, index) => (
+        {stats.map((stat) => (
           <motion.div
             key={stat.title}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 * (index + 1) }}
-            viewport={{ once: true }}
+            initial={{ opacity: 0, y: -80, scale: 0.8 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 1 }}
+            viewport={{ once: false }}
             className={`col-span-1 ${stat.span} ${stat.rowSpan} bg-slate-800/30 backdrop-blur-sm rounded-3xl p-6 md:p-10 border border-slate-700/50 hover:border-sky-500/50 transition-all`}
           >
             <div className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-sky-700 mb-3 md:mb-4 ${poppins.className}`}>

@@ -18,7 +18,7 @@ const Footer = () => {
   const pathname = usePathname();
 
   // If the current page is "/", do not render the footer
-  if (pathname === "/") return null;
+  if (pathname === "/" || pathname === "/not-found" || pathname === "/editor")  return null;
   const links = [
     {
       icon: <RiUser3Line className="w-6 h-6 md:w-8 md:h-8" />,

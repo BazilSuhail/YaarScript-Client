@@ -7,3 +7,6 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  background-color: #0f172a;
+}

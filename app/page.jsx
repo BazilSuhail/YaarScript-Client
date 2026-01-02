@@ -10,11 +10,14 @@ import CTASection from "@/components/home-page/CTASection";
 import ScrollWordReveal from "@/components/home-page/ScrollWordReveal"; 
 import HomeFooter from "@/components/home-page/HomeFooter";
 import NeuralGlow from "@/components/animations/NeuralGlow";
+import { ReactLenis } from 'lenis/react';
+
 
 export default function Home() {
   const containerRef = useRef(null); 
   
   return (
+        <ReactLenis root >
     <main ref={containerRef} className="min-h-screen relative bg-linear-to-b from-slate-950 to-slate-900">
       {/* RippleGrid Background */}
       <div className="fixed inset-0 w-full h-full overflow-hidden " aria-hidden="true">
@@ -49,5 +52,6 @@ export default function Home() {
 
       <HomeFooter /> 
     </main>
+    </ReactLenis>
   );
 }
