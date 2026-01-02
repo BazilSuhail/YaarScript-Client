@@ -6,8 +6,8 @@ import { RiHome5Line, RiCodeSSlashLine, RiArrowLeftLine } from "react-icons/ri";
 
 export default function NotFound() {
     return (
-        <div className="h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-6 transition-colors">
-            <div className=" max-w-2xl w-full text-center">
+        <div className="h-screen overflow-hidden pt-12 flex items-center justify-center bg-slate-50 dark:bg-slate-950 px-6 transition-colors">
+            <div className="sm:scale-[0.8] max-w-2xl w-full text-center">
                 {/* Animated 404 */}
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
@@ -65,7 +65,7 @@ export default function NotFound() {
                     initial={{ y: 20, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.6, duration: 0.5 }}
-                    className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                    className="flex gap-4 justify-center items-center"
                 >
                     <Link
                         href="/"
