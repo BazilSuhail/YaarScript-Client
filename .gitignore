@@ -1,6 +1,5 @@
 # Build outputs
 /target/
-/pkg/
 **/*.rs.bk
 
 # Environment files
@@ -16,3 +15,17 @@ Cargo.lock
 
 # Ignore all txt files globally
 *.txt
+
+# But allow all txt files inside tests/ and its subfolders
+!tests/**/*.txt
+# Ignore all executable files in any directory
+**/*.exe
+
+# Specifically ignore Rust build artifacts
+/target/
+
+# If you generate temporary IR or TAC logs
+*.log
+*.tmp
+*.yaar
+*.wasm

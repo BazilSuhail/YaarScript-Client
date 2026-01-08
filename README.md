@@ -1,198 +1,53 @@
-# YaarScript WASM Compiler
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Lord-Entity/Bazil-Suhail-Repos/main/YaarScript/yaarscript-github-readme.webp" alt="YaarScript Pro Banner" width="800">
+</div>
 
-This repository contains the source code to compile Yaarscript into WASM compiled binary. 
+<div align="center">
 
-#### About YaarScript:
-It is a professional, industrial-grade multi-pass compiler that brings the warmth of the Urdu language to the power of Rust-based systems programming. It transforms a high-performance language into optimized Three-Address Code (TAC), running natively in the browser via WebAssembly.
+[![Online Playground](https://img.shields.io/badge/Playground-YaarScript-blue?style=for-the-badge&logo=javascript)](https://yaarscript.netlify.app/)
+[![Rust](https://img.shields.io/badge/Rust-2024_Edition-orange?style=for-the-badge&logo=rust)](https://rustup.rs/)
+[![Architecture](https://img.shields.io/badge/Architecture-Middle_End-brightgreen?style=for-the-badge)](#)
+[![Status](https://img.shields.io/badge/Status-Optimized-purple?style=for-the-badge)](#)
+[![Version](https://img.shields.io/badge/Version-1.1.0-334155?style=for-the-badge&logo=github)](https://github.com/Lord-Entity/YaarScript/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge)](http://makeapullrequest.com)
+[![Built_with](https://img.shields.io/badge/Built_with-Rust-dea584?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
+[![License](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge&logo=github)](https://github.com/Lord-Entity/YaarScript/blob/main/LICENSE)
+ 
+ </div>
 
----
+## YaarScript WebAssembly (WASM) implementation
 
-## Quick Start (Setup)
+This is the **YaarScript-Client-WASM-Build** repository. This project adapts the core YaarScript compiler to run natively in any modern web browser using WebAssembly. It provides a secure, sandboxed environment to write, compile, and execute YaarScript code without any local setup.
 
-To run the YaarScript Pro playground locally, follow these steps:
+> [!NOTE]
+> This repository contains the Web-Frontend and WASM-bindings. For the core compiler source, visiting the [Official YaarScript Repository](https://github.com/BazilSuhail/YaarScript).
 
-### Prerequisites
-- **Rust**: Install from [rustup.rs](https://rustup.rs/)
-- **WASM Target**: Add the WebAssembly target via rustup:
-  ```bash
-  rustup target add wasm32-unknown-unknown
-  ```
-- **wasm-pack**: Install the orchestration tool:
-  ```bash
-  cargo install wasm-pack
-  ```
-- **Python**: Installed for serving the files locally.
+### Key Features
 
-### Build and Run
-1. **Clone the repository**:
-   ```bash
-   git clone --branch wasm-compiler --single-branch https://github.com/BazilSuhail/YaarScript-Client.git
-   cd YaarScript-Client
-   ```
+- **In-Browser Execution**: Compile and run `.yaar` code instantly via WebAssembly.
+- **Interactive Terminal**: A premium, glassmorphism-themed IDE with support for interactive input (`suno()`).
+- **Resumable VM**: Advanced compilation logic that can pause and resume execution for user inputs.
+- **Modern Aesthetics**: Built with Tailwind CSS and custom terminal-style interactions.
 
-2. **Build the WebAssembly package**:
-   This command compiles the Rust core into a JS-compatible WASM bundle:
-   ```bash
-   wasm-pack build --target web
-   ```
+###  Building the WASM Package
 
-3. **Serve the IDE**:
-   Run a local server in the project root to handle WASM MIME types correctly:
-   ```bash
-   python -m http.server 8000
-   ```
-   Open `http://localhost:8000` in your browser to start coding!
+To build the project yourself, ensure you have [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) installed:
 
----
-
-## Compiler Architecture
-
-The YaarScript toolchain is organized into a modular pipeline:
-
-1.  **Lexical Analysis (Lexer)**: Scans source code into tokens with full Unicode support.
-2.  **Syntax Analysis (Parser)**: Uses a Top-Down Operator Precedence (Pratt) Parser for advanced expression handling.
-3.  **Semantic Intelligence**:
-    *   **Scope Analyzer**: Manages symbol levels and shadowing.
-    *   **Type Checker**: Enforces strict typing (No implicit coercion).
-4.  **IR Pipeline**: Generates Three-Address Code (TAC).
-5.  **Fixed-Point Optimizer**: Runs persistent passes (Constant Folding, DCE, Peephole Optimization).
-6.  **Wasm Execution Engine**: A high-performance VM running optimized TAC in the browser.
-
----
-
-## The "Yaar" Style Syntax
-
-YaarScript Pro replaces boring standard keywords with intuitive Urdu-style keywords.
-
-| High-Level Category | Standard Keyword | Yaar Style | Use Case |
-| :--- | :--- | :--- | :--- |
-| **Entry Point** | `main` | `yaar` | The start of your script. |
-| **Output** | `print` | `bolo` | Output values to the terminal. |
-| **Types** | `int`, `string`, `bool`, `void` | `number`, `lafz`, `faisla`, `khaali` | Core data types. |
-| **Branching** | `if`, `else` | `agar`, `warna` | Logical decision making. |
-| **Loops** | `for`, `while`, `do` | `dohrao`, `jabtak`, `karo` | Iterative execution. |
-| **Constants** | `const`, `global` | `pakka`, `sab_ke_liye` | State modifiers. |
-| **Booleans** | `true`, `false` | `sahi`, `galat` | Logical literals. |
-| **Control** | `break`, `return` | `bas_kar`, `wapsi` | Flow termination and return. |
-| **Switch** | `switch`, `case`, `default` | `intekhab`, `agar_ho`, `aakhir` | Multi-way branching. |
-| **Custom Types** | `enum` | `qism` | User-defined enumerations. |
-
----
-
-## Comprehensive Example
-
-```cpp
-qism Color { RED, GREEN, BLUE };
-
-pakka number TARGET = 5;
-
-// Function to print a separator line
-khaali print_separator(number count) {
-
-    bolo("\n");
-    dohrao (number i = 0; i < TARGET; i++) {
-        bolo("=");
-    }
-    bolo("\n");
-}
-
-yaar {
-    // Example of the new features:
-    bolo("Enter Number: ");
-
-    number base = suno();
-    number power = 3;
-    bolo("Power for ", base, " is ", base ** power);
-
-    number start = waqt();
-    bolo("\n", ittifaq(1, 100));
-    number end = waqt();
-    bolo("\nTime taken: ", end - start);
-
-    bolo("--- 🚀 THE ULTIMATE LANGUAGE POWER TEST ---\n");
-
-    // 1. The Numerical Diamond (Nested For Loops)
-    number size = 5 ;
-    bolo("\n[1] Generating Numeric Diamond:\n");
-    
-    // Top Half
-    dohrao (number i = 1; i <= size; i++) {
-        dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
-        dohrao (number j = 1; j <= i; j++) { 
-            bolo(" ");
-            bolo(i); 
-         }
-        bolo("\n");
-    }
-    // Bottom Half
-    dohrao (number i = (size - 1); i >= 1; i--) {
-        dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
-        dohrao (number j = 1; j <= i; j++) {
-            bolo(" ");
-            bolo(i); 
-         }
-        bolo("\n");
-    }
-
-    print_separator(40);
-
-    // 2. Karo-Jabtak Loop (Diagnostics)
-    bolo("[2] Running Sensor Calibration:\n");
-    number attempt = 1;
-    faisla sensor_ready = galat;
-
-    karo {
-        bolo("Probe #", attempt, ":\t");
-        agar (attempt < 10) {
-            bolo("Warming up...\t[WAIT...]\n");
-        } warna {
-            bolo("Calibration Complete!\t[READY]\n");
-            sensor_ready = sahi;
-        }
-        attempt = attempt + 1;
-    } jabtak (!sensor_ready);
-
-    print_separator(40);
-
-    // 3. Qism & Intekhab Implementation
-    bolo("[3] System Final Status:\n");
-    number status_color = GREEN;
-    
-    intekhab (status_color) {
-        agar_ho RED:   
-        bolo("SYSTEM FATAL (RED)\n"); bas_kar;
-        agar_ho GREEN: bolo("SYSTEM OPTIMAL (GREEN)\n"); bas_kar;
-        agar_ho BLUE:  bolo("SYSTEM RECOVERY (BLUE)\n"); bas_kar;
-    }
-}
+```bash
+# Compile Rust to WASM/JS bindings
+wasm-pack build --target web --out-dir pkg
 ```
 
----
+### 💻 Running Locally
 
-## Language Grammar (EBNF)
+1. Build the package using the command above.
+2. Serve the root directory using any local server (e.g., `npx serve .` or `python -m http.server`).
+3. Open your browser and navigate to the local address.
 
-### Declarations & Types
-```ebnf
-VarDecl          ::= ("pakka" | "sab_ke_liye")? Type Identifier ("=" Expression)? ";"
-Type             ::= "number" | "float" | "double" | "char" | "faisla" | "lafz" | "khaali" | Identifier
-EnumDecl         ::= "qism" Identifier "{" Identifier ("," Identifier)* "}" ";"
-MainDecl         ::= "yaar" Block
-```
+### 🔗 Useful Links
 
-### Control Flow
-```ebnf
-IfStmt           ::= "agar" "(" Expression ")" Block ("warna" Block)?
-WhileStmt        ::= "jabtak" "(" Expression ")" Block
-DoWhileStmt      ::= "karo" Block "jabtak" "(" Expression ")" ";"
-ForStmt          ::= "dohrao" "(" (VarDecl | ";") Expression? ";" Expression? ")" Block
-PrintStmt        ::= "bolo" "(" ExpressionList? ")" ";"
-SwitchStmt       ::= "intekhab" "(" Expression ")" "{" CaseBlock* DefaultBlock? "}"
-```
+- **Main Repository**: [YaarScript Engine](https://github.com/BazilSuhail/YaarScript)
+- **Live Playground**: [Experience YaarScript Online](https://yaarscript.netlify.app/)
 
 ---
-
-## Project Achievements
-*   Wasm Integration: Entire compiler pipeline compiled to wasm32-unknown-unknown.
-*   Professional IDE: Dark/Light mode, syntax highlighting, and responsive terminal.
-*   Urdu Slang Branding: Fully localized keyword set for a unique developer experience.
-*   Multi-Pass Optimizer: Fixed-point optimization reducing code density.
+<div align="center">Made with ❤️ for the YaarScript community.</div>

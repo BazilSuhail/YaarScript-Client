@@ -1,666 +1,256 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YaarScript Pro | Cloud Compiler</title>
+    <title>YaarScript Native Playground</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
-                        editor: {
-                            dark: '#0f172a',
-                            light: '#ffffff'
-                        },
-                        terminal: {
-                            dark: '#020617',
-                            light: '#f8fafc'
-                        }
+                        brandBlack: '#0f0804',
+                        brandOrange: '#ea580c', // orange-600
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        fira: ['Fira Code', 'monospace'],
                     }
                 }
             }
         }
     </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;600&display=swap"
-        rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Outfit', sans-serif;
-        }
 
-        .mono {
-            font-family: 'JetBrains Mono', monospace;
+    <style type="text/css">
+        body { font-family: 'Outfit', sans-serif; }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background: #10b981;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
         }
-
-        .glass {
-            backdrop-filter: blur(16px);
-        }
-
-        .bg-main {
-            background-color: #020617;
-        }
-
-        html:not(.dark) .bg-main {
-            background-color: #f1f5f9;
-        }
-
-        .editor-wrapper {
-            position: relative;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .editor-container {
-            display: flex;
-            height: 100%;
-            position: relative;
-        }
-
-        .line-numbers {
-            width: 45px;
-            padding: 24px 0;
-            text-align: right;
-            font-size: 14px;
-            line-height: 1.5rem;
-            user-select: none;
-            z-index: 10;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .line-numbers span {
-            display: block;
-            padding-right: 10px;
-        }
-
-        #code,
-        #highlighting {
-            position: absolute;
-            top: 0;
-            left: 45px;
-            width: calc(100% - 45px);
-            height: 100%;
-            margin: 0;
-            padding: 24px;
-            border: 0;
-            font-size: 15px;
-            line-height: 1.5rem;
-            font-family: 'JetBrains Mono', monospace;
-            tab-size: 4;
-            white-space: pre;
-            overflow: auto;
-            box-sizing: border-box;
-        }
-
-        #code {
-            color: transparent;
-            background: transparent;
-            caret-color: #38bdf8;
-            z-index: 20;
-            resize: none;
-            outline: none;
-        }
-
-        #highlighting {
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        /* Syntax Colors - Dark Mode (Default) */
-        .token-keyword {
-            color: #38bdf8;
-            font-weight: 500;
-        }
-
-        .token-type {
-            color: #818cf8;
-        }
-
-        .token-string {
-            color: #fbbf24;
-        }
-
-        .token-number {
-            color: #f87171;
-        }
-
-        .token-comment {
-            color: #475569;
-            font-style: italic;
-        }
-
-        .token-function {
-            color: #4ade80;
-        }
-
-        .token-operator {
-            color: #94a3b8;
-        }
-
-        .token-boolean {
-            color: #fb7185;
-        }
-
-        /* Syntax Colors - Light Mode Overrides */
-        html:not(.dark) .token-keyword {
-            color: #0284c7;
-        }
-
-        html:not(.dark) .token-type {
-            color: #4f46e5;
-        }
-
-        html:not(.dark) .token-string {
-            color: #b45309;
-        }
-
-        html:not(.dark) .token-number {
-            color: #dc2626;
-        }
-
-        html:not(.dark) .token-comment {
-            color: #94a3b8;
-        }
-
-        html:not(.dark) .token-function {
-            color: #16a34a;
-        }
-
-        html:not(.dark) .token-operator {
-            color: #64748b;
-        }
-
-        /* Terminal Colors */
-        .term-error-header {
-            color: #facc15;
-            font-weight: bold;
-        }
-
-        .term-error-label {
-            color: #f87171;
-            font-weight: bold;
-        }
-
-        .term-arrow {
-            color: #22d3ee;
-        }
-
-        .term-pointer {
-            color: #ef4444;
-            font-weight: bold;
-        }
-
-        .term-caret {
-            color: #ef4444;
-            font-weight: bold;
-        }
-
-        .term-gutter {
-            color: #475569;
-        }
-
-        html:not(.dark) .term-arrow {
-            color: #0891b2;
-        }
-
-        html:not(.dark) .term-error-header {
-            color: #a16207;
-        }
-
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .dark ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 5px;
-            border: 2px solid #0f172a;
-        }
-
-        html:not(.dark) ::-webkit-scrollbar-thumb {
-            background: #e2e8f0;
-            border-radius: 5px;
-            border: 2px solid #ffffff;
-        }
+        @keyframes blink { 50% { opacity: 0; } }
+        #inline-input:focus { outline: none; caret-color: transparent; }
     </style>
 </head>
 
-<body
-    class="text-slate-900 dark:text-slate-200 bg-slate-50 bg-main min-h-screen flex flex-col selection:bg-sky-500/30 transition-colors duration-300">
+<body class="bg-brandBlack text-slate-200 h-screen flex flex-col overflow-hidden">
 
-    <!-- Navbar -->
-    <header
-        class="glass sticky top-0 z-50 px-6 py-3 flex justify-between items-center bg-white/80 dark:bg-slate-950/80 border-b border-slate-200 dark:border-white/5">
-        <div class="flex items-center space-x-6">
-            <div class="flex items-center space-x-2.5 group cursor-pointer" onclick="window.location.reload()">
-                <div
-                    class="w-9 h-9 bg-gradient-to-tr from-sky-500 via-blue-600 to-indigo-700 rounded-lg flex items-center justify-center shadow-xl shadow-sky-500/20 group-hover:scale-110 transition-transform duration-300">
-                    <span class="text-white font-black text-xl italic leading-none">Y</span>
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-tight text-slate-800 dark:text-white leading-none">YaarScript
-                        <span class="text-sky-500">Pro</span>
-                    </h1>
-                    <p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-semibold mt-1">Advanced
-                        Toolchain</p>
-                </div>
-            </div>
-
-            <div
-                class="hidden md:flex items-center h-8 border-l border-slate-200 dark:border-white/10 pl-6 space-x-5 text-sm font-medium">
-                <a href="#"
-                    class="text-slate-500 dark:text-slate-400 hover:text-sky-500 dark:hover:text-white transition-colors">Docs</a>
-                <a href="#"
-                    class="text-slate-500 dark:text-slate-400 hover:text-sky-500 dark:hover:text-white transition-colors">Standard
-                    Lib</a>
-                <a href="#"
-                    class="text-sky-600 dark:text-white underline decoration-sky-500 decoration-2 underline-offset-4">Playground</a>
-            </div>
+    <header class="flex items-center justify-between px-8 py-4 border-b border-white/10 bg-brandBlack/80 backdrop-blur-md z-50">
+        <div class="text-2xl font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+            YaarScript.native
         </div>
-
-        <div class="flex items-center space-x-3">
-            <button id="theme-toggle"
-                class="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg transition-all mr-2"
-                title="Toggle Theme">
-                <svg id="theme-toggle-dark-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
-                </svg>
-                <svg id="theme-toggle-light-icon" class="hidden w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path
-                        d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
-                        fill-rule="evenodd" clip-rule="evenodd"></path>
-                </svg>
-            </button>
-
-            <div id="connection-status"
-                class="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-white/5 mr-2 transition-colors">
-                <div class="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></div>
-                <span class="text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-widest">Wasm:
-                    Connecting</span>
+        
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 text-xs font-medium">
+                <div id="status-indicator" class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+                <span id="status-text" class="text-slate-400">WASM Not Loaded</span>
             </div>
-
-            <button id="run"
-                class="flex items-center space-x-2.5 px-6 py-2 bg-sky-500 hover:bg-sky-400 text-white dark:text-slate-950 font-bold rounded-lg shadow-lg shadow-sky-500/20 active:scale-95 transition-all">
-                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                </svg>
-                <span class="text-sm uppercase tracking-wide">Compile & Run</span>
+            <button id="run-btn" class="bg-orange-600 hover:bg-orange-500 hover:-translate-y-0.5 active:translate-y-0 transition-all px-6 py-2 rounded-lg font-semibold text-white shadow-lg shadow-orange-900/20">
+                Run Program (Ctrl+Enter)
             </button>
         </div>
     </header>
 
-    <!-- Main Workspace -->
-    <main class="flex-1 flex flex-col lg:flex-row overflow-hidden">
-
-        <!-- Editor -->
-        <section class="flex-1 flex flex-col bg-white dark:bg-editor-dark transition-colors duration-300">
-            <div
-                class="h-10 bg-slate-50 dark:bg-slate-900/80 px-4 flex items-center justify-between border-b border-slate-200 dark:border-white/5 transition-colors">
-                <div class="flex items-center space-x-4">
-                    <span
-                        class="text-[10px] font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400/80">workspace/main.yr</span>
-                    <span id="line-col-indicator" class="text-[10px] text-slate-500 font-mono">Line: 1, Col: 1</span>
-                </div>
-                <div class="flex items-center space-x-4">
-                    <button id="clear"
-                        class="text-[10px] text-slate-500 hover:text-slate-800 dark:hover:text-slate-300 transition-colors uppercase font-bold">Clear</button>
-                    <span class="text-[10px] text-slate-400 dark:text-slate-600 font-serif italic">YaarScript Lexical
-                        Core</span>
-                </div>
+    <main class="flex-1 flex gap-4 p-4 overflow-hidden">
+        
+        <section class="flex-1 flex flex-col bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-2xl">
+            <div class="px-5 py-3 bg-white/5 border-b border-white/10 flex justify-between text-xs font-bold text-slate-500 tracking-widest uppercase">
+                <span>Editor — test_input.yaar</span>
+                <span>Rust-Wasm v1.1.0</span>
             </div>
+            <textarea id="editor" class="flex-1 bg-transparent p-6 font-fira text-sm leading-relaxed resize-none outline-none text-slate-300" spellcheck="false">
+yaar {
 
-            <div class="editor-wrapper">
-                <div class="editor-container">
-                    <div id="line-numbers"
-                        class="line-numbers bg-slate-50 dark:bg-slate-950 text-slate-400 dark:text-slate-600 border-r border-slate-200 dark:border-white/5">
-                        <span>1</span>
-                    </div>
-                    <pre id="highlighting" class="text-slate-900 dark:text-slate-200" aria-hidden="true"></pre>
-                    <textarea id="code" spellcheck="false" wrap="off" autofocus>
-                        /* 
-                        YaarScript Pro: Comprehensive Feature Demo
-                        This code covers loops, functions, variables, and logic.
-                        */
-                        // qism creates an Enum
-                        qism Color { RED, GREEN, BLUE };
-                        // pakka means constant
-                        pakka number TARGET = 5;
+    bolo("Apni pehli umar likho:");
 
-                        // Function to print a separator line
-                        khaali print_separator(number count) {
+    number umar = suno();
 
-                            bolo("\n");
-                            dohrao (number i = 0; i < TARGET; i++) {
-                                bolo("=");
-                            }
-                            bolo("\n");
-                        }
+   
 
-                        yaar {
-                            // Example of the new features:
-                            bolo("Enter Number: ");
+    agar (umar >= 18) {
 
-                            number base = suno();
-                            number power = 3;
-                            bolo("Power for ", base, " is ", base ** power);
+        bolo("Aap bade ho gaye hain!");
 
-                            number start = waqt();
-                            bolo("\n", ittifaq(1, 100));
-                            number end = waqt();
-                            bolo("\nTime taken: ", end - start);
+    } warna {
 
-                            bolo("--- 🚀 THE ULTIMATE LANGUAGE POWER TEST ---\n");
+        bolo("Abhi aap chote hain.");
 
-                            // 1. The Numerical Diamond (Nested For Loops)
-                            number size = 5 ;
-                            bolo("\n[1] Generating Numeric Diamond:\n");
-                            
-                            // Top Half
-                            dohrao (number i = 1; i <= size; i++) {
-                                dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
-                                dohrao (number j = 1; j <= i; j++) { 
-                                    bolo(" ");
-                                    bolo(i); 
-                                }
-                                bolo("\n");
-                            }
-                            // Bottom Half
-                            dohrao (number i = (size - 1); i >= 1; i--) {
-                                dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
-                                dohrao (number j = 1; j <= i; j++) {
-                                    bolo(" ");
-                                    bolo(i); 
-                                }
-                                bolo("\n");
-                            }
+    }
 
-                            print_separator(40);
 
-                            // 2. Karo-Jabtak Loop (Diagnostics)
-                            bolo("[2] Running Sensor Calibration:\n");
-                            number attempt = 1;
-                            faisla sensor_ready = galat;
 
-                            karo {
-                                bolo("Probe #", attempt, ":\t");
-                                agar (attempt < 10) {
-                                    bolo("Warming up...\t[WAIT...]\n");
-                                } warna {
-                                    bolo("Calibration Complete!\t[READY]\n");
-                                    sensor_ready = sahi;
-                                }
-                                attempt = attempt + 1;
-                            } jabtak (!sensor_ready);
+    bolo("Dusri umar likho:");
 
-                            print_separator(40);
+    number umar1 = suno();
 
-                            // 3. Qism & Intekhab Implementation
-                            bolo("[3] System Final Status:\n");
-                            number status_color = GREEN;
-                            
-                            intekhab (status_color) {
-                                agar_ho RED:   
-                                bolo("SYSTEM FATAL (RED)\n"); bas_kar;
-                                agar_ho GREEN: bolo("SYSTEM OPTIMAL (GREEN)\n"); bas_kar;
-                                agar_ho BLUE:  bolo("SYSTEM RECOVERY (BLUE)\n"); bas_kar;
-                            }
-                        }
-                    </textarea>
-                </div>
-            </div>
+    agar (umar1 <= 18) {
+
+        bolo("Ye wali choti hai!");
+
+    } warna {
+
+        bolo("Ye wali badi hai!");
+
+    }
+
+
+
+    lafz random_msg = "Waqt check karo: ";
+
+    bolo(random_msg, waqt());
+
+   
+
+    number luck = ittifaq(1, 100);
+
+    bolo("Aapka lucky number: ", luck);
+
+}
+</textarea>
         </section>
 
-        <!-- Terminal -->
-        <section
-            class="lg:w-[550px] flex flex-col bg-slate-100 dark:bg-terminal-dark border-l border-slate-200 dark:border-white/5 transition-colors duration-300">
-            <div
-                class="h-10 bg-slate-50 dark:bg-slate-900/80 px-4 flex items-center justify-between border-b border-slate-200 dark:border-white/5 transition-colors">
-                <span
-                    class="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">Terminal
-                    Output</span>
-                <button id="clear-term"
-                    class="text-[10px] text-slate-400 hover:text-slate-700 dark:hover:text-slate-400 uppercase font-bold">Clear</button>
+        <section class="flex-1 flex flex-col bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-2xl">
+            <div class="px-5 py-3 bg-white/5 border-b border-white/10 flex justify-between text-xs font-bold text-slate-500 tracking-widest uppercase">
+                <span>Output Console</span>
+                <span id="exec-time" class="text-orange-500">0ms</span>
             </div>
-            <div class="flex-1 p-6 overflow-auto bg-white/40 dark:bg-slate-950/40">
-                <pre id="output" class="mono text-sm leading-7 text-slate-800 dark:text-slate-300 whitespace-pre-wrap">
-<span class="text-slate-400 dark:text-slate-600 italic opacity-60">System ready. Awaiting instructions...</span></pre>
-            </div>
-
-            <div
-                class="h-24 bg-slate-50 dark:bg-slate-900/30 p-4 border-t border-slate-200 dark:border-white/5 flex flex-col justify-between transition-colors">
-                <div
-                    class="flex justify-between items-center text-[10px] text-slate-500 font-bold uppercase tracking-widest">
-                    <span>Execution Efficiency</span>
-                    <span id="exec-time" class="text-sky-600 dark:text-sky-500/80">0ms</span>
-                </div>
-                <div class="w-full h-1 bg-slate-200 dark:bg-white/5 rounded-full overflow-hidden">
-                    <div id="prog-bar"
-                        class="h-full bg-sky-500/40 w-0 transition-all duration-500 border-r border-sky-400"></div>
-                </div>
-                <div class="flex justify-between text-[9px] text-slate-400 dark:text-slate-600 mono">
-                    <span>VIRTUAL_MACHINE: READY</span>
-                    <span>CORE: OPTIMIZED_WASM</span>
-                </div>
+            <div id="console" class="flex-1 p-6 font-fira text-sm overflow-y-auto whitespace-pre-wrap text-emerald-400 selection:bg-emerald-500/30">
+                Welcome to YaarScript Playground.
             </div>
         </section>
-
     </main>
 
-    <!-- Footer -->
-    <footer
-        class="border-t border-slate-200 dark:border-white/5 bg-white dark:bg-slate-950 px-6 py-2 flex justify-between items-center text-[10px] text-slate-500 dark:text-slate-600 mono transition-colors">
-        <div class="flex items-center space-x-6">
-            <div class="flex items-center space-x-2">
-                <div class="w-2 h-2 rounded-full bg-green-500 shadow-sm shadow-green-500"></div>
-                <span class="font-bold">ENGINE: STABLE</span>
-            </div>
-            <span>LANG: YAARSCRIPT_PRO</span>
-        </div>
-        <div>
-            <span>&copy; 2026 YAAR LABS</span>
-        </div>
-    </footer>
-
     <script type="module">
-        import init, { compile_and_run } from './pkg/compiler.js';
+        import init, { init_vm, WasmVMStatus } from './pkg/compiler.js';
 
-        const codeArea = document.getElementById('code');
-        const highlightArea = document.getElementById('highlighting');
-        const gutter = document.getElementById('line-numbers');
-        const outputArea = document.getElementById('output');
-        const runBtn = document.getElementById('run');
-        const statusIndicator = document.getElementById('connection-status');
-        const lineColIndicator = document.getElementById('line-col-indicator');
+        const consoleEl = document.getElementById('console');
+        const editor = document.getElementById('editor');
+        const runBtn = document.getElementById('run-btn');
+        const indicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+        const execTime = document.getElementById('exec-time');
 
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const darkIcon = document.getElementById('theme-toggle-dark-icon');
-        const lightIcon = document.getElementById('theme-toggle-light-icon');
+        let currentVM = null;
+        let lastOutputLength = 0;
 
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            lightIcon.classList.remove('hidden');
-        } else {
-            document.documentElement.classList.remove('dark');
-            darkIcon.classList.remove('hidden');
-        }
-
-        themeToggleBtn.addEventListener('click', function () {
-            darkIcon.classList.toggle('hidden');
-            lightIcon.classList.toggle('hidden');
-
-            if (localStorage.getItem('color-theme')) {
-                if (localStorage.getItem('color-theme') === 'light') {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                } else {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                }
-            } else {
-                if (document.documentElement.classList.contains('dark')) {
-                    document.documentElement.classList.remove('dark');
-                    localStorage.setItem('color-theme', 'light');
-                } else {
-                    document.documentElement.classList.add('dark');
-                    localStorage.setItem('color-theme', 'dark');
-                }
-            }
-        });
-
-        const highlight = (text) => {
-            const tokens = [
-                { type: 'comment', regex: /\/\/.*|\/\*[\s\S]*?\*\// },
-                { type: 'string', regex: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/ },
-                { type: 'keyword', regex: /\b(?:agar|warna|jabtak|wapsi|yaar|karo|mangwao|pakka|sab_ke_liye|bas_kar|dohrao|aakhir|agar_ho|intekhab)\b/ },
-                { type: 'type', regex: /\b(?:number|float|double|char|khaali|faisla|lafz|qism)\b/ },
-                { type: 'function', regex: /\b(?:bolo)\b/ },
-                { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
-                { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
-                { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,]+/ }
-            ];
-
-            const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            const bigRegex = new RegExp(tokens.map(t => `(${t.regex.source})`).join('|'), 'g');
-
-            let html = "";
-            let lastIndex = 0;
-
-            text.replace(bigRegex, (match, ...args) => {
-                const offset = args[args.length - 2];
-                html += escapeHTML(text.slice(lastIndex, offset));
-                const tokenIndex = args.slice(0, tokens.length).findIndex(val => val !== undefined);
-                if (tokenIndex !== -1) {
-                    html += `<span class="token-${tokens[tokenIndex].type}">${escapeHTML(match)}</span>`;
-                } else {
-                    html += escapeHTML(match);
-                }
-                lastIndex = offset + match.length;
-                return match;
-            });
-
-            html += escapeHTML(text.slice(lastIndex));
-            return html;
-        };
-
-        const formatTerminal = (text) => {
-            const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            let escaped = escapeHTML(text);
-
-            return escaped
-                .replace(/(\b\w+ Error:)/g, '<span class="term-error-header">$1</span>')
-                .replace(/(error:)/g, '<span class="term-error-label">$1</span>')
-                .replace(/(--&gt; \d+:\d+)/g, '<span class="term-arrow">$1</span>')
-                .replace(/(^|[\r\n])(\s*&gt;\s*)/g, '$1<span class="term-pointer">$2</span>')
-                .replace(/(\s+\^)/g, '<span class="term-caret">$1</span>')
-                .replace(/(\d+\s+\|\s+)/g, '<span class="term-gutter">$1</span>');
-        };
-
-        const syncHighlight = () => {
-            highlightArea.innerHTML = highlight(codeArea.value) + "\n";
-        };
-
-        async function bootstrap() {
+        async function start() {
             try {
                 await init();
-                statusIndicator.innerHTML = `
-            <div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-            <span class="text-[10px] font-bold text-green-500 uppercase tracking-widest">Wasm: Online</span>
-          `;
+                indicator.classList.replace('bg-red-500', 'bg-emerald-500');
+                indicator.classList.add('shadow-[0_0_8px_rgba(16,185,129,0.5)]');
+                statusText.innerText = 'WASM Ready';
             } catch (e) {
-                statusIndicator.innerHTML = `
-            <div class="w-1.5 h-1.5 rounded-full bg-red-500"></div>
-            <span class="text-[10px] font-bold text-red-500 uppercase tracking-widest">Wasm: Offline</span>
-          `;
+                consoleEl.innerHTML += `<div class="text-red-400 mt-2">[System Error] WASM failed to load.</div>`;
             }
         }
 
-        const updateLineNumbers = () => {
-            const lines = codeArea.value.split('\n').length;
-            gutter.innerHTML = Array.from({ length: lines }, (_, i) => `<span>${i + 1}</span>`).join('');
-        };
-
-        const updateLineCol = () => {
-            const textBefore = codeArea.value.substr(0, codeArea.selectionStart);
-            const lines = textBefore.split('\n');
-            lineColIndicator.textContent = `Line: ${lines.length}, Col: ${lines[lines.length - 1].length + 1}`;
-        };
-
-        codeArea.addEventListener('input', () => {
-            syncHighlight();
-            updateLineNumbers();
-            updateLineCol();
-        });
-
-        codeArea.addEventListener('scroll', () => {
-            highlightArea.scrollTop = codeArea.scrollTop;
-            highlightArea.scrollLeft = codeArea.scrollLeft;
-            gutter.scrollTop = codeArea.scrollTop;
-        });
-
-        codeArea.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                e.preventDefault();
-                const start = codeArea.selectionStart;
-                const end = codeArea.selectionEnd;
-                codeArea.value = codeArea.value.substring(0, start) + "    " + codeArea.value.substring(end);
-                codeArea.selectionStart = codeArea.selectionEnd = start + 4;
-                syncHighlight();
-                updateLineNumbers();
+        function handleVMStatus(status) {
+            const fullOutput = currentVM.get_output();
+            const newOutput = fullOutput.substring(lastOutputLength);
+            
+            if (newOutput) {
+                const textNode = document.createTextNode(newOutput);
+                consoleEl.appendChild(textNode);
+                lastOutputLength = fullOutput.length;
             }
-        });
 
-        codeArea.addEventListener('click', updateLineCol);
-        codeArea.addEventListener('keyup', updateLineCol);
+            if (status === WasmVMStatus.AwaitingInput) {
+                createInlineInput();
+            } else if (status === WasmVMStatus.Finished) {
+                const fin = document.createElement('div');
+                fin.className = "text-slate-500 mt-4 border-t border-white/5 pt-2 italic";
+                fin.innerText = "Program exited successfully.";
+                consoleEl.appendChild(fin);
+            } else if (status === WasmVMStatus.Error) {
+                 const err = document.createElement('div');
+                err.className = "text-red-500 mt-4 border-t border-white/5 pt-2";
+                err.innerText = "Runtime Error occurred.";
+                consoleEl.appendChild(err);
+            }
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
 
-        runBtn.onclick = () => {
-            const code = codeArea.value;
-            outputArea.innerHTML = '<span class="text-sky-500 animate-pulse font-bold tracking-widest">>> BUILDING CORE...</span>\n';
-            const start = performance.now();
-            document.getElementById('prog-bar').style.width = '60%';
+        function createInlineInput() {
+            const inputContainer = document.createElement('span');
+            inputContainer.className = "inline-flex items-center";
+            
+            const inputSpan = document.createElement('span');
+            inputSpan.id = "inline-input";
+            inputSpan.contentEditable = "true";
+            inputSpan.className = "text-orange-400 outline-none min-w-[1px] whitespace-pre";
+            
+            const cursor = document.createElement('span');
+            cursor.className = "terminal-cursor";
+            
+            inputContainer.appendChild(inputSpan);
+            inputContainer.appendChild(cursor);
+            consoleEl.appendChild(inputContainer);
+            
+            // Focus and scroll
+            inputSpan.focus();
+            consoleEl.scrollTop = consoleEl.scrollHeight;
 
-            // Small delay to allow the "BUILDING..." message to show
-            setTimeout(() => {
-                try {
-                    // Call the WASM function
-                    const result = compile_and_run(code);
+            inputSpan.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = inputSpan.innerText.trim();
                     
-                    // Display the captured output
-                    // If it contains "Error:", it might be from our ErrorReporter
-                    if (result.includes("Error:") || result.includes("error:")) {
-                        outputArea.innerHTML = formatTerminal(result);
-                    } else if (result.trim() === "") {
-                        outputArea.innerHTML = '<span class="text-slate-500 italic">>> Process finished with no output.</span>';
-                    } else {
-                        // Standard output
-                        outputArea.textContent = result;
-                    }
+                    // Freeze the input in the history
+                    inputSpan.contentEditable = "false";
+                    cursor.remove();
+                    inputContainer.classList.remove('inline-flex'); // Just keep it as text
+                    consoleEl.appendChild(document.createTextNode('\n'));
                     
-                    document.getElementById('prog-bar').style.width = '100%';
-                } catch (err) {
-                    outputArea.innerHTML = `<span class="text-red-500 font-bold border-b border-red-500/20 pb-1 block mb-2">BUILD FAILED</span>\n<span class="text-slate-400">${err}</span>`;
-                    document.getElementById('prog-bar').style.width = '0%';
+                    const nextStatus = currentVM.provide_input(val);
+                    handleVMStatus(nextStatus);
                 }
-                const duration = Math.floor(performance.now() - start);
-                document.getElementById('exec-time').textContent = `${duration}ms`;
-            }, 50);
+            });
+
+            // Keep focus if user clicks console
+            consoleEl.onclick = () => {
+                if (inputSpan.parentElement) inputSpan.focus();
+            };
+        }
+
+        function run() {
+            const startTime = performance.now();
+            consoleEl.innerHTML = '';
+            lastOutputLength = 0;
+            
+            const startMsg = document.createElement('div');
+            startMsg.className = "text-slate-500 italic mb-2";
+            startMsg.innerText = "Compiling and running...";
+            consoleEl.appendChild(startMsg);
+            
+            try {
+                currentVM = init_vm(editor.value);
+                const status = currentVM.start();
+                handleVMStatus(status);
+                execTime.innerText = `${Math.round(performance.now() - startTime)}ms`;
+            } catch (err) {
+                const errDiv = document.createElement('div');
+                errDiv.className = "text-red-500 whitespace-pre-wrap font-fira";
+                errDiv.innerText = err;
+                consoleEl.appendChild(errDiv);
+            }
+        }
+
+        runBtn.onclick = run;
+        window.onkeydown = (e) => { 
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                run(); 
+            }
         };
 
-        document.getElementById('clear').onclick = () => { codeArea.value = ''; syncHighlight(); updateLineNumbers(); };
-        document.getElementById('clear-term').onclick = () => outputArea.textContent = '';
-
-        syncHighlight();
-        updateLineNumbers();
-        bootstrap();
+        start();
     </script>
 </body>
-
 </html>
