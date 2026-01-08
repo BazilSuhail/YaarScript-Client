@@ -24,10 +24,10 @@ const ScrollWordReveal = ({
   const SCROLL_END = 0.7;
 
   return (
-    <section className="mx-auto py-30 px-6 max-w-5xl md:mb-12">
+    <section className="mx-auto py-30 sm:px-6 max-w-5xl md:mb-12">
       <div
         ref={containerRef}
-        className={`${poppins.className} relative mx-auto text-[22px] lg:text-[60px] font-bold leading-relaxed`}
+        className={`${poppins.className} relative mx-auto text-[32px] sm:text-[44px] md:text-[54px] lg:text-[60px] font-bold leading-relaxed`}
       >
         {/* Static gray background */}
         <div className="absolute inset-0 flex flex-wrap justify-center pointer-events-none select-none">

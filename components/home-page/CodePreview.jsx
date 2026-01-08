@@ -79,7 +79,7 @@ const CodePreview = () => {
           className="relative group"
         >
           {/* Main terminal container matching previous components */}
-          <div className="relative bg-slate-800/30 backdrop-blur-md rounded-3xl overflow-hidden border border-slate-700/50">
+          <div className="relative bg-slate-800/30 backdrop-blur-md rounded-xl overflow-hidden border border-slate-700/50">
 
             {/* Terminal Header */}
             <div className="relative bg-slate-800/50 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-slate-700/50">
