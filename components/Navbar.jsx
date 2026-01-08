@@ -11,6 +11,26 @@ const Navbar = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = React.useRef(null);
+
+    // Click outside to close menu
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (menuRef.current && !menuRef.current.contains(event.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+
+        if (isMenuOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [isMenuOpen]);
 
     // All hooks must stay at the top level!
     useEffect(() => {
@@ -57,7 +77,7 @@ const Navbar = () => {
                 initial={{ y: 0 }}
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="fixed top-4 left-1/2 -translate-x-1/2 z-999 w-[90%] max-w-4xl"
+                className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl"
             >
             <div className="backdrop-blur-xl bg-slate-900/80 border-2 border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/30">
                 <div className="flex justify-between items-center px-6 py-3">
@@ -126,149 +146,63 @@ const Navbar = () => {
         <AnimatePresence>
             {isMenuOpen && (
                 <motion.div
+                    ref={menuRef}
                     layout
-                    initial={{ y: 100, opacity: 0, height: 70 }}
-                    animate={{ y: 0, opacity: 1, height: "auto" }}
-                    exit={{ y: 100, opacity: 0, height: 70 }}
-                    transition={{ 
-                        y: { duration: 0.4, ease: "easeInOut" },
-                        opacity: { duration: 0.4, ease: "easeInOut" },
-                        height: { duration: 0.8, ease: "easeInOut" }
-                    }}
+                    initial={{ y: 20, opacity: 0, scale: 0.95 }}
+                    animate={{ y: 0, opacity: 1, scale: 1 }}
+                    exit={{ y: 20, opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
                     className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden w-[90%] max-w-sm overflow-hidden"
-                    style={{ originY: 1 }}
                 >
-                    <div className="backdrop-blur-xl bg-slate-900/80 border-2 border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/30 p-6">
-                        <div className="space-y-2">
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 1.6, duration: 0.4 }}
+                    <div className="backdrop-blur-xl bg-slate-900/90 border-2 border-slate-700/50 rounded-2xl shadow-2xl shadow-black/50 p-6">
+                        <div className="space-y-3">
+                            <Link 
+                                href="/docs" 
+                                onClick={() => setIsMenuOpen(false)} 
+                                className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group"
                             >
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.5 }}
-                                >
-                                    <motion.div
-                                        whileHover={{ scale: 1.05, x: 5 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    >
-                                        <Link href="/docs" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group">
-                                            <RiBook2Line className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                            <span className="font-medium">Documentation</span>
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 1.6, duration: 0.4 }}
+                                <RiBook2Line className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                                <span className="font-medium">Documentation</span>
+                            </Link>
+
+                            <Link 
+                                href="/editor" 
+                                onClick={() => setIsMenuOpen(false)} 
+                                className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group"
                             >
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.6 }}
-                                >
-                                    <motion.div
-                                        whileHover={{ scale: 1.05, x: 5 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    >
-                                        <Link href="/editor" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group">
-                                            <RiPlayCircleLine className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                            <span className="font-medium">Playground</span>
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 1.6, duration: 0.4 }}
+                                <RiPlayCircleLine className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                                <span className="font-medium">Playground</span>
+                            </Link>
+
+                            <Link 
+                                href="https://github.com/BazilSuhail/Custom-Compiler" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                                onClick={() => setIsMenuOpen(false)} 
+                                className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group"
                             >
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.7 }}
-                                >
-                                    <motion.div
-                                        whileHover={{ scale: 1.05, x: 5 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    >
-                                        <Link href="https://github.com/BazilSuhail/Custom-Compiler" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group">
-                                            <RiGithubFill className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                            <span className="font-medium">GitHub</span>
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
+                                <RiGithubFill className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                                <span className="font-medium">GitHub</span>
+                            </Link>
 
                             {/* Divider */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 1.6, duration: 0.4 }}
-                            >
-                                <div className="h-px bg-linear-to-r from-transparent via-sky-500/40 to-transparent my-2"></div>
-                            </motion.div>
+                            <div className="h-px bg-slate-700/50 my-2"></div>
 
                             {/* Footer Links Row */}
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 1.6, duration: 0.4 }}
-                                className="flex gap-2"
-                            >
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.8 }}
-                                    className="flex-1"
-                                >
-                                    <motion.div
-                                        whileHover={{ scale: 1.05, y: -3 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    >
-                                        <Link href="https://bazilsuhail.netlify.app" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-center space-y-1 px-3 py-3 text-slate-300 hover:text-sky-300 bg-sky-600/30 hover:bg-sky-600/50 border border-sky-500/40 hover:border-sky-400/80 rounded-lg transition-all duration-300 group w-full">
-                                            <RiUser3Line className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                            <span className="font-medium text-xs text-center">Creator</span>
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 0.9 }}
-                                    className="flex-1"
-                                >
-                                    <motion.div
-                                        whileHover={{ scale: 1.05, y: -3 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    >
-                                        <Link href="https://github.com/BazilSuhail/YaarScript-Client" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-center space-y-1 px-3 py-3 text-slate-300 hover:text-sky-300 bg-sky-600/30 hover:bg-sky-600/50 border border-sky-500/40 hover:border-sky-400/80 rounded-lg transition-all duration-300 group w-full">
-                                            <RiGithubFill className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                            <span className="font-medium text-xs text-center">Client</span>
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                                <motion.div
-                                    initial={{ opacity: 0, x: -20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: 1.0 }}
-                                    className="flex-1"
-                                >
-                                    <motion.div
-                                        whileHover={{ scale: 1.05, y: -3 }}
-                                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                                    >
-                                        <Link href="https://github.com/BazilSuhail/YaarScript" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-center space-y-1 px-3 py-3 text-slate-300 hover:text-sky-300 bg-sky-600/30 hover:bg-sky-600/50 border border-sky-500/40 hover:border-sky-400/80 rounded-lg transition-all duration-300 group w-full">
-                                            <RiCodeSSlashLine className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                            <span className="font-medium text-xs text-center">Compiler</span>
-                                        </Link>
-                                    </motion.div>
-                                </motion.div>
-                            </motion.div>
+                            <div className="flex gap-2">
+                                <Link href="https://bazilsuhail.netlify.app" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-center space-y-1 px-3 py-3 text-slate-300 hover:text-sky-300 bg-sky-600/20 hover:bg-sky-600/40 border border-sky-500/30 hover:border-sky-400/80 rounded-lg transition-all duration-300 group w-full">
+                                    <RiUser3Line className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                                    <span className="font-medium text-[10px] text-center">Creator</span>
+                                </Link>
+                                <Link href="https://github.com/BazilSuhail/YaarScript-Client" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-center space-y-1 px-3 py-3 text-slate-300 hover:text-sky-300 bg-sky-600/20 hover:bg-sky-600/40 border border-sky-500/30 hover:border-sky-400/80 rounded-lg transition-all duration-300 group w-full">
+                                    <RiGithubFill className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                                    <span className="font-medium text-[10px] text-center">Client</span>
+                                </Link>
+                                <Link href="https://github.com/BazilSuhail/YaarScript" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="flex flex-col items-center space-y-1 px-3 py-3 text-slate-300 hover:text-sky-300 bg-sky-600/20 hover:bg-sky-600/40 border border-sky-500/30 hover:border-sky-400/80 rounded-lg transition-all duration-300 group w-full">
+                                    <RiCodeSSlashLine className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
+                                    <span className="font-medium text-[10px] text-center">Compiler</span>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </motion.div>

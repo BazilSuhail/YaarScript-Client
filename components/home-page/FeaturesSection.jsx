@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
 import { 
   RiCodeSSlashLine, 
   RiFlashlightLine, 
@@ -10,6 +9,7 @@ import {
   RiCpuLine, 
   RiShieldCheckLine 
 } from "react-icons/ri";
+import { motion, useScroll, useTransform, useSpring } from "motion/react";
 
 const FeaturesSection = () => {
   const features = [
@@ -45,14 +45,28 @@ const FeaturesSection = () => {
     }
   ];
 
+  const containerRef = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
+  const opacity = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+  const scale = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+  const y = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [100, 0, 0, -100]);
+
   return (
-    <section className="relative z-10 py-20 px-6 pointer-events-none">
+    <section ref={containerRef} className="relative z-10 py-20 px-6 pointer-events-none">
       <div className="max-w-5xl mx-auto pointer-events-auto">
+        {/* Scroll animation ONLY on the heading */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          style={{ opacity, scale, y }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-linear-to-r from-white  via-sky-600 to-sky-800 animate-linear-features bg-size-[200%_auto] mb-4">
@@ -77,13 +91,11 @@ const FeaturesSection = () => {
           </p>
         </motion.div>
 
+        {/* Static grid as requested */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
-            <motion.div
+            <div
               key={feature.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6}}
               className="group bg-slate-800/30 backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50 hover:border-sky-500/50 transition-all hover:shadow-xl hover:shadow-sky-500/10"
             >
               <div className="w-14 h-14 rounded-2xl bg-linear-to-r from-sky-500 to-sky-700 flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
@@ -95,7 +107,7 @@ const FeaturesSection = () => {
               <p className="text-slate-400 text-[14px] leading-relaxed">
                 {feature.description}
               </p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

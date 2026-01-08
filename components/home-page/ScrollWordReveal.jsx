@@ -30,9 +30,13 @@ const ScrollWordReveal = ({
         className={`${poppins.className} relative mx-auto text-[22px] lg:text-[60px] font-bold leading-relaxed`}
       >
         {/* Static gray background */}
-        <div className="absolute inset-0 flex flex-wrap justify-center text-slate-200 opacity-25 pointer-events-none select-none">
+        <div className="absolute inset-0 flex flex-wrap justify-center pointer-events-none select-none">
           {words.map((word, i) => (
-            <span key={`bg-${i}`} className="mr-2">
+            <span 
+              key={`bg-${i}`} 
+              className="mr-2 text-transparent"
+              style={{ WebkitTextStroke: '1px rgba(226, 232, 240, 0.1)' }} // Faint outline
+            >
               {word}
             </span>
           ))}
@@ -50,8 +54,12 @@ const ScrollWordReveal = ({
             return (
               <motion.span
                 key={`motion-${i}`}
-                style={{ opacity, x }}
-                className="inline-block mr-2 text-transparent bg-clip-text bg-linear-to-r from-sky-500 via-sky-600 to-sky-700 animate-linear-text"
+                style={{ 
+                  opacity, 
+                  x,
+                  WebkitTextStroke: '1.5px #0ea5e9'
+                }}
+                className="inline-block mr-2 text-transparent"
               >
                 {word}
               </motion.span>
@@ -59,23 +67,8 @@ const ScrollWordReveal = ({
           })}
         </div>
       </div>
-
-      {/* Gradient animation style */}
-      <style jsx>{`
-        @keyframes linear-text {
-          0% {
-            background-position: 0% 50%;
-          }
-          100% {
-            background-position: 200% 50%;
-          }
-        }
-        .animate-linear-text {
-          background-size: 200% 100%; /* important to make linear move */
-          animation: linear-text 3s linear infinite;
-        }
-      `}</style>
     </section>
+
   );
 };
 

@@ -135,7 +135,13 @@ export const ScrollVelocity = ({
           parallaxStyle={parallaxStyle}
           scrollerStyle={scrollerStyle}
         >
-          <span className='bg-linear-to-br from-sky-700 via-sky-300 to-sky-700 bg-clip-text text-transparent'>
+          <span 
+            className='text-transparent bg-clip-text' 
+            style={{ 
+              WebkitTextStroke: '1.5px #0ea5e9', // Using sky-500 for the stroke
+              backgroundClip: 'text'
+            }}
+          >
           {text}&nbsp;
           </span>
         </VelocityText>
