@@ -1,18 +1,39 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export function compile_and_run(source: string): string;
+export class WasmVM {
+    private constructor();
+    free(): void;
+    [Symbol.dispose](): void;
+    get_output(): string;
+    provide_input(input: string): WasmVMStatus;
+    start(): WasmVMStatus;
+}
+
+export enum WasmVMStatus {
+    Ready = 0,
+    Finished = 1,
+    AwaitingInput = 2,
+    Error = 3,
+}
+
+export function init_vm(source: string): WasmVM;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
-    readonly compile_and_run: (a: number, b: number) => [number, number];
+    readonly __wbg_wasmvm_free: (a: number, b: number) => void;
+    readonly init_vm: (a: number, b: number) => [number, number, number];
+    readonly wasmvm_get_output: (a: number) => [number, number];
+    readonly wasmvm_provide_input: (a: number, b: number, c: number) => number;
+    readonly wasmvm_start: (a: number) => number;
     readonly __wbindgen_exn_store: (a: number) => void;
     readonly __externref_table_alloc: () => number;
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+    readonly __externref_table_dealloc: (a: number) => void;
     readonly __wbindgen_free: (a: number, b: number, c: number) => void;
     readonly __wbindgen_start: () => void;
 }

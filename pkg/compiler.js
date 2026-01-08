@@ -1,22 +1,80 @@
 /* @ts-self-types="./compiler.d.ts" */
 
+export class WasmVM {
+    static __wrap(ptr) {
+        ptr = ptr >>> 0;
+        const obj = Object.create(WasmVM.prototype);
+        obj.__wbg_ptr = ptr;
+        WasmVMFinalization.register(obj, obj.__wbg_ptr, obj);
+        return obj;
+    }
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        WasmVMFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_wasmvm_free(ptr, 0);
+    }
+    /**
+     * @returns {string}
+     */
+    get_output() {
+        let deferred1_0;
+        let deferred1_1;
+        try {
+            const ret = wasm.wasmvm_get_output(this.__wbg_ptr);
+            deferred1_0 = ret[0];
+            deferred1_1 = ret[1];
+            return getStringFromWasm0(ret[0], ret[1]);
+        } finally {
+            wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
+        }
+    }
+    /**
+     * @param {string} input
+     * @returns {WasmVMStatus}
+     */
+    provide_input(input) {
+        const ptr0 = passStringToWasm0(input, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.wasmvm_provide_input(this.__wbg_ptr, ptr0, len0);
+        return ret;
+    }
+    /**
+     * @returns {WasmVMStatus}
+     */
+    start() {
+        const ret = wasm.wasmvm_start(this.__wbg_ptr);
+        return ret;
+    }
+}
+if (Symbol.dispose) WasmVM.prototype[Symbol.dispose] = WasmVM.prototype.free;
+
+/**
+ * @enum {0 | 1 | 2 | 3}
+ */
+export const WasmVMStatus = Object.freeze({
+    Ready: 0, "0": "Ready",
+    Finished: 1, "1": "Finished",
+    AwaitingInput: 2, "2": "AwaitingInput",
+    Error: 3, "3": "Error",
+});
+
 /**
  * @param {string} source
- * @returns {string}
+ * @returns {WasmVM}
  */
-export function compile_and_run(source) {
-    let deferred2_0;
-    let deferred2_1;
-    try {
-        const ptr0 = passStringToWasm0(source, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.compile_and_run(ptr0, len0);
-        deferred2_0 = ret[0];
-        deferred2_1 = ret[1];
-        return getStringFromWasm0(ret[0], ret[1]);
-    } finally {
-        wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+export function init_vm(source) {
+    const ptr0 = passStringToWasm0(source, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.init_vm(ptr0, len0);
+    if (ret[2]) {
+        throw takeFromExternrefTable0(ret[1]);
     }
+    return WasmVM.__wrap(ret[0]);
 }
 
 function __wbg_get_imports() {
@@ -67,6 +125,10 @@ function __wbg_get_imports() {
         },
         __wbg_node_84ea875411254db1: function(arg0) {
             const ret = arg0.node;
+            return ret;
+        },
+        __wbg_now_16f0c993d5dd6c27: function() {
+            const ret = Date.now();
             return ret;
         },
         __wbg_process_44c7a14e11e9f69e: function(arg0) {
@@ -132,6 +194,10 @@ function __wbg_get_imports() {
         "./compiler_bg.js": import0,
     };
 }
+
+const WasmVMFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_wasmvm_free(ptr >>> 0, 1));
 
 function addToExternrefTable0(obj) {
     const idx = wasm.__externref_table_alloc();
@@ -205,6 +271,12 @@ function passStringToWasm0(arg, malloc, realloc) {
 
     WASM_VECTOR_LEN = offset;
     return ptr;
+}
+
+function takeFromExternrefTable0(idx) {
+    const value = wasm.__wbindgen_externrefs.get(idx);
+    wasm.__externref_table_dealloc(idx);
+    return value;
 }
 
 let cachedTextDecoder = new TextDecoder('utf-8', { ignoreBOM: true, fatal: true });

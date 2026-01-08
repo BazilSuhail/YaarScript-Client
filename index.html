@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YaarScript Native Playground</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandBlack: '#0f0804',
+                        brandOrange: '#ea580c', // orange-600
+                    },
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                        fira: ['Fira Code', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        body { font-family: 'Outfit', sans-serif; }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 1.2em;
+            background: #10b981;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        #inline-input:focus { outline: none; caret-color: transparent; }
+    </style>
+</head>
+
+<body class="bg-brandBlack text-slate-200 h-screen flex flex-col overflow-hidden">
+
+    <header class="flex items-center justify-between px-8 py-4 border-b border-white/10 bg-brandBlack/80 backdrop-blur-md z-50">
+        <div class="text-2xl font-semibold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
+            YaarScript.native
+        </div>
+        
+        <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2 text-xs font-medium">
+                <div id="status-indicator" class="w-2.5 h-2.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+                <span id="status-text" class="text-slate-400">WASM Not Loaded</span>
+            </div>
+            <button id="run-btn" class="bg-orange-600 hover:bg-orange-500 hover:-translate-y-0.5 active:translate-y-0 transition-all px-6 py-2 rounded-lg font-semibold text-white shadow-lg shadow-orange-900/20">
+                Run Program (Ctrl+Enter)
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 flex gap-4 p-4 overflow-hidden">
+        
+        <section class="flex-1 flex flex-col bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-2xl">
+            <div class="px-5 py-3 bg-white/5 border-b border-white/10 flex justify-between text-xs font-bold text-slate-500 tracking-widest uppercase">
+                <span>Editor — test_input.yaar</span>
+                <span>Rust-Wasm v1.1.0</span>
+            </div>
+            <textarea id="editor" class="flex-1 bg-transparent p-6 font-fira text-sm leading-relaxed resize-none outline-none text-slate-300" spellcheck="false">
+yaar {
+
+    bolo("Apni pehli umar likho:");
+
+    number umar = suno();
+
+   
+
+    agar (umar >= 18) {
+
+        bolo("Aap bade ho gaye hain!");
+
+    } warna {
+
+        bolo("Abhi aap chote hain.");
+
+    }
+
+
+
+    bolo("Dusri umar likho:");
+
+    number umar1 = suno();
+
+    agar (umar1 <= 18) {
+
+        bolo("Ye wali choti hai!");
+
+    } warna {
+
+        bolo("Ye wali badi hai!");
+
+    }
+
+
+
+    lafz random_msg = "Waqt check karo: ";
+
+    bolo(random_msg, waqt());
+
+   
+
+    number luck = ittifaq(1, 100);
+
+    bolo("Aapka lucky number: ", luck);
+
+}
+</textarea>
+        </section>
+
+        <section class="flex-1 flex flex-col bg-white/5 border border-white/10 rounded-2xl overflow-hidden backdrop-blur-sm shadow-2xl">
+            <div class="px-5 py-3 bg-white/5 border-b border-white/10 flex justify-between text-xs font-bold text-slate-500 tracking-widest uppercase">
+                <span>Output Console</span>
+                <span id="exec-time" class="text-orange-500">0ms</span>
+            </div>
+            <div id="console" class="flex-1 p-6 font-fira text-sm overflow-y-auto whitespace-pre-wrap text-emerald-400 selection:bg-emerald-500/30">
+                Welcome to YaarScript Playground.
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import init, { init_vm, WasmVMStatus } from './pkg/compiler.js';
+
+        const consoleEl = document.getElementById('console');
+        const editor = document.getElementById('editor');
+        const runBtn = document.getElementById('run-btn');
+        const indicator = document.getElementById('status-indicator');
+        const statusText = document.getElementById('status-text');
+        const execTime = document.getElementById('exec-time');
+
+        let currentVM = null;
+        let lastOutputLength = 0;
+
+        async function start() {
+            try {
+                await init();
+                indicator.classList.replace('bg-red-500', 'bg-emerald-500');
+                indicator.classList.add('shadow-[0_0_8px_rgba(16,185,129,0.5)]');
+                statusText.innerText = 'WASM Ready';
+            } catch (e) {
+                consoleEl.innerHTML += `<div class="text-red-400 mt-2">[System Error] WASM failed to load.</div>`;
+            }
+        }
+
+        function handleVMStatus(status) {
+            const fullOutput = currentVM.get_output();
+            const newOutput = fullOutput.substring(lastOutputLength);
+            
+            if (newOutput) {
+                const textNode = document.createTextNode(newOutput);
+                consoleEl.appendChild(textNode);
+                lastOutputLength = fullOutput.length;
+            }
+
+            if (status === WasmVMStatus.AwaitingInput) {
+                createInlineInput();
+            } else if (status === WasmVMStatus.Finished) {
+                const fin = document.createElement('div');
+                fin.className = "text-slate-500 mt-4 border-t border-white/5 pt-2 italic";
+                fin.innerText = "Program exited successfully.";
+                consoleEl.appendChild(fin);
+            } else if (status === WasmVMStatus.Error) {
+                 const err = document.createElement('div');
+                err.className = "text-red-500 mt-4 border-t border-white/5 pt-2";
+                err.innerText = "Runtime Error occurred.";
+                consoleEl.appendChild(err);
+            }
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+        }
+
+        function createInlineInput() {
+            const inputContainer = document.createElement('span');
+            inputContainer.className = "inline-flex items-center";
+            
+            const inputSpan = document.createElement('span');
+            inputSpan.id = "inline-input";
+            inputSpan.contentEditable = "true";
+            inputSpan.className = "text-orange-400 outline-none min-w-[1px] whitespace-pre";
+            
+            const cursor = document.createElement('span');
+            cursor.className = "terminal-cursor";
+            
+            inputContainer.appendChild(inputSpan);
+            inputContainer.appendChild(cursor);
+            consoleEl.appendChild(inputContainer);
+            
+            // Focus and scroll
+            inputSpan.focus();
+            consoleEl.scrollTop = consoleEl.scrollHeight;
+
+            inputSpan.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const val = inputSpan.innerText.trim();
+                    
+                    // Freeze the input in the history
+                    inputSpan.contentEditable = "false";
+                    cursor.remove();
+                    inputContainer.classList.remove('inline-flex'); // Just keep it as text
+                    consoleEl.appendChild(document.createTextNode('\n'));
+                    
+                    const nextStatus = currentVM.provide_input(val);
+                    handleVMStatus(nextStatus);
+                }
+            });
+
+            // Keep focus if user clicks console
+            consoleEl.onclick = () => {
+                if (inputSpan.parentElement) inputSpan.focus();
+            };
+        }
+
+        function run() {
+            const startTime = performance.now();
+            consoleEl.innerHTML = '';
+            lastOutputLength = 0;
+            
+            const startMsg = document.createElement('div');
+            startMsg.className = "text-slate-500 italic mb-2";
+            startMsg.innerText = "Compiling and running...";
+            consoleEl.appendChild(startMsg);
+            
+            try {
+                currentVM = init_vm(editor.value);
+                const status = currentVM.start();
+                handleVMStatus(status);
+                execTime.innerText = `${Math.round(performance.now() - startTime)}ms`;
+            } catch (err) {
+                const errDiv = document.createElement('div');
+                errDiv.className = "text-red-500 whitespace-pre-wrap font-fira";
+                errDiv.innerText = err;
+                consoleEl.appendChild(errDiv);
+            }
+        }
+
+        runBtn.onclick = run;
+        window.onkeydown = (e) => { 
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                e.preventDefault();
+                run(); 
+            }
+        };
+
+        start();
+    </script>
+</body>
+</html>
