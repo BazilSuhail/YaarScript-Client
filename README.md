@@ -1,32 +1,43 @@
-# YaarScript Pro: The Industrial Urdu Compiler 🇵🇰🚀
+# YaarScript WASM Compiler
 
-YaarScript Pro is a professional, industrial-grade multi-pass compiler that brings the warmth of the Urdu language to the power of Rust-based systems programming. It transforms a high-performance language into optimized **Three-Address Code (TAC)**, running natively in the browser via **WebAssembly**.
+This repository contains the source code to compile Yaarscript into WASM compiled binary. 
+
+#### About YaarScript:
+It is a professional, industrial-grade multi-pass compiler that brings the warmth of the Urdu language to the power of Rust-based systems programming. It transforms a high-performance language into optimized Three-Address Code (TAC), running natively in the browser via WebAssembly.
 
 ---
 
-## ⚡ Quick Start (Setup)
+## Quick Start (Setup)
 
 To run the YaarScript Pro playground locally, follow these steps:
 
 ### Prerequisites
 - **Rust**: Install from [rustup.rs](https://rustup.rs/)
-- **wasm-pack**: Install via `cargo install wasm-pack`
-- **Python**: (Optional) For serving the files locally.
+- **WASM Target**: Add the WebAssembly target via rustup:
+  ```bash
+  rustup target add wasm32-unknown-unknown
+  ```
+- **wasm-pack**: Install the orchestration tool:
+  ```bash
+  cargo install wasm-pack
+  ```
+- **Python**: Installed for serving the files locally.
 
 ### Build and Run
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/BazilSuhail/YaarScript-Client.git
+   git clone --branch wasm-compiler --single-branch https://github.com/BazilSuhail/YaarScript-Client.git
    cd YaarScript-Client
    ```
 
 2. **Build the WebAssembly package**:
+   This command compiles the Rust core into a JS-compatible WASM bundle:
    ```bash
    wasm-pack build --target web
    ```
 
 3. **Serve the IDE**:
-   Run a local server in the project root:
+   Run a local server in the project root to handle WASM MIME types correctly:
    ```bash
    python -m http.server 8000
    ```
@@ -34,22 +45,22 @@ To run the YaarScript Pro playground locally, follow these steps:
 
 ---
 
-## 🏗️ Compiler Architecture
+## Compiler Architecture
 
 The YaarScript toolchain is organized into a modular pipeline:
 
 1.  **Lexical Analysis (Lexer)**: Scans source code into tokens with full Unicode support.
-2.  **Syntax Analysis (Parser)**: Uses a **Top-Down Operator Precedence (Pratt) Parser** for advanced expression handling.
+2.  **Syntax Analysis (Parser)**: Uses a Top-Down Operator Precedence (Pratt) Parser for advanced expression handling.
 3.  **Semantic Intelligence**:
     *   **Scope Analyzer**: Manages symbol levels and shadowing.
     *   **Type Checker**: Enforces strict typing (No implicit coercion).
-4.  **IR Pipeline**: Generates **Three-Address Code (TAC)**.
+4.  **IR Pipeline**: Generates Three-Address Code (TAC).
 5.  **Fixed-Point Optimizer**: Runs persistent passes (Constant Folding, DCE, Peephole Optimization).
 6.  **Wasm Execution Engine**: A high-performance VM running optimized TAC in the browser.
 
 ---
 
-## 🎭 The "Yaar" Style Syntax
+## The "Yaar" Style Syntax
 
 YaarScript Pro replaces boring standard keywords with intuitive Urdu-style keywords.
 
@@ -68,79 +79,97 @@ YaarScript Pro replaces boring standard keywords with intuitive Urdu-style keywo
 
 ---
 
-## 💻 Comprehensive Example
+## Comprehensive Example
 
 ```cpp
-/* 
-   YaarScript Pro: Comprehensive Feature Demo
-*/
+qism Color { RED, GREEN, BLUE };
 
-// Global constant
-pakka sab_ke_liye number TARGET = 100;
+pakka number TARGET = 5;
 
-// User defined Enum
-qism Mausam { Garmi, Sardi, Barish };
+// Function to print a separator line
+khaali print_separator(number count) {
 
-// Function definition
-number calculate_bonus(number level) {
-    agar (level > 5) {
-        wapsi level * 10;
-    } warna {
-        wapsi level * 2;
+    bolo("\n");
+    dohrao (number i = 0; i < TARGET; i++) {
+        bolo("=");
     }
+    bolo("\n");
 }
 
-// Main execution block
 yaar {
-    bolo("--- YaarScript Pro Mission Control ---\n");
+    // Example of the new features:
+    bolo("Enter Number: ");
 
-    number counter = 0;
-    lafz mission = "Mars Rover";
-    faisla is_active = sahi;
+    number base = suno();
+    number power = 3;
+    bolo("Power for ", base, " is ", base ** power);
 
-    // dohrao loop (For)
-    bolo("Starting Iteration:\n");
-    dohrao (number i = 1; i <= 5; i++) {
-        counter = counter + (i * 2);
-        bolo("Step ", i, ": Counter is ", counter, "\n");
+    number start = waqt();
+    bolo("\n", ittifaq(1, 100));
+    number end = waqt();
+    bolo("\nTime taken: ", end - start);
 
-        agar (counter > 20) {
-            bolo("Threshold crossed, stopping.\n");
-            bas_kar; 
+    bolo("--- 🚀 THE ULTIMATE LANGUAGE POWER TEST ---\n");
+
+    // 1. The Numerical Diamond (Nested For Loops)
+    number size = 5 ;
+    bolo("\n[1] Generating Numeric Diamond:\n");
+    
+    // Top Half
+    dohrao (number i = 1; i <= size; i++) {
+        dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
+        dohrao (number j = 1; j <= i; j++) { 
+            bolo(" ");
+            bolo(i); 
+         }
+        bolo("\n");
+    }
+    // Bottom Half
+    dohrao (number i = (size - 1); i >= 1; i--) {
+        dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
+        dohrao (number j = 1; j <= i; j++) {
+            bolo(" ");
+            bolo(i); 
+         }
+        bolo("\n");
+    }
+
+    print_separator(40);
+
+    // 2. Karo-Jabtak Loop (Diagnostics)
+    bolo("[2] Running Sensor Calibration:\n");
+    number attempt = 1;
+    faisla sensor_ready = galat;
+
+    karo {
+        bolo("Probe #", attempt, ":\t");
+        agar (attempt < 10) {
+            bolo("Warming up...\t[WAIT...]\n");
+        } warna {
+            bolo("Calibration Complete!\t[READY]\n");
+            sensor_ready = sahi;
         }
-    }
+        attempt = attempt + 1;
+    } jabtak (!sensor_ready);
 
-    // jabtak loop (While)
-    number wait_time = 3;
-    jabtak (wait_time > 0) {
-        bolo("T-minus: ", wait_time, "\n");
-        wait_time = wait_time - 1;
-    }
+    print_separator(40);
 
-    // intekhab (Switch Case)
-    number status_code = 1;
-    intekhab (status_code) {
-        agar_ho 0:
-            bolo("CRITICAL ERROR\n");
-            bas_kar;
-        agar_ho 1:
-            bolo("SYSTEMS NOMINAL\n");
-            bas_kar;
-        aakhir:
-            bolo("UNKNOWN STATE\n");
+    // 3. Qism & Intekhab Implementation
+    bolo("[3] System Final Status:\n");
+    number status_color = GREEN;
+    
+    intekhab (status_color) {
+        agar_ho RED:   
+        bolo("SYSTEM FATAL (RED)\n"); bas_kar;
+        agar_ho GREEN: bolo("SYSTEM OPTIMAL (GREEN)\n"); bas_kar;
+        agar_ho BLUE:  bolo("SYSTEM RECOVERY (BLUE)\n"); bas_kar;
     }
-
-    number bonus = calculate_bonus(7);
-    bolo("\nFinal Mission Report:");
-    bolo("\n- Bonus Points: ", bonus);
-    bolo("\n- Global Target: ", TARGET);
-    bolo("\n\nKaam khatam ho gaya!\n");
 }
 ```
 
 ---
 
-## 📝 Language Grammar (EBNF)
+## Language Grammar (EBNF)
 
 ### Declarations & Types
 ```ebnf
@@ -162,9 +191,8 @@ SwitchStmt       ::= "intekhab" "(" Expression ")" "{" CaseBlock* DefaultBlock? 
 
 ---
 
-## 🎓 Project Achievements
-*   ✅ **Wasm Integration**: Entire compiler pipeline compiled to `wasm32-unknown-unknown`.
-*   ✅ **Professional IDE**: Dark/Light mode, syntax highlighting, and responsive terminal.
-*   ✅ **Urdu Slang Branding**: Fully localized keyword set for a unique developer experience.
-*   ✅ **Multi-Pass Optimizer**: Fixed-point optimization reducing code density.
-
+## Project Achievements
+*   Wasm Integration: Entire compiler pipeline compiled to wasm32-unknown-unknown.
+*   Professional IDE: Dark/Light mode, syntax highlighting, and responsive terminal.
+*   Urdu Slang Branding: Fully localized keyword set for a unique developer experience.
+*   Multi-Pass Optimizer: Fixed-point optimization reducing code density.

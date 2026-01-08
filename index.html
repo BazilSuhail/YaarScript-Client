@@ -325,86 +325,96 @@
                         <span>1</span>
                     </div>
                     <pre id="highlighting" class="text-slate-900 dark:text-slate-200" aria-hidden="true"></pre>
-                    <textarea id="code" spellcheck="false" wrap="off" autofocus>/* 
-   YaarScript Pro: Comprehensive Feature Demo
-   This code covers loops, functions, variables, and logic.
-*/
+                    <textarea id="code" spellcheck="false" wrap="off" autofocus>
+                        /* 
+                        YaarScript Pro: Comprehensive Feature Demo
+                        This code covers loops, functions, variables, and logic.
+                        */
+                        // qism creates an Enum
+                        qism Color { RED, GREEN, BLUE };
+                        // pakka means constant
+                        pakka number TARGET = 5;
 
-// pakka means constant, sab_ke_liye means global
-pakka sab_ke_liye number TARGET = 100;
+                        // Function to print a separator line
+                        khaali print_separator(number count) {
 
-// qism creates an Enum
-qism Mausam { Garmi, Sardi, Barish };
+                            bolo("\n");
+                            dohrao (number i = 0; i < TARGET; i++) {
+                                bolo("=");
+                            }
+                            bolo("\n");
+                        }
 
-// Functions are defined with ReturnType Name(Params)
-number calculate_bonus(number level) {
-    agar (level > 5) {
-        wapsi level * 10;
-    } warna {
-        wapsi level * 2;
-    }
-}
+                        yaar {
+                            // Example of the new features:
+                            bolo("Enter Number: ");
 
-// yaar is the entry point (main function)
-yaar {
-    bolo("--- YaarScript Pro Mission Control ---\n");
+                            number base = suno();
+                            number power = 3;
+                            bolo("Power for ", base, " is ", base ** power);
 
-    // Variables: number (int), float, lafz (string), faisla (bool)
-    number counter = 0;
-    float gravity = 9.81;
-    lafz mission = "Mars Rover";
-    faisla is_active = sahi; // sahi = true, galat = false
+                            number start = waqt();
+                            bolo("\n", ittifaq(1, 100));
+                            number end = waqt();
+                            bolo("\nTime taken: ", end - start);
 
-    // 1. dohrao loop (For Loop)
-    bolo("Starting Iteration:\n");
-    dohrao (number i = 1; i <= 5; i++) {
-        counter = counter + (i * 2);
-        bolo("Step ", i, ": Counter is ", counter, "\n");
+                            bolo("--- 🚀 THE ULTIMATE LANGUAGE POWER TEST ---\n");
 
-        // Conditional break
-        agar (counter > 20) {
-            bolo("Threshold crossed, stopping.\n");
-            bas_kar; // bas_kar = break
-        }
-    }
+                            // 1. The Numerical Diamond (Nested For Loops)
+                            number size = 5 ;
+                            bolo("\n[1] Generating Numeric Diamond:\n");
+                            
+                            // Top Half
+                            dohrao (number i = 1; i <= size; i++) {
+                                dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
+                                dohrao (number j = 1; j <= i; j++) { 
+                                    bolo(" ");
+                                    bolo(i); 
+                                }
+                                bolo("\n");
+                            }
+                            // Bottom Half
+                            dohrao (number i = (size - 1); i >= 1; i--) {
+                                dohrao (number s = 1; s <= (size - i); s++) { bolo(" "); }
+                                dohrao (number j = 1; j <= i; j++) {
+                                    bolo(" ");
+                                    bolo(i); 
+                                }
+                                bolo("\n");
+                            }
 
-    // 2. jabtak loop (While Loop)
-    bolo("\nWaiting for systems...\n");
-    number wait_time = 3;
-    jabtak (wait_time > 0) {
-        bolo("T-minus: ", wait_time, "\n");
-        wait_time = wait_time - 1;
-    }
+                            print_separator(40);
 
-    // 3. karo-jabtak loop (Do-While Loop)
-    number attempts = 0;
-    karo {
-        attempts = attempts + 1;
-        bolo("Attempt #", attempts, " successful\n");
-    } jabtak (attempts < 2);
+                            // 2. Karo-Jabtak Loop (Diagnostics)
+                            bolo("[2] Running Sensor Calibration:\n");
+                            number attempt = 1;
+                            faisla sensor_ready = galat;
 
-    // 4. intekhab (Switch Case)
-    number status_code = 1;
-    bolo("\nSystem Status check: ");
-    intekhab (status_code) {
-        agar_ho 0:
-            bolo("CRITICAL ERROR\n");
-            bas_kar;
-        agar_ho 1:
-            bolo("SYSTEMS NOMINAL\n");
-            bas_kar;
-        aakhir:
-            bolo("UNKNOWN STATE\n");
-    }
+                            karo {
+                                bolo("Probe #", attempt, ":\t");
+                                agar (attempt < 10) {
+                                    bolo("Warming up...\t[WAIT...]\n");
+                                } warna {
+                                    bolo("Calibration Complete!\t[READY]\n");
+                                    sensor_ready = sahi;
+                                }
+                                attempt = attempt + 1;
+                            } jabtak (!sensor_ready);
 
-    // Function call and constant usage
-    number bonus = calculate_bonus(7);
-    bolo("\nFinal Mission Report:");
-    bolo("\n- Mission Name: ", mission);
-    bolo("\n- Bonus Points: ", bonus);
-    bolo("\n- Global Target: ", TARGET);
-    bolo("\n\nKaam khatam ho gaya! (Execution Finished)\n");
-}</textarea>
+                            print_separator(40);
+
+                            // 3. Qism & Intekhab Implementation
+                            bolo("[3] System Final Status:\n");
+                            number status_color = GREEN;
+                            
+                            intekhab (status_color) {
+                                agar_ho RED:   
+                                bolo("SYSTEM FATAL (RED)\n"); bas_kar;
+                                agar_ho GREEN: bolo("SYSTEM OPTIMAL (GREEN)\n"); bas_kar;
+                                agar_ho BLUE:  bolo("SYSTEM RECOVERY (BLUE)\n"); bas_kar;
+                            }
+                        }
+                    </textarea>
                 </div>
             </div>
         </section>
@@ -617,21 +627,31 @@ yaar {
             const start = performance.now();
             document.getElementById('prog-bar').style.width = '60%';
 
+            // Small delay to allow the "BUILDING..." message to show
             setTimeout(() => {
                 try {
+                    // Call the WASM function
                     const result = compile_and_run(code);
+                    
+                    // Display the captured output
+                    // If it contains "Error:", it might be from our ErrorReporter
                     if (result.includes("Error:") || result.includes("error:")) {
                         outputArea.innerHTML = formatTerminal(result);
+                    } else if (result.trim() === "") {
+                        outputArea.innerHTML = '<span class="text-slate-500 italic">>> Process finished with no output.</span>';
                     } else {
-                        outputArea.textContent = result || ">> Process finished with return code 0.";
+                        // Standard output
+                        outputArea.textContent = result;
                     }
+                    
                     document.getElementById('prog-bar').style.width = '100%';
                 } catch (err) {
-                    outputArea.innerHTML = `<span class="text-red-500 font-bold border-b border-red-500/20 pb-1 block mb-2">BUILD FAILED</span>\n${err}`;
+                    outputArea.innerHTML = `<span class="text-red-500 font-bold border-b border-red-500/20 pb-1 block mb-2">BUILD FAILED</span>\n<span class="text-slate-400">${err}</span>`;
                     document.getElementById('prog-bar').style.width = '0%';
                 }
-                document.getElementById('exec-time').textContent = `${Math.floor(performance.now() - start)}ms`;
-            }, 80);
+                const duration = Math.floor(performance.now() - start);
+                document.getElementById('exec-time').textContent = `${duration}ms`;
+            }, 50);
         };
 
         document.getElementById('clear').onclick = () => { codeArea.value = ''; syncHighlight(); updateLineNumbers(); };

@@ -46,10 +46,13 @@ pub enum Instruction {
     FuncStart(String, String, Vec<(String, String)>),
     FuncEnd,
     Print(Vec<Operand>),
+    Read(Operand),
+    Time(Operand),
+    Random(Operand, Operand, Operand),
     Comment(String),
 }
 
-fn type_node_to_str(t: &TypeNode, is_const: bool, is_global: bool) -> String {
+fn type_node_to_str(t: &TypeNode, is_const: bool) -> String {
     let mut s = match t {
         TypeNode::Builtin(tok) => match tok {
             TokenType::Int => "int".to_string(),
@@ -64,7 +67,6 @@ fn type_node_to_str(t: &TypeNode, is_const: bool, is_global: bool) -> String {
         TypeNode::UserDefined(name) => name.clone(),
     };
     if is_const { s = format!("const {}", s); }
-    if is_global { s = format!("global {}", s); }
     s
 }
 
@@ -99,6 +101,9 @@ impl fmt::Display for Instruction {
                 let args_str: Vec<String> = args.iter().map(|a| a.to_string()).collect();
                 write!(f, "print {}", args_str.join(", "))
             }
+            Instruction::Read(dest) => write!(f, "{} = read()", dest),
+            Instruction::Time(dest) => write!(f, "{} = time()", dest),
+            Instruction::Random(dest, min, max) => write!(f, "{} = random {}, {}", dest, min, max),
             Instruction::Comment(c) => write!(f, "; {}", c),
         }
     }
@@ -169,6 +174,13 @@ impl TACGenerator {
                 else { Some(Operand::Var(n.name.clone())) }
             }
 
+            // ASTNode::BinaryExpr(b) => {
+            //     let left = self.gen_node(&b.left)?;
+            //     let right = self.gen_node(&b.right)?;
+            //     let dest = self.new_temp();
+            //     self.emit(Instruction::Binary(dest.clone(), b.op, left, right));
+            //     Some(dest)
+            // }
             ASTNode::BinaryExpr(b) => {
             // 1. Generate the right-hand side first
             let right = self.gen_node(&b.right)?;
@@ -209,7 +221,7 @@ impl TACGenerator {
             }
 
             ASTNode::VarDecl(d) => {
-                let t_str = type_node_to_str(&d.var_type, d.is_const, d.is_global);
+                let t_str = type_node_to_str(&d.var_type, d.is_const);
                 let init = if let Some(init_node) = &d.initializer { self.gen_node(init_node) } else { None };
                 self.emit(Instruction::Declare(t_str, d.name.clone(), init));
                 None
@@ -226,8 +238,8 @@ impl TACGenerator {
             }
 
             ASTNode::FunctionDecl(d) => {
-                let ret_t = type_node_to_str(&d.return_type, false, false);
-                let params = d.params.iter().map(|(t, n)| (type_node_to_str(t, false, false), n.clone())).collect();
+                let ret_t = type_node_to_str(&d.return_type, false);
+                let params = d.params.iter().map(|(t, n)| (type_node_to_str(t, false), n.clone())).collect();
                 self.emit(Instruction::FuncStart(d.name.clone(), ret_t, params));
                 for stmt in &d.body { self.gen_node(stmt); }
                 self.emit(Instruction::FuncEnd);
@@ -351,9 +363,34 @@ impl TACGenerator {
 
             ASTNode::BlockStmt(d) => { for stmt in &d.body { self.gen_node(stmt); } None }
             ASTNode::ExpressionStmt(d) => { self.gen_node(&d.expr); None }
+            ASTNode::ReadExpr(_) => {
+                let dest = self.new_temp();
+                self.emit(Instruction::Read(dest.clone()));
+                Some(dest)
+            }
+            ASTNode::TimeExpr(_) => {
+                let dest = self.new_temp();
+                self.emit(Instruction::Time(dest.clone()));
+                Some(dest)
+            }
+            ASTNode::RandomExpr(r) => {
+                let dest = self.new_temp();
+                let min = self.gen_node(&r.min)?;
+                let max = self.gen_node(&r.max)?;
+                self.emit(Instruction::Random(dest.clone(), min, max));
+                Some(dest)
+            }
             ASTNode::EnumDecl(d) => { self.emit(Instruction::Comment(format!("Enum {} Defined", d.name))); None }
             _ => None,
         }
     }
 
+    pub fn save_to_file(&self, filename: &str) -> std::io::Result<()> {
+        let mut content = String::new();
+        for instr in &self.instructions 
+        { 
+            content.push_str(&format!("{}\n", instr)); 
+        }
+        std::fs::write(filename, content)
+    }
 }

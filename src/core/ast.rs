@@ -78,7 +78,6 @@ pub struct VarDecl {
     pub initializer: Option<Box<ASTNode>>,
     // The flags tell the compiler/semantic analysis how to treat the variable:
     pub is_const: bool,
-    pub is_global: bool,
     pub line: usize,
     pub column: usize,
 }
@@ -221,6 +220,26 @@ pub struct EnumDecl {
 }
 
 #[derive(Debug, Clone)]
+pub struct ReadExpr {
+    pub line: usize,
+    pub column: usize,
+}
+
+#[derive(Debug, Clone)]
+pub struct TimeExpr {
+    pub line: usize,
+    pub column: usize,
+}
+
+#[derive(Debug, Clone)]
+pub struct RandomExpr {
+    pub min: Box<ASTNode>,
+    pub max: Box<ASTNode>,
+    pub line: usize,
+    pub column: usize,
+}
+
+#[derive(Debug, Clone)]
 pub enum ASTNode {
     IntLiteral(IntLiteral),
     FloatLiteral(FloatLiteral),
@@ -231,6 +250,9 @@ pub enum ASTNode {
     BinaryExpr(BinaryExpr),
     UnaryExpr(UnaryExpr),
     CallExpr(CallExpr),
+    ReadExpr(ReadExpr),
+    TimeExpr(TimeExpr),
+    RandomExpr(RandomExpr),
     VarDecl(VarDecl),
     FunctionProto(FunctionProto),
     FunctionDecl(FunctionDecl),

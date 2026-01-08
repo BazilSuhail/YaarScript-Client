@@ -2,6 +2,8 @@ use crate::ir_pipeline::tac::{Instruction, Operand};
 use crate::core::token::TokenType;
 use std::collections::HashMap;
 use std::fmt;
+use std::time::{SystemTime, UNIX_EPOCH};
+use rand::Rng;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Value {
@@ -79,7 +81,6 @@ struct RuntimeState {
     global_vars: HashMap<String, Value>,
     stack: Vec<HashMap<String, Value>>,
     param_buffer: Vec<Value>,
-    pub output: Vec<String>,
 }
 
 impl RuntimeState {
@@ -88,7 +89,6 @@ impl RuntimeState {
             global_vars: HashMap::new(),
             stack: vec![HashMap::new()],
             param_buffer: Vec::new(),
-            output: Vec::new(),
         }
     }
 
@@ -121,6 +121,21 @@ impl RuntimeState {
             Operand::Temp(id) => format!("t{}", id),
             _ => return Err(RuntimeError::Other("Invalid assignment destination".into())),
         };
+
+        // If it's a variable, check if it's already in global_vars
+        if let Operand::Var(name) = dest {
+            // Check if it shadows in the current stack frame
+            if self.stack.last().map(|frame| frame.contains_key(name)).unwrap_or(false) {
+                self.stack.last_mut().unwrap().insert(name.clone(), val);
+                return Ok(());
+            }
+            // Otherwise check if it's a global
+            if self.global_vars.contains_key(name) {
+                self.global_vars.insert(name.clone(), val);
+                return Ok(());
+            }
+        }
+
         self.stack.last_mut().unwrap().insert(key, val);
         Ok(())
     }
@@ -129,6 +144,7 @@ impl RuntimeState {
 pub struct ExecutionEngine {
     instructions: Vec<Instruction>,
     labels: HashMap<String, usize>,
+    pub output: Vec<String>,
 }
 
 impl ExecutionEngine {
@@ -142,88 +158,123 @@ impl ExecutionEngine {
                 _ => {}
             }
         }
-        Self { instructions, labels }
+        Self { instructions, labels, output: Vec::new() }
     }
 
-    pub fn execute(&self) -> Result<String, RuntimeError> {
+    pub fn execute(&mut self) -> Result<(), RuntimeError> {
         let mut state = RuntimeState::new();
-        let main_idx = *self.labels.get("main").ok_or(RuntimeError::MainNotFound)?;
-        self.run_from(&mut state, main_idx)?;
-        Ok(state.output.join(""))
-    }
-
-    fn run_from(&self, state: &mut RuntimeState, start_pc: usize) -> Result<Value, RuntimeError> {
-        let mut pc = start_pc;
-
+        
+        // Phase 1: Initialize Globals (Top-level scope)
+        let mut pc = 0;
         while pc < self.instructions.len() {
-            // Using a reference avoids copying at every step
             match &self.instructions[pc] {
-                Instruction::Declare(type_str, name, init) => {
+                Instruction::FuncStart(_, _, _) => {
+                    // Skip function bodies
+                    let mut depth = 1;
+                    pc += 1;
+                    while pc < self.instructions.len() && depth > 0 {
+                        match &self.instructions[pc] {
+                            Instruction::FuncStart(_, _, _) => depth += 1,
+                            Instruction::FuncEnd => depth -= 1,
+                            _ => {}
+                        }
+                        pc += 1;
+                    }
+                    continue; // Continue from the instruction AFTER FuncEnd
+                }
+                Instruction::Declare(_, name, init) => {
                     let val = match init {
                         Some(op) => state.resolve(op)?,
                         None => Value::Int(0),
                     };
-                    if type_str.contains("global") {
+                    state.global_vars.insert(name.clone(), val);
+                }
+                Instruction::Assign(dest, src) => {
+                    if let Operand::Var(name) = dest {
+                        let val = state.resolve(src)?;
                         state.global_vars.insert(name.clone(), val);
-                    } else {
-                        state.stack.last_mut().unwrap().insert(name.clone(), val);
                     }
+                }
+                _ => {}
+            }
+            pc += 1;
+        }
+
+        // Phase 2: Run Main
+        let main_idx = *self.labels.get("main").ok_or(RuntimeError::MainNotFound)?;
+        self.run_from(&mut state, main_idx)?;
+        Ok(())
+    }
+
+    fn run_from(&mut self, state: &mut RuntimeState, start_pc: usize) -> Result<Value, RuntimeError> {
+        let mut pc = start_pc;
+
+        while pc < self.instructions.len() {
+            // Using a reference avoids copying at every step
+            let instr = self.instructions[pc].clone();
+            match instr {
+                Instruction::Declare(_type_str, name, init) => {
+                    let val = match init {
+                        Some(op) => state.resolve(&op)?,
+                        None => Value::Int(0),
+                    };
+                    state.stack.last_mut().unwrap().insert(name, val);
                 }
 
                 Instruction::Assign(dest, src) => {
-                    let val = state.resolve(src)?;
-                    state.store(dest, val)?;
+                    let val = state.resolve(&src)?;
+                    state.store(&dest, val)?;
                 }
 
                 Instruction::Binary(dest, op, l, r) => {
-                    let lv = state.resolve(l)?;
-                    let rv = state.resolve(r)?;
-                    let res = self.evaluate_binary(lv, op, rv)?;
-                    state.store(dest, res)?;
+                    let lv = state.resolve(&l)?;
+                    let rv = state.resolve(&r)?;
+                    let res = self.evaluate_binary(lv, &op, rv)?;
+                    state.store(&dest, res)?;
                 }
 
                 Instruction::Unary(dest, op, src) => {
-                    let val = state.resolve(src)?;
+                    let val = state.resolve(&src)?;
                     let res = match (op, val) {
                         (TokenType::Minus, Value::Int(v)) => Value::Int(-v),
                         (TokenType::Minus, Value::Float(v)) => Value::Float(-v),
                         (TokenType::Not, Value::Bool(v)) => Value::Bool(!v),
                         _ => return Err(RuntimeError::TypeMismatch(format!("Invalid unary op {:?} for value", op))),
                     };
-                    state.store(dest, res)?;
+                    state.store(&dest, res)?;
                 }
 
                 Instruction::Print(args) => {
-                    let vals: Vec<String> = args.iter()
+                    let res: Vec<String> = args.iter()
                         .map(|a| state.resolve(a).map(|v| v.to_string()))
                         .collect::<Result<_, _>>()?;
-                    state.output.push(vals.join(" "));
+                    self.output.push(res.join(" "));
                 }
 
                 Instruction::Goto(lbl) => {
-                    pc = *self.labels.get(lbl).unwrap();
+                    pc = *self.labels.get(&lbl).unwrap();
                     continue;
                 }
 
                 Instruction::IfTrue(cond, lbl) => {
-                    if let Value::Bool(true) = state.resolve(cond)? {
-                        pc = *self.labels.get(lbl).unwrap();
+                    if let Value::Bool(true) = state.resolve(&cond)? {
+                        pc = *self.labels.get(&lbl).unwrap();
                         continue;
                     }
                 }
 
                 Instruction::IfFalse(cond, lbl) => {
-                    if let Value::Bool(false) = state.resolve(cond)? {
-                        pc = *self.labels.get(lbl).unwrap();
+                    if let Value::Bool(false) = state.resolve(&cond)? {
+                        pc = *self.labels.get(&lbl).unwrap();
                         continue;
                     }
                 }
 
-                Instruction::Param(op) => state.param_buffer.push(state.resolve(op)?),
+                Instruction::Param(op) => state.param_buffer.push(state.resolve(&op)?),
 
                 Instruction::Call(dest, name, n_args) => {
                     let args: Vec<Value> = state.param_buffer.drain(state.param_buffer.len() - n_args..).collect();
-                    let func_idx = *self.labels.get(name).ok_or_else(|| RuntimeError::Other(format!("Function {} not found", name)))?;
+                    let func_idx = *self.labels.get(&name).ok_or_else(|| RuntimeError::Other(format!("Function {} not found", name)))?;
 
                     let mut new_frame = HashMap::new();
                     if let Instruction::FuncStart(_, _, params) = &self.instructions[func_idx] {
@@ -237,19 +288,39 @@ impl ExecutionEngine {
                     state.stack.pop();
 
                     if let Some(d) = dest {
-                        state.store(d, result)?;
+                        state.store(&d, result)?;
                     }
                 }
 
                 Instruction::Return(op) => {
                     return match op {
-                        Some(o) => state.resolve(o),
+                        Some(o) => state.resolve(&o),
                         None => Ok(Value::Unit),
                     };
                 }
 
                 Instruction::FuncEnd => return Ok(Value::Unit),
-
+                
+                Instruction::Read(dest) => {
+                    state.store(&dest, Value::Int(0))?;
+                }
+                
+                Instruction::Time(dest) => {
+                    let now = SystemTime::now().duration_since(UNIX_EPOCH).map_err(|e| RuntimeError::Other(e.to_string()))?.as_secs();
+                    state.store(&dest, Value::Int(now as i64))?;
+                }
+                
+                Instruction::Random(dest, min, max) => {
+                    let lower = match state.resolve(&min)? { Value::Int(i) => i, _ => 0 };
+                    let upper = match state.resolve(&max)? { Value::Int(i) => i, _ => 100 };
+                    if lower > upper {
+                        state.store(&dest, Value::Int(0))?;
+                    } else {
+                        let mut rng = rand::thread_rng();
+                        let val = rng.gen_range(lower..=upper);
+                        state.store(&dest, Value::Int(val))?;
+                    }
+                }
                 _ => {}
             }
             pc += 1;
@@ -271,6 +342,10 @@ impl ExecutionEngine {
                 TokenType::Gt => Ok(Value::Bool(a > b)),
                 TokenType::Le => Ok(Value::Bool(a <= b)),
                 TokenType::Ge => Ok(Value::Bool(a >= b)),
+                TokenType::Power => {
+                    if b < 0 { Ok(Value::Int(0)) }
+                    else { Ok(Value::Int(a.pow(b as u32))) }
+                }
                 TokenType::AssignOp => Ok(Value::Int(b)),
                 _ => Err(RuntimeError::TypeMismatch(format!("Invalid int op {:?}", op))),
             },
@@ -279,6 +354,7 @@ impl ExecutionEngine {
                 TokenType::Minus => Ok(Value::Float(a - b)),
                 TokenType::Multiply => Ok(Value::Float(a * b)),
                 TokenType::Divide => Ok(Value::Float(a / b)),
+                TokenType::Power => Ok(Value::Float(a.powf(b))),
                 TokenType::EqualOp => Ok(Value::Bool(a == b)),
                 _ => Err(RuntimeError::TypeMismatch(format!("Invalid float op {:?}", op))),
             },
