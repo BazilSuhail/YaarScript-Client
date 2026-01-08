@@ -44,14 +44,9 @@ const DocsContent = ({ activeSection }) => {
 
                     <h3>✨ Key Features</h3>
                     <ul>
-                        <li><strong>WebAssembly Powered</strong> - Entire compiler compiled to wasm32-unknown-unknown for native browser performance</li>
-                        <li><strong>Urdu-Inspired Keywords</strong> - Natural, intuitive syntax using familiar words like <code>agar</code>, <code>warna</code>, <code>dohrao</code></li>
-                        <li><strong>Multi-Pass Optimizer</strong> - Fixed-point optimization with constant folding, dead code elimination, and peephole optimization</li>
-                        <li><strong>Strong Type System</strong> - Strict typing with no implicit coercion ensures code safety and reliability</li>
-                        <li><strong>Modern IDE Experience</strong> - Professional editor with syntax highlighting, auto-completion, and real-time error detection</li>
-                        <li><strong>Three-Address Code</strong> - Generates optimized intermediate representation for efficient execution</li>
-                        <li><strong>Rich Data Types</strong> - Support for integers, floats, doubles, characters, strings, and booleans</li>
-                        <li><strong>Control Flow Mastery</strong> - Complete set of control structures including loops, conditionals, and switch statements</li>
+                        <li><strong>Exponentiation Power</strong> - Native support for the <code>**</code> operator with high binding precedence (Level 9)</li>
+                        <li><strong>System Intrinsics</strong> - First-class support for <code>suno()</code> (input), <code>waqt()</code> (time), and <code>ittifaq()</code> (randomness)</li>
+                        <li><strong>Standard Library</strong> - Built-in functions for console I/O, system time, and mathematical operations</li>
                     </ul>
 
                     <h3>🏗️ Compiler Architecture</h3>
@@ -203,16 +198,15 @@ npm run dev`} language="bash" />
     bolo("Age: ", age, "\\n");
 }`} />
 
-                    <h3>Conditionals</h3>
+                    <h3>Interactive Input</h3>
                     <CodeBlock code={`yaar {
-    number score = 85;
+    bolo("Apni umar likho: ");
+    number umar = suno(); // Interactive input
     
-    agar (score >= 90) {
-        bolo("Grade: A\\n");
-    } warna agar (score >= 70) {
-        bolo("Grade: B\\n");
+    agar (umar >= 18) {
+        bolo("Aap bade ho gaye hain!\\n");
     } warna {
-        bolo("Grade: C\\n");
+        bolo("Abhi aap chote hain.\\n");
     }
 }`} />
                 </>
@@ -273,7 +267,25 @@ pakka sab_ke_liye number GLOBAL_LIMIT = 500;`} />
 number b = 10 - 5;   // Subtraction
 number c = 10 * 5;   // Multiplication
 number d = 10 / 5;   // Division
-number e = 10 % 3;   // Modulus`} />
+number e = 10 % 3;   // Modulus
+number f = 2 ** 8;   // Exponentiation (Power)`} />
+
+                    <h3>Exponentiation (**)</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            The <code>**</code> operator handles power calculations with high precedence (Level 9). It is evaluated before multiplication and addition.
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    number base = 2;
+    number exp = 10;
+    number result = base ** exp; // 1024
+    bolo("2 power 10 is: ", result, "\\n");
+    
+    // Precedence test: 5 + 2 * 3 ** 2 = 5 + 2 * 9 = 5 + 18 = 23
+    number complex = 5 + 2 * 3 ** 2;
+    bolo("Complex result: ", complex, "\\n");
+}`} />
 
                     <h3>Comparison Operators</h3>
                     <CodeBlock code={`faisla result1 = (5 == 5);  // Equal to
@@ -368,6 +380,46 @@ yaar {
     bolo("Pass\\n");
 } warna {
     bolo("Fail\\n");
+}`} />
+
+                    <h3>Else-If (warna agar)</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            <strong className="text-sky-400">warna agar</strong> (else if in C/C++) allows you to check multiple conditions sequentially. If the first <code>agar</code> is <code>galat</code>, the next <code>warna agar</code> condition is evaluated. You can chain as many of these as needed.
+                        </p>
+                        <p className="text-xs text-slate-500">
+                            <strong>C/C++ Equivalent:</strong> <code>else if (condition) &#123; ... &#125;</code>
+                        </p>
+                    </div>
+                    <CodeBlock code={`number marks = 85;
+
+agar (marks >= 90) {
+    bolo("A Grade!\\n");
+} warna agar (marks >= 75) {
+    bolo("B Grade!\\n");
+} warna agar (marks >= 50) {
+    bolo("C Grade!\\n");
+} warna {
+    bolo("F Grade (Fail)\\n");
+}`} />
+
+                    <h3>Interactive Example (suno + if-else)</h3>
+                    <div className="mb-4">
+                        <p className="text-xs text-slate-400 mb-2">
+                            Combining <code>suno()</code> with <code>warna agar</code> allows for complex user-driven logic:
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    bolo("Apni age likho: ");
+    number age = suno();
+
+    agar (age >= 18) {
+        bolo("Aap vote de sakte hain!\\n");
+    } warna agar (age >= 16) {
+        bolo("Aap driving seekh sakte hain!\\n");
+    } warna {
+        bolo("Abhi aap chote hain.\\n");
+    }
 }`} />
                 </>
             )
@@ -637,14 +689,6 @@ yaar {
     bolo("PI: ", PI, "\\n");
 }`} />
 
-                    <h3>Global Constants</h3>
-                    <CodeBlock code={`// Global constant (accessible everywhere)
-pakka sab_ke_liye number GLOBAL_LIMIT = 1000;
-
-yaar {
-    bolo("Global Limit: ", GLOBAL_LIMIT, "\\n");
-}`} />
-
                     <h3>Best Practices</h3>
                     <ul>
                         <li>Use UPPERCASE names for constants</li>
@@ -697,6 +741,54 @@ yaar {
                 </>
             )
         },
+        "standard-library": {
+            title: "Standard Library (Intrinsics)",
+            description: "Built-in functions for input, time, and randomness.",
+            content: (
+                <>
+                    <h3>User Input (suno)</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            The <code>suno()</code> function pauses program execution and waits for user input from the terminal. It returns the value as the appropriate type (usually <code>number</code> or <code>lafz</code> depending on context).
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    bolo("Enter a number: ");
+    number val = suno();
+    bolo("You entered: ", val, "\\n");
+}`} />
+
+                    <h3>System Time (waqt)</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            The <code>waqt()</code> function returns the current system time (UNIX timestamp) as a <code>number</code>. Useful for measuring execution time or generating seeds.
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    number startTime = waqt();
+    // ... some logic ...
+    number endTime = waqt();
+    bolo("Elapsed time: ", endTime - startTime, " seconds\\n");
+}`} />
+
+                    <h3>Randomness (ittifaq)</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            The <code>ittifaq(min, max)</code> function generates a random <code>number</code> between the specified <code>min</code> and <code>max</code> values (inclusive).
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    bolo("Rolling a die...\\n");
+    number roll = ittifaq(1, 6);
+    bolo("You rolled a: ", roll, "\\n");
+    
+    agar (roll == 6) {
+        bolo("CHAKKA! (Six!)\\n");
+    }
+}`} />
+                </>
+            )
+        },
         "keywords": {
             title: "Keyword Reference",
             description: "Complete list of YaarScript keywords and their equivalents.",
@@ -708,6 +800,16 @@ yaar {
                         <tbody>
                             <tr><td><code>yaar</code></td><td>main</td><td>Program entry point</td></tr>
                             <tr><td><code>bolo</code></td><td>print</td><td>Output to console</td></tr>
+                            <tr><td><code>suno</code></td><td>scanf</td><td>Input from console</td></tr>
+                        </tbody>
+                    </table>
+
+                    <h3>System Functions</h3>
+                    <table>
+                        <thead><tr><th>YaarScript</th><th>Standard</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>waqt()</code></td><td>time()</td><td>Get system time</td></tr>
+                            <tr><td><code>ittifaq(l,r)</code></td><td>rand(l,r)</td><td>Random number in range</td></tr>
                         </tbody>
                     </table>
 
@@ -821,19 +923,24 @@ MainDecl ::= "yaar" Block`} language="ebnf" />
 
                     <h3>Control Flow</h3>
                     <p>Control flow structures handle program logic and looping:</p>
-                    <CodeBlock code={`IfStmt      ::= "agar" "(" Expression ")" Block ("warna" Block)?
+                    <CodeBlock code={`IfStmt      ::= "agar" "(" Expression ")" Block ("warna agar" "(" Expression ")" Block)* ("warna" Block)?
 WhileStmt   ::= "jabtak" "(" Expression ")" Block
 DoWhileStmt ::= "karo" Block "jabtak" "(" Expression ")" ";"
 ForStmt     ::= "dohrao" "(" (VarDecl | ";") Expression? ";" Expression? ")" Block
 PrintStmt   ::= "bolo" "(" ExpressionList? ")" ";"
+InputStmt   ::= "suno" "(" ")"
+RandomStmt  ::= "ittifaq" "(" Expression "," Expression ")"
 SwitchStmt  ::= "intekhab" "(" Expression ")" "{" CaseBlock* DefaultBlock? "}"`} language="ebnf" />
                     <ul>
                         <li><code>agar</code> = <code>if</code> in C/C++</li>
+                        <li><code>warna agar</code> = <code>else if</code> in C/C++</li>
                         <li><code>warna</code> = <code>else</code> in C/C++</li>
                         <li><code>jabtak</code> = <code>while</code> loop in C/C++</li>
                         <li><code>karo...jabtak</code> = <code>do...while</code> loop in C/C++</li>
                         <li><code>dohrao</code> = <code>for</code> loop in C/C++</li>
                         <li><code>bolo</code> = <code>printf()</code> or <code>cout</code> in C/C++</li>
+                        <li><code>suno</code> = <code>scanf()</code> or <code>cin</code> in C/C++</li>
+                        <li><code>ittifaq</code> = <code>rand()</code> in C/C++</li>
                         <li><code>intekhab</code> = <code>switch</code> statement in C/C++</li>
                     </ul>
 
@@ -846,14 +953,15 @@ LogicalAnd     ::= Equality ("&&" Equality)*
 Equality       ::= Comparison (("==" | "!=") Comparison)*
 Comparison     ::= Term (("<" | ">" | "<=" | ">=") Term)*
 Term           ::= Factor (("+" | "-") Factor)*
-Factor         ::= Unary (("*" | "/" | "%") Unary)*
+Factor         ::= Power (("*" | "/" | "%") Power)*
+Power          ::= Unary ("**" Unary)*
 Unary          ::= ("!" | "-") Unary | Primary
 Primary        ::= Literal | Identifier | "(" Expression ")" | FunctionCall`} language="ebnf" />
                     <ul>
-                        <li><strong>Operator Precedence</strong> - Same as C/C++: multiplication/division before addition/subtraction</li>
+                        <li><strong>Operator Precedence</strong> - Exponentiation (<code>**</code>) has higher precedence than multiplication/division. Same as C/C++ otherwise.</li>
                         <li><strong>Logical Operators</strong> - <code>&&</code> (AND), <code>||</code> (OR), <code>!</code> (NOT) work identically to C/C++</li>
                         <li><strong>Comparison Operators</strong> - <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> match C/C++ conventions</li>
-                        <li><strong>Arithmetic Operators</strong> - <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo) are identical to C/C++</li>
+                        <li><strong>Arithmetic Operators</strong> - <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code> (modulo) and <code>**</code> (power) are supported.</li>
                     </ul>
                 </>
             )
@@ -958,6 +1066,145 @@ yaar {
     number num = 5;
     number result = factorial(num);
     bolo("Factorial of ", num, " is ", result, "\\n");
+}`} />
+                    <h3>Guess the Number Game</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            This example demonstrates <code>ittifaq</code> for generating a random target, <code>suno</code> for user input, and <code>warna agar</code> for multi-branch feedback logic.
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    number target = ittifaq(1, 100);
+    number guess = 0;
+    number attempts = 0;
+    
+    bolo("I have chosen a number between 1 and 100.\\n");
+    
+    karo {
+        bolo("Apna guess likho: ");
+        guess = suno();
+        attempts = attempts + 1;
+        
+        agar (guess == target) {
+            bolo("Mubarak ho! Aapne ", attempts, " attempts mein sahi guess kiya!\\n");
+        } warna agar (guess > target) {
+            bolo("Bohot bada! Dobara koshish karein.\\n");
+        } warna {
+            bolo("Bohot chota! Dobara koshish karein.\\n");
+        }
+    } jabtak (guess != target);
+}`} />
+                </>
+            )
+        },
+        "snippets": {
+            title: "Pro Snippets & Examples",
+            description: "Ready-to-use YaarScript code for complex scenarios.",
+            content: (
+                <>
+                    <h3>Hardcoded Tic-Tac-Toe (2 Player)</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            A simplified 2-player Tic-Tac-Toe game using a variable-based grid. This snippet demonstrates game state management and conditional checking in YaarScript.
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    // Grid representation (1-9)
+    lafz p1 = "-"; lafz p2 = "-"; lafz p3 = "-";
+    lafz p4 = "-"; lafz p5 = "-"; lafz p6 = "-";
+    lafz p7 = "-"; lafz p8 = "-"; lafz p9 = "-";
+
+    number turn = 1; // 1 for X, 2 for O
+    number moves = 0;
+    faisla won = galat;
+
+    bolo("Tic-Tac-Toe Game Started!\\n");
+
+    jabtak (!won && moves < 9) {
+        bolo("Grid Board:\\n");
+        bolo("|", p1, "|", p2, "|", p3, "|\\n");
+        bolo("|", p4, "|", p5, "|", p6, "|\\n");
+        bolo("|", p7, "|", p8, "|", p9, "|\\n");
+
+        agar (turn == 1) {
+            bolo("Player X (1-9) chuno: ");
+        } warna {
+            bolo("Player O (1-9) chuno: ");
+        }
+
+        number pos = suno();
+        lafz mark = "X";
+        agar (turn == 2) { mark = "O"; }
+
+        // Update positions
+        agar (pos == 1) { p1 = mark; } warna agar (pos == 2) { p2 = mark; }
+        warna agar (pos == 3) { p3 = mark; } warna agar (pos == 4) { p4 = mark; }
+        warna agar (pos == 5) { p5 = mark; } warna agar (pos == 6) { p6 = mark; }
+        warna agar (pos == 7) { p7 = mark; } warna agar (pos == 8) { p8 = mark; }
+        warna agar (pos == 9) { p9 = mark; }
+
+        moves = moves + 1;
+        // Simple win detection (top row only for brevity)
+        agar (p1 == mark && p2 == mark && p3 == mark) { won = sahi; }
+        warna agar (p4 == mark && p5 == mark && p6 == mark) { won = sahi; }
+        warna agar (p7 == mark && p8 == mark && p9 == mark) { won = sahi; }
+        
+        agar (won) {
+            bolo("Mubarak ho! Player ", mark, " jeet gaya!\\n");
+        } warna {
+            agar (turn == 1) { turn = 2; } warna { turn = 1; }
+        }
+    }
+}`} />
+
+                    <h3>Interactive Calculator</h3>
+                    <div className="mb-4">
+                        <p className="text-sm text-slate-300">
+                            A CLI-based calculator that supports multiple operations using the <code>intekhab</code> (switch) statement.
+                        </p>
+                    </div>
+                    <CodeBlock code={`yaar {
+    bolo("Calculator Mission Control\\n");
+    bolo("Number 1: ");
+    number n1 = suno();
+    bolo("Number 2: ");
+    number n2 = suno();
+
+    bolo("Operation (1: +, 2: -, 3: *, 4: /): ");
+    number op = suno();
+
+    intekhab (op) {
+        agar_ho 1:
+            bolo("Result: ", n1 + n2, "\\n");
+            bas_kar;
+        agar_ho 2:
+            bolo("Result: ", n1 - n2, "\\n");
+            bas_kar;
+        agar_ho 3:
+            bolo("Result: ", n1 * n2, "\\n");
+            bas_kar;
+        agar_ho 4:
+            agar (n2 != 0) {
+                bolo("Result: ", n1 / n2, "\\n");
+            } warna {
+                bolo("ERROR: Zero se divide nahi kar sakte!\\n");
+            }
+            bas_kar;
+        aakhir:
+            bolo("UNKNOWN OPERATION\\n");
+    }
+}`} />
+
+                    <h3>Even or Odd Checker</h3>
+                    <CodeBlock code={`yaar {
+    bolo("Enter a number: ");
+    number val = suno();
+    
+    agar (val % 2 == 0) {
+        bolo(val, " is Even (Juxt)\\n");
+    } warna {
+        bolo(val, " is Odd (Taq)\\n");
+    }
 }`} />
                 </>
             )

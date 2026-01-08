@@ -1,38 +1,53 @@
-# YaarScript ![YaarScript Logo](https://img.shields.io/badge/YaarScript-Apki%20Zuban%2C%20Apki%20Code-00D9FF?style=for-the-badge)
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Lord-Entity/Bazil-Suhail-Repos/main/YaarScript/yaarscript-github-readme.webp" alt="YaarScript Pro Banner" width="800">
+</div>
 
+<div align="center">
 
-**A slang-infused Urdu styled programming language that turns regular code into cool slang**
+![YaarScript Logo](https://img.shields.io/badge/YaarScript-Apki%20Zuban%2C%20Apki%20Code-00D9FF?style=for-the-badge)
+[![Architecture](https://img.shields.io/badge/Architecture-Middle_End-brightgreen?style=for-the-badge)](#)
+[![Version](https://img.shields.io/badge/Version-1.1.0-334155?style=for-the-badge&logo=github)](https://github.com/Lord-Entity/YaarScript/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen?style=for-the-badge)](http://makeapullrequest.com)
+[![Built with Rust](https://img.shields.io/badge/Built_with-Rust-dea584?style=for-the-badge&logo=rust)](https://www.rust-lang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![WebAssembly](https://img.shields.io/badge/WebAssembly-Powered-654FF0?style=for-the-badge&logo=webassembly)](https://webassembly.org/)
+[![License](https://img.shields.io/badge/License-Open%20Source-green?style=for-the-badge)](LICENSE)
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=flat-square&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-61DAFB?style=flat-square&logo=react)](https://reactjs.org/)
-[![WebAssembly](https://img.shields.io/badge/WebAssembly-Powered-654FF0?style=flat-square&logo=webassembly)](https://webassembly.org/)
-[![Rust](https://img.shields.io/badge/Rust-Backend-000000?style=flat-square&logo=rust)](https://www.rust-lang.org/)
-[![License](https://img.shields.io/badge/License-Open%20Source-green?style=flat-square)](LICENSE)
+ </div>
 
-[**Try Online Playground**](https://yaarscript.netlify.app/editor) • [**Documentation**](https://yaarscript.netlify.app/docs) • [**Examples**](#quick-examples) • [**Actual Compiler**](https://github.com/BazilSuhail/Custom-Compiler)
+#### YaarScript: an Urdu-Slang Multi-phase Compiler
+
+This repository contains the code for client side of **YaarScript**.
+
+> **YaarScript** is an educational passion project I built as a solo developer. It is a full-fledged, multi-phase compiler written in Rust, designed to demonstrate advanced compiler construction techniques, such as semantic analysis, intermediate representation optimization, and bytecode execution, while utilizing a uniquely fun, Urdu-infused slang syntax to make learning systems programming more relatable and engaging.
+
+> [!IMPORTANT]
+> **Explore the Core:** Check out the compiler source code at the [YaarScript Repository](https://github.com/BazilSuhail/YaarScript).
+> 
+> **Quick Links:**
+> * **Official Website:** [yaarscript.netlify.app](https://yaarscript.netlify.app)
+> * **Online Playground:** [Try YaarScript in the Browser](https://yaarscript.netlify.app/editor)
+> * **Documentation:** [Read the Docs](https://yaarscript.netlify.app/docs)
 
 </div>
 
 ---
 
-## 📖 Overview
-
-**YaarScript** is a modern, professional programming language that brings the warmth and familiarity of the Urdu language to software development. Built with **Rust** and compiled to **WebAssembly**, YaarScript offers a unique blend of cultural accessibility and cutting-edge technology.
-
 ### 🎯 Key Highlights
 
-- **🌍 Urdu-Inspired Syntax** – Natural keywords like `agar`, `warna`, `dohrao`, `bolo` make coding intuitive for Urdu speakers
-- **⚡ Lightning Fast** – Entire compiler runs in the browser via WebAssembly (wasm32-unknown-unknown)
-- **🔧 Industrial-Grade** – Multi-pass compiler with fixed-point optimization, constant folding, and dead code elimination
-- **🎨 Modern IDE** – Professional web-based editor with syntax highlighting and real-time execution
-- **🔒 Strong Type System** – Strict typing with no implicit coercion for safer code
-- **🚀 Zero Installation** – Run directly in your browser with our online playground
+- **Urdu-Inspired Syntax** – Natural keywords like `agar`, `warna`, `dohrao`, `bolo` make coding intuitive for Urdu speakers
+- **Lightning Fast** – Entire compiler runs in the browser via WebAssembly (wasm32-unknown-unknown)
+- **Industrial-Grade** – Multi-pass compiler with fixed-point optimization, constant folding, and dead code elimination
+- **Modern IDE** – Professional web-based editor with syntax highlighting and real-time execution
+- **Strong Type System** – Strict typing with no implicit coercion for safer code
+- **Zero Installation** – Run directly in your browser with our online playground
 
 ---
 
-## ✨ Features
+## Features
 
-### 🛠️ Compiler Architecture
+### Compiler Architecture
 
 YaarScript features a sophisticated multi-pass compilation pipeline:
 
@@ -43,7 +58,7 @@ YaarScript features a sophisticated multi-pass compilation pipeline:
 5. **Optimization** – Fixed-point optimization passes
 6. **Execution** – High-performance WASM virtual machine
 
-### 💡 Language Features
+### Language Features
 
 - ✅ **Strong Type System** – `number`, `float`, `double`, `char`, `lafz` (string), `faisla` (boolean)
 - ✅ **Control Flow** – `agar/warna` (if/else), `dohrao` (for), `jabtak` (while), `karo-jabtak` (do-while)
@@ -53,6 +68,122 @@ YaarScript features a sophisticated multi-pass compilation pipeline:
 - ✅ **Constants** – `pakka` for immutable values, `sab_ke_liye` for globals
 - ✅ **Operators** – Full arithmetic, logical, and comparison operations
 - ✅ **Loop Control** – `bas_kar` (break), `aagay_baro` (continue)
+
+## Urdu Slang Keywords
+
+YaarScript Maps localized terminology directly to robust systems logic.
+
+| YaarScript Keyword | C-Equivalent | Purpose |
+|--------------------|--------------|---------|
+| `number` | `int64_t` | 64-bit signed integer |
+| `float` | `double` | 64-bit floating point |
+| `faisla` | `bool` | Boolean value |
+| `lafz` | `char*` | String primitive |
+| `khaali` | `void` | No return value |
+| `pakka` | `const` | Immutable constant |
+| `yaar` | `main` | Entry point block |
+| `agar` | `if` | Conditional branch |
+| `warna` | `else` | Alternative branch |
+| `jabtak` | `while` | Loop continuation |
+| `dohrao` | `for` | Iterative loop |
+| `intekhab` | `switch` | Multi-way branching |
+| `bas_kar` | `break` | Scope exit |
+| `wapsi` | `return` | Function return |
+| `qism` | `enum` | Enumeration type |
+| `bolo` | `printf` | Console Output |
+| `suno` | `scanf` | Console Input |
+| `sahi` | `true` | Boolean true |
+| `galat` | `false` | Boolean false |
+
+---
+
+## Operator Precedence
+
+The parser natively incorporates the **Power Operator** with high precedence.
+
+| Level | Operators | Associativity | Example |
+|-------|-----------|---------------|---------|
+| 1 | `=` | Right-to-left | `a = b = c` |
+| 2 | `\|\|` | Left-to-right | `a \|\| b` |
+| 3 | `&&` | Left-to-right | `a && b` |
+| 4 | `==`, `!=` | Left-to-right | `a == b` |
+| 5 | `<`, `>`, `<=`, `>=` | Left-to-right | `a < b` |
+| 6 | `&`, `\|`, `^`, `<<`, `>>` | Left-to-right | `a & b` |
+| 7 | `+`, `-` | Left-to-right | `a + b` |
+| 8 | `*`, `/`, `%` | Left-to-right | `a * b` |
+| 9 | **`**` (Power)** | **Left-to-right** | `a ** b` |
+| 10 | `-`, `!`, `++`, `--` (prefix) | Right-to-left | `!-x` |
+| 11 | `++`, `--` (postfix) | Left-to-right | `x++` |
+| 12 | `()` | Highest | `f(x)` |
+
+---
+
+## Code Examples
+
+### ✅ Correct Code Snippet
+
+```rust
+yaar {
+    number w = 10;
+    number h = 20;
+
+    dohrao (number i = 0; i < 5; i++) {
+        agar (i == 3) {
+            bas_kar; 
+        }
+    }
+
+    faisla flag = (w > 5) && (h < 50);
+    faisla check = !flag;
+    
+    number result = w ** 2; // Power operator test
+    bolo("Computed successfully! ", result);
+}
+```
+
+**Expected Output:**
+```text
+0
+1
+2
+Computed successfully! 100
+```
+
+### ❌ Incorrect Code Snippet
+
+Shows strict type safety catching errors before execution.
+
+```rust
+khaali invalidVar; // ERROR: 1. ErroneousVarDecl
+
+khaali voidFunc() {
+    bolo("hello");
+}
+
+yaar {
+    number i = 10;
+    float f = 3.14;
+    
+    // 3. FnCallParamType
+    voidFunc(f); 
+    
+    // 5. ExpressionTypeMismatch
+    i = 3.14; 
+    
+    // 7. NonBooleanCondStmt
+    agar (i) { 
+        bolo("wont work");
+    }
+}
+```
+
+**Compiler Output (Caught at Semantic Stage):**
+```text
+[Type Error] Variable invalidVar cannot be of type void
+[Type Error] Function 'voidFunc' expects 0 arguments, but got 1
+[Type Error] Invalid assignment: Cannot assign type 'float' to variable 'i' of type 'int'
+[Type Error] Condition must be a boolean expression
+```
 
 ---
 
@@ -72,8 +203,11 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 # Clone the compiler repository (wasm-compiler branch)
-git clone -b wasm-compiler https://github.com/YourUsername/YaarScript-Compiler.git
-cd YaarScript-Compiler
+git clone -b wasm-compiler https://github.com/BazilSuhail/YaarScript-Client.git
+cd YaarScript-Client
+
+# For building the WASM package go to wasm-compiler branch
+git checkout wasm-compiler
 
 # Build the WASM package
 wasm-pack build --target web
@@ -215,95 +349,7 @@ yaar {
 }
 ```
 
----
-
-## 📚 Documentation
-
-### Data Types
-
-| Type | Description | Example |
-|------|-------------|---------|
-| `number` | Integer values | `42` |
-| `float` | Single precision | `3.14` |
-| `double` | Double precision | `2.718281828` |
-| `char` | Single character | `'A'` |
-| `lafz` | String values | `"Hello"` |
-| `faisla` | Boolean | `sahi`, `galat` |
-| `khaali` | Void/Empty | Function return type |
-
-### Keywords Reference
-
-| Keyword | English Equivalent | Usage |
-|---------|-------------------|-------|
-| `yaar` | main | Main function entry point |
-| `bolo` | print | Output to console |
-| `agar` | if | Conditional statement |
-| `warna` | else | Alternative branch |
-| `dohrao` | for | For loop |
-| `jabtak` | while | While loop |
-| `karo` | do | Do-while loop |
-| `intekhab` | switch | Switch statement |
-| `agar_ho` | case | Case in switch |
-| `aakhir` | default | Default case |
-| `wapsi` | return | Return from function |
-| `bas_kar` | break | Break loop/switch |
-| `aagay_baro` | continue | Continue loop |
-| `pakka` | const | Constant declaration |
-| `sab_ke_liye` | global | Global scope |
-| `qism` | enum | Enumeration |
-| `sahi` | true | Boolean true |
-| `galat` | false | Boolean false |
-
-### Operators
-
-**Arithmetic:** `+`, `-`, `*`, `/`, `%`  
-**Comparison:** `==`, `!=`, `>`, `<`, `>=`, `<=`  
-**Logical:** `&&`, `||`, `!`  
-**Increment/Decrement:** `++`, `--`
-
----
-
-## 🎮 Online Playground
-
-Visit our [**Online Editor**](https://yaarscript.netlify.app/editor) to start coding immediately without any installation. The playground features:
-
-- 🎨 **Syntax Highlighting** – Clean, readable code editor
-- ⚡ **Instant Compilation** – Real-time compilation and execution
-- 📺 **Live Terminal** – See output as you code
-- 💾 **Auto-Save** – Your code is saved automatically
-- 🌙 **Dark Theme** – Easy on the eyes
-
----
-
-## 🛠️ Development
-
-### Available Scripts
-
-```bash
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Lint code
-npm run lint
-```
-
-### Tech Stack
-
-- **Frontend:** Next.js 16.1, React 19.2, Tailwind CSS 4
-- **Animations:** Framer Motion
-- **Backend Compiler:** Rust (compiled to WASM)
-- **Icons:** React Icons
-- **Code Editor:** Custom implementation
-
----
-
-## 🤝 Contributing
+##  Contributing
 
 We welcome contributions from the community! Here's how you can help:
 
@@ -324,47 +370,8 @@ We welcome contributions from the community! Here's how you can help:
 
 ---
 
-## 🎯 Roadmap
-
-- [ ] Array and list data structures
-- [ ] String manipulation functions
-- [ ] File I/O operations
-- [ ] Standard library expansion
-- [ ] Module system
-- [ ] Package manager
-- [ ] Debugging tools
-- [ ] Mobile app version
-- [ ] VS Code extension
-
----
-
 ## 📄 License
 
 This project is open source and available under the [MIT License](LICENSE).
 
 ---
-
-## 🙏 Acknowledgments
-
-- Built with ❤️ for the Urdu-speaking developer community
-- Powered by **Rust** and **WebAssembly**
-- UI framework by **Next.js** and **React**
-- Special thanks to all contributors and supporters
-
----
-
-## 📧 Contact & Support
-
-- **Website:** [YaarScript Official](#)
-- **GitHub Issues:** [Report a bug](https://github.com/BazilSuhail/YaarScript-Client/issues)
-- **Discussions:** [Join the conversation](https://github.com/BazilSuhail/YaarScript-Client/discussions)
-
----
-
-<div align="center">
-
-**Made with ❤️ by the YaarScript Team**
-
-⭐ **Star this repo if you find it helpful!** ⭐
-
-</div>

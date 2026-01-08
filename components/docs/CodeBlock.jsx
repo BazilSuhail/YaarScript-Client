@@ -86,6 +86,7 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
             { type: 'string', regex: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/ },
             { type: 'keyword', regex: /\b(?:agar|warna|jabtak|wapsi|yaar|karo|mangwao|pakka|sab_ke_liye|bas_kar|dohrao|aakhir|agar_ho|intekhab)\b/ },
             { type: 'type', regex: /\b(?:number|float|double|char|khaali|faisla|lafz|qism)\b/ },
+            { type: 'builtin', regex: /\b(?:suno|waqt|ittifaq)\b/ },
             { type: 'function', regex: /\b(?:bolo)\b/ },
             { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
             { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
@@ -159,6 +160,7 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
                 .code-token-string { color: #fbbf24; }
                 .code-token-keyword { color: #38bdf8; font-weight: 600; }
                 .code-token-type { color: #a78bfa; }
+                .code-token-builtin { color: #22d3ee; }
                 .code-token-function { color: #4ade80; font-weight: 500; }
                 .code-token-boolean { color: #fb7185; font-weight: 500; }
                 .code-token-number { color: #f87171; }

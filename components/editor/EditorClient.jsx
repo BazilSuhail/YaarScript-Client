@@ -185,7 +185,8 @@ yaar {
             { type: 'string', regex: /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'/ },
             { type: 'keyword', regex: /\b(?:agar|warna|jabtak|wapsi|yaar|karo|mangwao|pakka|sab_ke_liye|bas_kar|dohrao|aakhir|agar_ho|intekhab)\b/ },
             { type: 'type', regex: /\b(?:number|float|double|char|khaali|faisla|lafz|qism)\b/ },
-            { type: 'function', regex: /\b(?:bolo|suno|waqt|ittifaq)\b/ },
+            { type: 'function', regex: /\b(?:bolo)\b/ },
+            { type: 'builtin', regex: /\b(?:suno|waqt|ittifaq)\b/ },
             { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
             { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
             { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,]+/ }
@@ -426,6 +427,7 @@ yaar {
                 .token-keyword { color: #38bdf8; font-weight: 500; }
                 .token-type { color: #818cf8; }
                 .token-function { color: #4ade80; }
+                .token-builtin { color: #22d3ee; }
                 .token-boolean { color: #fb7185; }
                 .token-number { color: #f87171; }
                 .token-operator { color: #94a3b8; }
@@ -436,6 +438,7 @@ yaar {
                 html:not(.dark) .token-number { color: #dc2626; }
                 html:not(.dark) .token-comment { color: #94a3b8; font-style: italic; }
                 html:not(.dark) .token-function { color: #16a34a; }
+                html:not(.dark) .token-builtin { color: #0891b2; }
                 html:not(.dark) .token-operator { color: #64748b; }
                 html:not(.dark) .token-boolean { color: #be123c; }
 
