@@ -100,7 +100,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Navigation */}
-                    <div className="hidden md:flex md:-ml-8.75 items-center space-x-1">
+                    <div className="hidden md:flex sm:ml-0 md:ml-20 items-center space-x-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
@@ -119,14 +119,32 @@ const Navbar = () => {
                     {/* GitHub Link */}
                     <div className="hidden md:flex justify-center items-center space-x-2">
                         <Link
-                            href="https://github.com/BazilSuhail/Custom-Compiler"
+                            href="https://github.com/BazilSuhail/YaarScript"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+                            className="flex items-center p-2.5 rounded-lg text-slate-100 hover:text-slate-200 hover:bg-slate-800/50 bg-slate-700/80 transition-all duration-200"
                             aria-label="View on GitHub"
+                            title="YaarScript on GitHub"
                         >
-                            <RiGithubFill className="w-5 h-5" />
-                            <span className="ml-2 text-[16px]">Github</span>
+                            <RiGithubFill className="w-6 h-6" />
+                        </Link>
+                        <Link
+                            href="https://bazilsuhail.netlify.app/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-3 rounded-xl border border-sky-400/30 bg-sky-500/10 px-4 py-1.5 transition-colors hover:border-sky-300/60 hover:bg-sky-500/20"
+                            aria-label="Visit Bazil Suhail's website"
+                            title="Bazil Suhail"
+                        >
+                            <img
+                                src="/bazil-suhail.webp"
+                                alt="Bazil Suhail"
+                                className="h-8 w-8 rounded-full border border-sky-300/50 object-cover"
+                            />
+                            <div className="leading-tight">
+                                <p className="text-[9px] font-medium tracking-[0.16em] text-sky-300/80">Created by</p>
+                                <p className="text-sm font-semibold text-slate-100">Bazil Suhail</p>
+                            </div>
                         </Link>
                     </div>
 
@@ -175,18 +193,37 @@ const Navbar = () => {
                             </Link>
 
                             <Link 
-                                href="https://github.com/BazilSuhail/Custom-Compiler" 
+                                href="https://github.com/BazilSuhail/YaarScript" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 onClick={() => setIsMenuOpen(false)} 
-                                className="flex items-center space-x-3 px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group"
+                                className="flex items-center justify-center px-4 py-3 text-slate-300 hover:text-sky-300 bg-slate-800/30 hover:bg-sky-900/40 border border-sky-500/20 hover:border-sky-400/60 rounded-lg transition-all duration-300 group"
+                                aria-label="Open YaarScript on GitHub"
+                                title="YaarScript on GitHub"
                             >
                                 <RiGithubFill className="w-5 h-5 text-sky-400 group-hover:text-sky-300 transition-colors" />
-                                <span className="font-medium">GitHub</span>
                             </Link>
 
                             {/* Divider */}
                             <div className="h-px bg-slate-700/50 my-2"></div>
+
+                            <Link
+                                href="https://bazilsuhail.netlify.app/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex gap-4 rounded-xl border border-sky-400/30 bg-sky-500/10 px-6 py-3 shadow-lg shadow-sky-950/20 transition-colors hover:border-sky-300/60 hover:bg-sky-500/20"
+                                aria-label="Visit Bazil Suhail's website"
+                            >
+                                <img
+                                    src="/bazil-suhail.webp"
+                                    alt="Bazil Suhail"
+                                    className="h-11 w-11 rounded-full border border-sky-300/50 object-cover"
+                                />
+                                <div>
+                                    <p className="text-[10px] tracking-[0.18em] text-sky-300/80">Created by:</p>
+                                    <p className="text-lg font-semibold text-slate-100">Bazil Suhail</p>
+                                </div>
+                            </Link>
 
                             {/* Footer Links Row */}
                             <div className="flex gap-2">
