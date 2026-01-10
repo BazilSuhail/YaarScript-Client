@@ -2,14 +2,14 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { RiRocket2Line } from "react-icons/ri";
 import MetaBalls from "../animations/MetaBalls";
 
 const CTASection = () => {
   return (
     <section className="relative z-10 py-20 px-6 pointer-events-none">
-      <div className="max-w-5xl mx-auto pointer-events-auto">
+      <div className="max-w-6xl mx-auto pointer-events-auto">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}

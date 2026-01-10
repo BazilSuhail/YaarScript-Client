@@ -90,7 +90,7 @@ const CodeBlock = ({ code, language = "yaarscript" }) => {
             { type: 'function', regex: /\b(?:bolo)\b/ },
             { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
             { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
-            { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,;{}()\[\]]+/ }
+            { type: 'operator', regex: /[+\-*/%=!<>|&^:?~.,;{}()[\]]+/ }
         ];
 
         const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

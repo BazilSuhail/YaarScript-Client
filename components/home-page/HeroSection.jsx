@@ -2,9 +2,10 @@
 
 import React from "react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { RiRocket2Line, RiGlobalLine, RiLightbulbLine } from "react-icons/ri";
 import { Poppins } from "next/font/google";
+import FuzzyText from "@/components/animations/FuzzyText";
 
 const poppins = Poppins({
   weight: ['500', '700'],
@@ -28,27 +29,29 @@ const HeroSection = () => {
           </div>
 
           <h1 className={`text-[28px]  md:text-6xl lg:text-[55px] font-black text-slate-50 mb-6 leading-tight ${poppins.className}`}>
-            <span className="text-[52px] lg:text-[110px] inline-block text-transparent bg-clip-text bg-linear-to-r from-white via-sky-400 to-sky-800 animate-linear bg-size-[200%_auto]">
-              Apki Zuban
-            </span>
-            <span className="block text-transparent mt-2 bg-clip-text bg-linear-to-r from-sky-300 via-sky-400 to-sky-600">
-              Apki marzi wala Code
+            <FuzzyText
+              text="Apki Zuban"
+              font={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 110 }}
+              color="#ffffff"
+              gradientMiddle="#38bdf8"
+              gradientEnd="#075985"
+              baseIntensity={1}
+              hoverIntensity={4}
+              className="lg:scale-125"
+            />
+            <span className="block mt-1">
+              <FuzzyText
+                text="Apki marzi wala Code"
+                font={{ fontFamily: "Poppins, sans-serif", fontWeight: 700, fontSize: 55 }}
+                color="#7dd3fc"
+                gradientMiddle="#38bdf8"
+                gradientEnd="#0284c7"
+                baseIntensity={1}
+                hoverIntensity={4}
+                className="lg:scale-125"
+              />
             </span>
           </h1>
-
-          <style jsx>{`
-            @keyframes linear {
-              0%, 100% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-            }
-            .animate-linear {
-              animation: linear 2s ease infinite;
-            }
-          `}</style>
 
           <p className={`text-[13px] sm:text-base md:text-lg text-slate-100 max-w-2xl mx-auto mb-10 leading-relaxed font-medium ${poppins.className}`}>
             YaarScript ek modern compiler hai jo <strong>Urdu/Roman Urdu keywords</strong> ke sath programming ko asaan banata hai.

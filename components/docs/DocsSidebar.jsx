@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiCodeSSlashLine, RiBookOpenLine, RiHome4Line, RiPlayCircleLine } from "react-icons/ri";
-import { motion, AnimatePresence } from "framer-motion";
+import { RiCloseLine, RiMenuLine, RiArrowRightSLine, RiBookOpenLine, RiHome4Line, RiPlayCircleLine } from "react-icons/ri";
+import { motion, AnimatePresence } from "motion/react";
 import Link from "next/link";
 
 const DocsSidebar = ({ activeSection, setActiveSection }) => {

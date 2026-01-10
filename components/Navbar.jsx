@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { RiGithubFill, RiMenuLine, RiCloseLine, RiBook2Line, RiPlayCircleLine, RiUser3Line, RiCodeSSlashLine } from "react-icons/ri";
+import { motion, AnimatePresence } from "motion/react";
+import { RiGithubFill, RiMenuLine, RiBook2Line, RiPlayCircleLine, RiUser3Line, RiCodeSSlashLine } from "react-icons/ri";
 
 const Navbar = () => {
     const pathname = usePathname();
@@ -77,7 +77,7 @@ const Navbar = () => {
                 initial={{ y: 0 }}
                 animate={{ y: isVisible ? 0 : -100 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
-                className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-4xl"
+                className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-6xl"
             >
             <div className="backdrop-blur-xl bg-slate-900/80 border-2 border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/30">
                 <div className="flex justify-between items-center px-6 py-3">
@@ -100,7 +100,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Navigation */}
-                    <div className="hidden md:flex md:ml-[-35px] items-center space-x-1">
+                    <div className="hidden md:flex md:-ml-8.75 items-center space-x-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}

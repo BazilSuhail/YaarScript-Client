@@ -1,10 +1,15 @@
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 const Terminal = React.forwardRef(({ output, setOutput, formatTerminal, isAwaitingInput, provideInput }, ref) => {
     const inputRef = React.useRef(null);
-    const [inputValue, setInputValue] = React.useState("");
+    const outputRef = React.useRef(null);
 
+    React.useEffect(() => {
+        if (outputRef.current) {
+            outputRef.current.scrollTop = outputRef.current.scrollHeight;
+        }
+    }, [output]);
     React.useEffect(() => {
         if (isAwaitingInput && inputRef.current) {
             inputRef.current.focus();
@@ -15,14 +20,13 @@ const Terminal = React.forwardRef(({ output, setOutput, formatTerminal, isAwaiti
         if (e.key === 'Enter') {
             e.preventDefault();
             const val = inputRef.current.innerText.trim();
-            setInputValue("");
             inputRef.current.innerText = "";
             provideInput(val);
         }
     };
 
     return (
-        <div ref={ref} className="lg:w-125 w-full flex flex-col bg-slate-50 dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div ref={ref} className="w-full min-w-0 flex flex-col bg-slate-50 dark:bg-slate-950 border-l border-slate-200 dark:border-slate-800 overflow-hidden">
             <div className="h-8 md:h-10 px-3 md:px-4 flex items-center justify-between bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800">
                 <span className="text-[9px] md:text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-slate-400">
                     Output
@@ -35,7 +39,8 @@ const Terminal = React.forwardRef(({ output, setOutput, formatTerminal, isAwaiti
                 </button>
             </div>
 
-            <div 
+            <div
+                ref={outputRef}
                 className="flex-1 p-3 md:p-6 overflow-auto bg-white dark:bg-slate-950 cursor-text"
                 onClick={() => isAwaitingInput && inputRef.current?.focus()}
             >

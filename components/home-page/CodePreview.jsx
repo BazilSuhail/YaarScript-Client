@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 
 const CodePreview = () => {
   const [animationKey, setAnimationKey] = useState(0);
@@ -70,7 +70,7 @@ const CodePreview = () => {
         variants={containerFloatVariants}
         initial="initial"
         animate="animate"
-        className="max-w-4xl mx-auto"
+        className="max-w-6xl mx-auto"
       >
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
@@ -161,7 +161,7 @@ const CodePreview = () => {
                   </div>
                 </div>
 
-                <div className="p-6 md:p-8 min-h-[300px]">
+                <div className="p-6 md:p-8 min-h-75">
                   <pre className="text-left overflow-x-auto font-mono">
                     <code className="text-sm leading-7">
                       <motion.div

@@ -59,7 +59,7 @@ const StatsSection = () => {
   const y = useTransform(smoothProgress, [0, 0.2, 0.8, 1], [100, 0, 0, -100]);
 
   return (
-    <section ref={containerRef} className="relative max-w-5xl mx-auto z-10 py-10 px-6">
+    <section ref={containerRef} className="relative max-w-6xl mx-auto z-10 py-10 px-6">
       {/* Scroll animation ONLY on the heading */}
       <motion.div style={{ opacity, scale, y }} className="text-center mb-16">
         <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-7xl pb-2 font-black text-transparent bg-clip-text bg-linear-to-r from-white via-sky-600 to-sky-800 animate-gradient bg-size-[200%_auto] mb-4 ${poppins.className}`}>

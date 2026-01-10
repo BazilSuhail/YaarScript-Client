@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { Poppins } from "next/font/google";
 
 const poppins = Poppins({
@@ -17,7 +17,7 @@ const DocSection = ({ title, description, content }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
-            className="flex-1 w-full min-w-0 p-4 sm:p-6 md:p-8 lg:p-12 max-w-5xl"
+            className="flex-1 w-full min-w-0 p-4 sm:p-6 md:p-8 lg:p-12"
         >
             <article className="prose prose-slate prose-invert max-w-none">
                 <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-semibold text-slate-50 mb-4 wrap-break-words ${poppins.className}`}>

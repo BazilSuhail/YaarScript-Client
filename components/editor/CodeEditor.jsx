@@ -17,7 +17,7 @@ const CodeEditor = ({
     isCompiling
 }) => {
     return (
-        <div className="flex-1 flex flex-col min-w-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 overflow-hidden">
+        <div className="flex h-full min-h-0 flex-1 flex-col min-w-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 overflow-hidden">
             <div className="flex-1 relative overflow-hidden">
                 {/* Line Numbers Gutter */}
                 <div

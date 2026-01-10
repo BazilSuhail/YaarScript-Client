@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { RiHome4Line, RiBookReadLine, RiSunLine, RiMoonLine } from "react-icons/ri";
+import { RiHome4Line, RiBookReadLine, RiSunLine, RiMoonLine, RiCodeBoxLine, RiTerminalBoxLine } from "react-icons/ri";
 import Link from "next/link";
 import {
     RiPlayFill,
@@ -140,7 +140,9 @@ yaar {
     const [lineCol, setLineCol] = useState({ line: 1, col: 1 });
     const [copied, setCopied] = useState(false);
     const [isAwaitingInput, setIsAwaitingInput] = useState(false);
-    const [vmStatus, setVmStatus] = useState(null);
+    const [mobilePanel, setMobilePanel] = useState("editor");
+    const [editorWidth, setEditorWidth] = useState(62);
+    const [isResizing, setIsResizing] = useState(false);
 
     const textareaRef = useRef(null);
     const highlightRef = useRef(null);
@@ -189,7 +191,7 @@ yaar {
             { type: 'builtin', regex: /\b(?:suno|waqt|ittifaq)\b/ },
             { type: 'boolean', regex: /\b(?:sahi|galat)\b/ },
             { type: 'number', regex: /\b\d+(?:\.\d+)?(?:[eE][+-]?\d+)?\b/ },
-            { type: 'operator', regex: /[+\-*\/%=!<>|&^:?~.,]+/ }
+            { type: 'operator', regex: /[+\-*/%=!<>|&^:?~.,]+/ }
         ];
 
         const escapeHTML = (str) => str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -288,7 +290,6 @@ yaar {
             lastOutputLengthRef.current = fullOutput.length;
         }
 
-        setVmStatus(status);
         if (status === WasmVMStatus.AwaitingInput) {
             setIsAwaitingInput(true);
         } else if (status === WasmVMStatus.Finished) {
@@ -330,13 +331,35 @@ yaar {
         }
         
         setIsCompiling(false);
-        
-        if (window.innerWidth < 1024 && terminalRef.current) {
-            setTimeout(() => {
-                terminalRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 150);
-        }
+        if (window.innerWidth < 1024) setMobilePanel("terminal");
     };
+
+    useEffect(() => {
+        if (!isResizing) return undefined;
+
+        const handlePointerMove = (event) => {
+            if (window.innerWidth < 1024) return;
+            const editorShell = document.getElementById('editor-workspace');
+            if (!editorShell) return;
+
+            const bounds = editorShell.getBoundingClientRect();
+            const nextWidth = ((event.clientX - bounds.left) / bounds.width) * 100;
+            setEditorWidth(Math.min(80, Math.max(20, nextWidth)));
+        };
+
+        const stopResizing = () => setIsResizing(false);
+        window.addEventListener('pointermove', handlePointerMove);
+        window.addEventListener('pointerup', stopResizing);
+        document.body.style.cursor = 'col-resize';
+        document.body.style.userSelect = 'none';
+
+        return () => {
+            window.removeEventListener('pointermove', handlePointerMove);
+            window.removeEventListener('pointerup', stopResizing);
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        };
+    }, [isResizing]);
 
     const copyCode = () => {
         navigator.clipboard.writeText(code);
@@ -348,6 +371,7 @@ yaar {
 
     return (
         <div className="flex flex-col h-screen bg-slate-50 dark:bg-slate-950 overflow-hidden" style={{ fontFamily: 'var(--font-outfit), "Outfit", sans-serif' }}>
+            <h1 className="sr-only">YaarScript Online Editor</h1>
             <div className="h-12 md:h-14 flex items-center justify-between px-3 md:px-6 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 transition-colors gap-2 md:gap-4">
                 <div className="flex items-center space-x-1 md:space-x-4 min-w-0">
                     <div className="flex items-center space-x-0.5 md:space-x-1">
@@ -371,7 +395,7 @@ yaar {
                     </div>
                 </div>
 
-                <div className="flex items-center space-x-0.5 md:space-x-2 flex-shrink-0">
+                <div className="flex items-center space-x-0.5 md:space-x-2 shrink-0">
                     <button onClick={toggleTheme} className="p-1.5 md:p-2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-all" aria-label="Toggle Theme">
                         {isDark ? <RiSunLine className="w-4 h-4 md:w-4 md:h-4" /> : <RiMoonLine className="w-4 h-4 md:w-4 md:h-4" />}
                     </button>
@@ -395,30 +419,65 @@ yaar {
                 </div>
             </div>
 
-            <div className="flex-1 flex overflow-hidden lg:flex-row flex-col">
-                <CodeEditor
-                    code={code}
-                    setCode={setCode}
-                    lineCol={lineCol}
-                    highlightCode={highlightCode}
-                    handleScroll={handleScroll}
-                    handleKeyDown={handleKeyDown}
-                    updateLineCol={updateLineCol}
-                    lineCount={lineCount}
-                    textareaRef={textareaRef}
-                    highlightRef={highlightRef}
-                    gutterRef={gutterRef}
-                    execTime={execTime}
-                    isCompiling={isCompiling}
-                />
-                <Terminal
-                    ref={terminalRef}
-                    output={output}
-                    setOutput={setOutput}
-                    formatTerminal={formatTerminal}
-                    isAwaitingInput={isAwaitingInput}
-                    provideInput={provideInput}
-                />
+            <div className="flex lg:hidden items-center gap-1 border-b border-slate-200 bg-white px-3 py-2 dark:border-slate-800 dark:bg-slate-900">
+                <button
+                    type="button"
+                    onClick={() => setMobilePanel("editor")}
+                    className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-semibold transition-colors ${mobilePanel === "editor" ? "bg-sky-500 text-white" : "text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"}`}
+                    aria-pressed={mobilePanel === "editor"}
+                >
+                    <RiCodeBoxLine className="h-4 w-4" />
+                    Code
+                </button>
+                <button
+                    type="button"
+                    onClick={() => setMobilePanel("terminal")}
+                    className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-xs font-semibold transition-colors ${mobilePanel === "terminal" ? "bg-sky-500 text-white" : "text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800"}`}
+                    aria-pressed={mobilePanel === "terminal"}
+                >
+                    <RiTerminalBoxLine className="h-4 w-4" />
+                    Terminal
+                </button>
+            </div>
+
+            <div id="editor-workspace" className={`flex-1 flex overflow-hidden lg:flex-row flex-col ${isResizing ? 'cursor-col-resize' : ''}`}>
+                <div className={`${mobilePanel === "editor" ? "flex" : "hidden"} flex-1 min-h-0 min-w-0 w-full lg:flex-none lg:flex lg:h-full lg:w-(--editor-width) lg:shrink-0`} style={{ '--editor-width': `${editorWidth}%` }}>
+                    <div className="flex h-full min-h-0 min-w-0 flex-1">
+                        <CodeEditor
+                            code={code}
+                            setCode={setCode}
+                            lineCol={lineCol}
+                            highlightCode={highlightCode}
+                            handleScroll={handleScroll}
+                            handleKeyDown={handleKeyDown}
+                            updateLineCol={updateLineCol}
+                            lineCount={lineCount}
+                            textareaRef={textareaRef}
+                            highlightRef={highlightRef}
+                            gutterRef={gutterRef}
+                            execTime={execTime}
+                            isCompiling={isCompiling}
+                        />
+                    </div>
+                    <button
+                        type="button"
+                        aria-label="Resize code editor and terminal"
+                        onPointerDown={() => setIsResizing(true)}
+                        className="hidden lg:flex w-1 shrink-0 cursor-col-resize items-center justify-center bg-slate-200 transition-colors hover:bg-sky-400 dark:bg-slate-800 dark:hover:bg-sky-500"
+                    >
+                        <span className="h-10 w-px bg-slate-400/70 dark:bg-slate-600" />
+                    </button>
+                </div>
+                <div className={`${mobilePanel === "terminal" ? "flex" : "hidden"} min-h-0 min-w-0 flex-1 lg:flex`}>
+                    <Terminal
+                        ref={terminalRef}
+                        output={output}
+                        setOutput={setOutput}
+                        formatTerminal={formatTerminal}
+                        isAwaitingInput={isAwaitingInput}
+                        provideInput={provideInput}
+                    />
+                </div>
             </div>
             {/* Global Styles */}
             <style jsx global>{`

@@ -54,9 +54,9 @@ const HomeFooter = () => {
 
   return (
     <footer className="relative lg:mt-25">
-      <div className="max-w-5xl bg-linear-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
+      <div className="max-w-6xl bg-linear-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
 
-      <div className="max-w-7xl mx-auto px-6 py-12">
+      <div className="max-w-6xl mx-auto px-6 py-12">
         <div className="flex flex-col items-center justify-center space-y-8">
           {/* Logo / Brand */}
           <div className="text-center">

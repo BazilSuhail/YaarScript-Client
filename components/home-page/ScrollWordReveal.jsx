@@ -13,22 +13,22 @@ const poppins = Poppins({
 const ScrollWordReveal = ({
   text = `YaarScript is a slang-infused Urdu styled programming language that turns regular code into cool slang. Perfect for coding as it makes every word carry personality and flair.`,
 }) => {
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
   const words = text.split(' ');
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
+    target: sectionRef,
     offset: ['start end', 'end start'],
   });
 
   const SCROLL_END = 0.7;
 
   return (
-    <section className="mx-auto py-30 sm:px-6 max-w-5xl md:mb-12">
-      <div
-        ref={containerRef}
-        className={`${poppins.className} relative mx-auto text-[32px] sm:text-[44px] md:text-[54px] lg:text-[60px] font-bold leading-relaxed`}
-      >
+    <section ref={sectionRef} className="relative h-[400vh] mx-auto sm:px-6 max-w-6xl md:mb-12">
+      <div className="sticky top-0 flex h-screen items-center">
+        <div
+          className={`${poppins.className} relative mx-auto text-[24px] sm:text-[32px] md:text-[40px] lg:text-[46px] font-bold leading-relaxed`}
+        >
         {/* Static gray background */}
         <div className="absolute inset-0 flex flex-wrap justify-center pointer-events-none select-none">
           {words.map((word, i) => (
@@ -65,6 +65,7 @@ const ScrollWordReveal = ({
               </motion.span>
             );
           })}
+        </div>
         </div>
       </div>
     </section>

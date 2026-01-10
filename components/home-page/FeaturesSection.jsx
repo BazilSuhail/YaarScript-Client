@@ -63,7 +63,7 @@ const FeaturesSection = () => {
 
   return (
     <section ref={containerRef} className="relative z-10 py-20 px-6 pointer-events-none">
-      <div className="max-w-5xl mx-auto pointer-events-auto">
+      <div className="max-w-6xl mx-auto pointer-events-auto">
         {/* Scroll animation ONLY on the heading */}
         <motion.div
           style={{ opacity, scale, y }}
@@ -93,7 +93,7 @@ const FeaturesSection = () => {
 
         {/* Static grid as requested */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <div
               key={feature.title}
               className="group bg-slate-800/30 backdrop-blur-sm rounded-3xl p-8 border border-slate-700/50 hover:border-sky-500/50 transition-all hover:shadow-xl hover:shadow-sky-500/10"

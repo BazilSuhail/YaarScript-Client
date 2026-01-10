@@ -10,8 +10,6 @@
 !.yarn/releases
 !.yarn/versions
 
-package-lock.json
-
 # testing
 /coverage
 
@@ -38,7 +36,7 @@ yarn-error.log*
 # vercel
 .vercel
 
-# typescript
+# generated Next.js type hints (this project uses JavaScript)
 *.tsbuildinfo
 next-env.d.ts
 

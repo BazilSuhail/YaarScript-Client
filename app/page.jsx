@@ -9,7 +9,6 @@ import FeaturesSection from "@/components/home-page/FeaturesSection";
 import CTASection from "@/components/home-page/CTASection"; 
 import ScrollWordReveal from "@/components/home-page/ScrollWordReveal"; 
 import HomeFooter from "@/components/home-page/HomeFooter";
-import NeuralGlow from "@/components/animations/NeuralGlow";
 import { ReactLenis } from 'lenis/react';
 import DelicateAsciiDots from "@/components/animations/DelicateAsciiDots";
 
@@ -32,7 +31,7 @@ export default function Home() {
       <section className="max-w-5xl mx-auto mb-20 px-4 z-10 text-sky-200 ]">
         <ScrollVelocity
           texts={['YaarScript •', 'Urdu Styled Compiler •']}
-          velocity={50}
+          velocity={28}
           className="custom-scroll-text"
         />
       </section>
