@@ -35,7 +35,7 @@ const HomeFooter = () => {
 
   return (
     <footer className="relative lg:mt-25">
-      <div className="max-w-5xl bg-gradient-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
+      <div className="max-w-5xl bg-linear-to-l from-slate-300 via-slate-400 to-slate-300 h-1 mx-auto"></div>
 
       <div className="max-w-7xl mx-auto px-6 py-12">
         <div className="flex flex-col items-center justify-center space-y-8">
@@ -111,7 +111,7 @@ const HomeFooter = () => {
           </div>
 
           {/* Divider */}
-          <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-slate-700 to-transparent" />
+          <div className="w-full max-w-md h-px bg-linear-to-r from-transparent via-slate-700 to-transparent" />
 
           {/* Copyright */}
           <div className="text-center">

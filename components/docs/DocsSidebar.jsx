@@ -96,7 +96,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                         
                     >
                         <div className="relative mb-3 px-3">
-                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-gradient-to-b from-sky-500 to-blue-400 rounded-full"></div>
+                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-4 bg-linear-to-b from-sky-500 to-blue-400 rounded-full"></div>
                             <h3 className="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 pl-4">
                                 {section.category}
                             </h3>
@@ -125,7 +125,7 @@ const DocsSidebar = ({ activeSection, setActiveSection }) => {
                                             {isActive && (
                                                 <motion.div
                                                     layoutId="activeSection"
-                                                    className="absolute inset-0 bg-gradient-to-r from-sky-500 to-sky-600 rounded-xl"
+                                                    className="absolute inset-0 bg-linear-to-r from-sky-500 to-sky-600 rounded-xl"
                                                     transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                                 />
                                             )}

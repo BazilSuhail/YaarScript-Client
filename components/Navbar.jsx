@@ -3,13 +3,14 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { RiGithubFill } from "react-icons/ri";
+import { motion, AnimatePresence } from "framer-motion";
+import { RiGithubFill, RiMenuLine, RiCloseLine } from "react-icons/ri";
 
 const Navbar = () => {
     const pathname = usePathname();
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // All hooks must stay at the top level!
     useEffect(() => {
@@ -51,12 +52,13 @@ const Navbar = () => {
     ];
 
     return (
-        <motion.nav
-            initial={{ y: 0 }}
-            animate={{ y: isVisible ? 0 : -100 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed top-4 left-1/2 -translate-x-1/2 z-999 w-[90%] max-w-4xl"
-        >
+        <>
+            <motion.nav
+                initial={{ y: 0 }}
+                animate={{ y: isVisible ? 0 : -100 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="fixed top-4 left-1/2 -translate-x-1/2 z-999 w-[90%] max-w-4xl"
+            >
             <div className="backdrop-blur-xl bg-slate-900/80 border-2 border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/30">
                 <div className="flex justify-between items-center px-6 py-3">
                     {/* Logo */}
@@ -78,7 +80,7 @@ const Navbar = () => {
                     </Link>
 
                     {/* Navigation */}
-                    <div className="flex md:ml-[-35px] items-center space-x-1">
+                    <div className="hidden md:flex md:ml-[-35px] items-center space-x-1">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
@@ -95,21 +97,61 @@ const Navbar = () => {
                     </div>
 
                     {/* GitHub Link */}
-                    <div className="flex justify-center  items-center space-x-2">
+                    <div className="hidden md:flex justify-center items-center space-x-2">
                         <Link
                             href="https://github.com/BazilSuhail/Custom-Compiler"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className=" flex items-center p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+                            className="flex items-center p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
                             aria-label="View on GitHub"
                         >
                             <RiGithubFill className="w-5 h-5" />
                             <span className="ml-2 text-[16px]">Github</span>
                         </Link>
                     </div>
+
+                    {/* Mobile Menu Icon */}
+                    <button
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="md:hidden p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+                        aria-label="Toggle menu"
+                    >
+                        <RiMenuLine className="w-5 h-5" />
+                    </button>
                 </div>
             </div>
         </motion.nav>
+
+        {/* Mobile Bottom Menu */}
+        <AnimatePresence>
+            {isMenuOpen && (
+                <motion.div
+                    initial={{ y: 100, opacity: 0, height: 0 }}
+                    animate={{ y: 0, opacity: 1, height: "auto" }}
+                    exit={{ y: 100, opacity: 0, height: 0 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    className="fixed bottom-4 left-1/2 -translate-x-1/2 z-40 md:hidden w-[90%] max-w-sm overflow-hidden"
+                >
+                    <div className="backdrop-blur-xl bg-slate-900/80 border-2 border-slate-700/50 rounded-2xl shadow-lg shadow-slate-900/30 p-6">
+                        <div className="flex items-center justify-between mb-4">
+                            <h2 className="text-slate-50 font-semibold">Menu</h2>
+                            <button
+                                onClick={() => setIsMenuOpen(false)}
+                                className="p-2 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-all duration-200"
+                            >
+                                <RiCloseLine className="w-5 h-5" />
+                            </button>
+                        </div>
+                        <div className="space-y-2">
+                            <Link href="/docs" className="block px-4 py-2 text-slate-300 hover:text-slate-100 hover:bg-slate-800/50 rounded-lg transition-all">Documentation</Link>
+                            <Link href="/editor" className="block px-4 py-2 text-slate-300 hover:text-slate-100 hover:bg-slate-800/50 rounded-lg transition-all">Playground</Link>
+                            <Link href="https://github.com/BazilSuhail/Custom-Compiler" target="_blank" rel="noopener noreferrer" className="block px-4 py-2 text-slate-300 hover:text-slate-100 hover:bg-slate-800/50 rounded-lg transition-all">GitHub</Link>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
+        </>
     );
 };
 

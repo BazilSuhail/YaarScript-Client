@@ -37,7 +37,7 @@ const CTASection = () => {
 
             {/* Noise texture overlay */}
             <div 
-              className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none z-[1]"
+              className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none z-1"
               style={{
                 backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
                 backgroundSize: '200px 200px'
@@ -45,7 +45,7 @@ const CTASection = () => {
             />
 
             <div className="relative z-10 pointer-events-none">
-              <h2 className="text-5xl md:text-6xl pb-4 font-black text-transparent bg-clip-text bg-linear-to-br from-sky-900 via-sky-400 to-sky-700 animate-gradient-cta bg-[length:200%_auto] mb-6">
+              <h2 className="text-5xl md:text-6xl pb-4 font-black text-transparent bg-clip-text bg-linear-to-br from-sky-900 via-sky-400 to-sky-700 animate-gradient-cta bg-size-[200%_auto] mb-6">
                 Start Exploring
               </h2>
               

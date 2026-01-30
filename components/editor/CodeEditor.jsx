@@ -78,7 +78,7 @@ const CodeEditor = ({
                     <span className="hidden md:inline">Col {lineCol.col}</span>
                     <div className="hidden md:block w-px h-3 bg-slate-300 dark:bg-slate-700"></div>
                     <div className="flex items-center space-x-1 md:space-x-2">
-                        <RiTerminalBoxLine className="w-3 h-3 flex-shrink-0" />
+                        <RiTerminalBoxLine className="w-3 h-3 shrink-0" />
                         <span className={`${isCompiling ? 'text-sky-500 animate-pulse' : 'text-slate-500'}`}>
                             {isCompiling ? 'Compiling...' : execTime}
                         </span>

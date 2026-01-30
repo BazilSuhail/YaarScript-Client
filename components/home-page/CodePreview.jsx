@@ -145,14 +145,14 @@ const CodePreview = () => {
             variants={glowVariants}
             initial="initial"
             animate="animate"
-            className="absolute -inset-1 bg-gradient-to-r from-sky-500 via-sky-600 to-sky-700 rounded-md blur-xl group-hover:opacity-40 transition-opacity duration-500"
+            className="absolute -inset-1 bg-linear-to-r from-sky-500 via-sky-600 to-sky-700 rounded-md blur-xl group-hover:opacity-40 transition-opacity duration-500"
           ></motion.div>
 
           {/* Main terminal container */}
-          <div className="relative bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 rounded-lg shadow-2xl overflow-hidden border border-slate-700/50 backdrop-blur-sm">
+          <div className="relative bg-linear-to-br from-slate-900 via-slate-900 to-slate-950 rounded-lg shadow-2xl overflow-hidden border border-slate-700/50 backdrop-blur-sm">
 
             {/* Terminal Header */}
-            <div className="relative bg-gradient-to-r from-slate-800/90 via-slate-850/90 to-slate-800/90 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-slate-700/50">
+            <div className="relative bg-linear-to-r from-slate-800/90 via-slate-850/90 to-slate-800/90 backdrop-blur-md px-6 py-4 flex items-center justify-between border-b border-slate-700/50">
               <div className="flex items-center space-x-3">
                 <div className="flex space-x-2">
                   <motion.div
@@ -248,7 +248,7 @@ const CodePreview = () => {
               </div>
 
               {/* Output Section */}
-              <div className="relative bg-gradient-to-br from-slate-950/80 to-slate-900/80 backdrop-blur-sm">
+              <div className="relative bg-linear-to-br from-slate-950/80 to-slate-900/80 backdrop-blur-sm">
                 <div className="sticky top-0 bg-slate-800/80 backdrop-blur-sm px-6 py-3 border-b border-slate-700/50 flex items-center justify-between z-10">
                   <div className="flex items-center space-x-2">
                     <svg className="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
